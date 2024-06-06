@@ -1,0 +1,111 @@
+﻿@model X.PagedList.IPagedList<Size>
+@using X.PagedList.Mvc.Core
+
+@{
+    ViewData["Title"] = "Size Management" + " ";
+    Layout = "_AdminLayout";
+}
+<link rel="stylesheet" href="~/css/custom.css" />
+<div class="d-flex justify-content-between align-items-center mt-4 mb-4">
+    <div class="admin-title">
+        <ion-icon name="settings-outline"></ion-icon>
+        <div class="admin-title-content">
+            <h5>Kích cỡ</h5>
+            <span>Liệt kê danh sách kích cỡ</span>
+        </div>
+    </div>
+    <div class="option-create">
+        <a asp-action="Create" class="btn-create">
+            Tạo mới <i class="fa-solid fa-circle-plus"></i>
+        </a>
+    </div>
+</div>
+
+<table id="table_id" class="custom-table">
+    <thead>
+        <tr>
+            <th>
+                Id
+            </th>
+            <th>
+                Đơn vị
+            </th>
+            <th>
+                Giá trị
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Unit)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Value)
+                </td>
+                <td class="dt-nowrap">
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn-option" role="button" data-bs-toggle="tooltip"
+                    data-bs-placement="bottom" title="Edit">
+                        <i class="fa-regular fa-pen-to-square"></i>
+                    </a>
+                    @* <a asp-action="Details" asp-route-id="@item.Id" class="btn-option" role="button" *@
+                    @* data-bs-toggle="tooltip" data-bs-placement="bottom" title="Details"> *@
+                    @*     <i class="fa-solid fa-circle-info"></i> *@
+                    @* </a> *@
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn-option" role="button" data-bs-toggle="tooltip"
+                    data-bs-placement="bottom" title="Detele">
+                        <i class="fa-solid fa-trash"></i>
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div class="pagination-container custom-pagination">
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page }), new PagedListRenderOptions { DisplayLinkToFirstPage = PagedListDisplayMode.Never, DisplayLinkToLastPage = PagedListDisplayMode.Never })
+</div>
+
+<style>
+    .custom-pagination {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 20px;
+    }
+
+    .custom-pagination .pagination {
+        display: flex;
+        list-style: none;
+        padding: 0;
+    }
+
+    .custom-pagination .pagination li {
+        margin: 0 5px;
+    }
+
+    .custom-pagination .pagination li a,
+    .custom-pagination .pagination li span {
+        display: block;
+        width: 30px; /* Chiều rộng của ô vuông */
+        height: 30px; /* Chiều cao của ô vuông */
+        line-height: 30px; /* Căn giữa nội dung theo chiều dọc */
+        text-align: center; /* Căn giữa nội dung theo chiều ngang */
+        border: 1px solid #ddd; /* Đường viền ô vuông */
+        border-radius: 4px; /* Góc bo tròn, có thể bỏ nếu muốn góc vuông hoàn toàn */
+        background-color: #f8f9fa; /* Màu nền */
+        color: #333; /* Màu chữ */
+        text-decoration: none; /* Bỏ gạch chân */
+    }
+
+    .custom-pagination .pagination li a:hover,
+    .custom-pagination .pagination li span:hover {
+        background-color: #007bff; /* Màu nền khi hover */
+        color: white; /* Màu chữ khi hover */
+    }
+</style>

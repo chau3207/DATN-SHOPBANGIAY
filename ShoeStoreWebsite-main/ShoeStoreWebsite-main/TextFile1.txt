@@ -1,0 +1,41 @@
+﻿Unit of Work chỉ có 1 nhiệm vụ duy nhất, đảm bảo tất cả các repository 
+của bạn đều dùng chung một DbContext. Bằng cách này, khi thực hiện xong 
+tất cả các tác vụ thay đổi database, 
+bạn chỉ cần gọi DbContext.SaveChanges() 1 lần duy nhất,
+và các thay đổi đó sẽ được lưu lại
+trong database
+ViewBags:
+
+
+ViewBag.ParentId = new SelectList(await _unitOfWork.Categories.GetAllAsync()
+, "Id", "Name");
+Những đối tượng này được sử dụng để truyền dữ liệu từ controller đến view. 
+Trong trường hợp này, nó cung cấp một danh sách các danh mục để chọn khi 
+tạo hoặc sửa một danh mục.
+
+[Bind("Id,Name,DisplayName,Description,ParentId")]
+Thuộc tính này chỉ định các thuộc tính của mô hình Category có thể được liên kết
+trong quá trình liên kết mô hình. Điều này giúp ngăn chặn các cuộc tấn công 
+"over-posting".
+
+if (ModelState.IsValid)
+Đảm bảo rằng dữ liệu biểu mẫu được gửi là hợp lệ trước khi xử lý.
+
+UnitOfWork và Repository Pattern:
+Đoạn mã sử dụng một giao diện IUnitOfWork, chỉ ra việc sử dụng mô hình 
+Unit of Work. Mô hình này thường được sử dụng kết hợp với mô hình Repository 
+để trừu tượng hóa việc truy cập dữ liệu và đảm bảo hành vi giao dịch nhất quán.
+
+Phương thức sử dụng một vòng lặp để tạo ra một thẻ <a> (anchor) cho mỗi trang,
+thiết lập thuộc tính href với URL tương ứng. Nó cũng xử lý các lớp CSS dựa trên trang 
+hiện tại và việc tùy chỉnh kiểu dáng.
+
+Luồng xử lý trong MVC
+Luồng xử lý trong MVC rất đơn giản thôi, với web nó gồm các bước như sau:
+
+Đầu tiên là Request từ người dùng được gửi từ client đến server (Xem thêm nếu bạn chưa biết về Request)
+Sau đó Controller dựa vào yêu cầu của người dùng tiến hành giao tiếp với Model để lấy data từ database
+Cuối cùng Controller gửi dữ liệu vừa lấy được về View và hiển thị ra cho người dùng trên trình duyệt
+
+ViewModel là class định nghĩa cách dữ liệu tương tác với người dùng thông qua view. Nói cách khác ViewModel là model của View.
+Một lưu ý quan trọng đó là ViewModel không mô tả giao diện sẽ trông như thế nào. Nó chỉ mô tả cách mà view hoạt động và thông tin nào sẽ được cung cấp cho người dùng.

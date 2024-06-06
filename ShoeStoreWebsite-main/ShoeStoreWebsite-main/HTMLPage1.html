@@ -1,0 +1,57 @@
+﻿<div id="sidebar" class="collapse collapse-horizontal show">
+    <div id="sidebar-nav">
+        <div class="sidebar-header">
+            <a asp-controller="Admin" asp-action="Index">
+                <img src='@Url.Content("~/images/logo/logo.png")' class="admin-logo" alt=""
+                     asp-append-version="true">
+            </a>
+        </div>
+        <div class="sidebar-content mb-4">
+            <div class="sidebar-content-inner">
+                <h2 class="custom-header">Products</h2>
+                <div>
+                    <div class="accordion-body">
+                        <ul>
+                            <li>
+                                <a asp-controller="Order" asp-action="Index">Order</a>
+                            </li>
+                            <li>
+                                <a asp-controller="Brand" asp-action="Index">Brand</a>
+                            </li>
+                            <li>
+                                <a asp-controller="Shoe" asp-action="Index">Shoe</a>
+                            </li>
+                            <li>
+                                <a asp-controller="ShoeColors" asp-action="Index">Shoe Colors</a>
+                            </li>
+                            <li>
+                                <a asp-controller="Categories" asp-action="Index">Categories</a>
+                            </li>
+                            <li>
+                                <a asp-controller="Color" asp-action="Index">Color</a>
+                            </li>
+                            <li>
+                                <a asp-controller="Size" asp-action="Index">Size</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<style>
+    .custom-header {
+        background-color: #fa6257; /* Màu nền */
+        border: 1px solid #ccc; /* Viền */
+        padding: 10px; /* Khoảng cách bên trong */
+        border-radius: 5px; /* Bo góc (tùy chọn) */
+        text-align: center; /* Căn giữa chữ (tùy chọn) */
+        margin-bottom: 20px; /* Khoảng cách dưới (tùy chọn) */
+        color: white;
+    }
+</style>

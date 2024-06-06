@@ -1,0 +1,32 @@
+﻿.custom-table {
+    border-collapse: collapse;
+    width: 100%;
+    background-color: #ffffff; /* Màu nền cho bảng */
+}
+
+    .custom-table th, .custom-table td {
+        border: 1px solid #ddd;
+        padding: 8px;
+    }
+
+    .custom-table th {
+        padding-top: 12px;
+        padding-bottom: 12px;
+        text-align: left;
+        background-color: #f2f2f2; /* Màu nền cho tiêu đề bảng */
+        color: #333; /* Màu chữ cho tiêu đề bảng */
+    }
+
+    .custom-table tr:nth-child(even) {
+        background-color: #f9f9f9; /* Màu nền cho các hàng chẵn */
+    }
+
+    .custom-table tr:nth-child(odd) {
+        background-color: #ffffff; /* Màu nền cho các hàng lẻ */
+    }
+
+    .custom-table tr:hover {
+        background-color: #ddd; /* Màu nền khi hover vào hàng */
+    }
+
+    

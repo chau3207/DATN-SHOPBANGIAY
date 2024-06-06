@@ -1,0 +1,39 @@
+﻿Để thêm chức năng tìm kiếm dựa vào tên của sản phẩm, bạn cần thực hiện các bước sau:
+
+Trong Controller:
+Thêm một tham số searchString vào action Index():
+
+csharp
+Copier
+public async Task<IActionResult> Index(int? page, string searchString)
+{
+    int pageNumber = page ?? 1;
+    int pageSize = 10;
+    var shoes = await _unitOfWork.Shoes.GetAllAsync(include: e => e.Include(s => s.Brand)!);
+
+    if (!string.IsNullOrEmpty(searchString))
+    {
+        shoes = shoes.Where(s => s.Name.Contains(searchString));
+    }
+
+    var paginatedShoes = shoes.ToPagedList(pageNumber, pageSize);
+    return View(paginatedShoes);
+}
+Trong View:
+Thêm một <form> để người dùng có thể nhập từ khóa tìm kiếm:
+
+html
+Copier
+<form asp-action="Index" method="get" class="mb-4">
+    <div class="input-group">
+        <input name="searchString" type="text" class="form-control" placeholder="Search by name..." />
+        <button type="submit" class="btn btn-primary">
+            <i class="fa fa-search"></i>
+        </button>
+    </div>
+</form>
+Điều này sẽ thêm một ô input và một nút tìm kiếm vào trang. Khi người dùng nhập từ khóa và nhấn nút tìm kiếm, action Index() sẽ được gọi lại với tham số searchString được truyền vào.
+
+Trong action Index(), chúng ta sẽ kiểm tra nếu searchString không rỗng, thì sẽ áp dụng bộ lọc Where() để lấy ra danh sách các sản phẩm có tên chứa từ khóa tìm kiếm. Sau đó, chúng ta vẫn tiếp tục phân trang kết quả như trước.
+
+Với những thay đổi này, người dùng sẽ có thể tìm kiếm sản phẩm dựa trên tên của sản phẩm.
