@@ -36,10 +36,10 @@ else
                     <div class="row">
                         <div class="col-12 col-lg-6 pb-4">
                             <div class="row">
-                                <h3 class="title-option mb-4">Delivery Details</h3>
+                                <h3 class="title-option mb-4">Chi tiết giao hàng</h3>
                             </div>
                             <div class="row mb-3 d-flex align-items-center">
-                                <div class="col-3">Name</div>
+                                <div class="col-3">Tên</div>
                                 <div class="col-9">
                                     @if (isAdmin && Model.Order.OrderStatus != SD.StatusShipped &&
                                     Model.Order.OrderStatus != SD.StatusCancelled)
@@ -54,7 +54,7 @@ else
                                 </div>
                             </div>
                             <div class="row mb-3 d-flex align-items-center">
-                                <div class="col-3">Phone</div>
+                                <div class="col-3">Số điện thoại</div>
                                 <div class="col-9">
                                     @if (isAdmin && Model.Order.OrderStatus != SD.StatusShipped &&
                                     Model.Order.OrderStatus != SD.StatusCancelled)
@@ -69,7 +69,7 @@ else
                                 </div>
                             </div>
                             <div class="row mb-3 d-flex align-items-center">
-                                <div class="col-3">Address</div>
+                                <div class="col-3">Địa chỉ</div>
                                 <div class="col-9">
                                     @if (isAdmin && Model.Order.OrderStatus != SD.StatusShipped &&
                                     Model.Order.OrderStatus != SD.StatusCancelled)
@@ -84,7 +84,7 @@ else
                                 </div>
                             </div>
                             <div class="row mb-3 d-flex align-items-center">
-                                <div class="col-3">Address</div>
+                                <div class="col-3">Thành phố</div>
                                 <div class="col-9">
                                     @if (isAdmin && Model.Order.OrderStatus != SD.StatusShipped &&
                                     Model.Order.OrderStatus != SD.StatusCancelled)
@@ -118,7 +118,7 @@ else
                                 </div>
                             </div> *@
                             <div class="row mb-3 d-flex align-items-center">
-                                <div class="col-3">District</div>
+                                <div class="col-3">Quận</div>
                                 <div class="col-9">
                                     @if (isAdmin && Model.Order.OrderStatus != SD.StatusShipped &&
                                     Model.Order.OrderStatus != SD.StatusCancelled)
@@ -141,7 +141,7 @@ else
                                 </div>
                             </div>
                             <div class="row mb-3 d-flex align-items-center">
-                                <div class="col-3">Ward</div>
+                                <div class="col-3">Phường</div>
                                 <div class="col-9">
                                     @if (isAdmin && Model.Order.OrderStatus != SD.StatusShipped &&
                                     Model.Order.OrderStatus != SD.StatusCancelled)
@@ -160,7 +160,7 @@ else
                                 </div>
                             </div>
                             <div class="row mb-3 d-flex align-items-center">
-                                <div class="col-3">Postal Code</div>
+                                <div class="col-3">Mã bưu điện</div>
                                 <div class="col-9">
                                     @if (isAdmin && Model.Order.OrderStatus != SD.StatusShipped &&
                                     Model.Order.OrderStatus != SD.StatusCancelled)
@@ -182,14 +182,14 @@ else
                                 </div>
                             </div>
                             <div class="row mb-3 d-flex align-items-center">
-                                <div class="col-3">Order Date</div>
+                                <div class="col-3">Ngày đặt hàng</div>
                                 <div class="col-9">
                                     <input value="@Model.Order.OrderDate.ToShortDateString()" class="form-control"
                                         disabled="disabled" />
                                 </div>
                             </div>
                             <div class="row mb-3 d-flex align-items-center">
-                                <div class="col-3">Carrier</div>
+                                <div class="col-3">Người vân chuyển</div>
                                 <div class="col-9">
                                     @if (isAdmin && Model.Order.OrderStatus != SD.StatusShipped &&
                                     Model.Order.OrderStatus != SD.StatusCancelled)
@@ -204,7 +204,7 @@ else
                                 </div>
                             </div>
                             <div class="row mb-3 d-flex align-items-center">
-                                <div class="col-3">Tracking</div>
+                                <div class="col-3">Người giám sát</div>
                                 <div class="col-9">
                                     @if (isAdmin && Model.Order.OrderStatus != SD.StatusShipped &&
                                     Model.Order.OrderStatus != SD.StatusCancelled)
@@ -219,7 +219,7 @@ else
                                 </div>
                             </div>
                             <div class="row mb-3 d-flex align-items-center">
-                                <div class="col-3">Shipping Date</div>
+                                <div class="col-3">Ngày vận chuyển</div>
                                 <div class="col-9">
                                     <input value="@Model.Order.ShippingDate.ToShortDateString()" readonly
                                         class="form-control" />
@@ -234,7 +234,7 @@ else
                                     </div>
                                 </div>
                                 <div class="row mb-3 d-flex align-items-center">
-                                    <div class="col-3">Payment Intent Id</div>
+                                    <div class="col-3">Mục đích thanh toán</div>
                                     <div class="col-9">
                                         <input asp-for="Order.PaymentIntentId" readonly class="form-control" />
                                     </div>
@@ -243,7 +243,7 @@ else
                             <div class="row mb-3 d-flex align-items-center">
                                 @if (Model.Order.SessionId == null)
                                 {
-                                    <div class="col-3">Payment Due Date</div>
+                                    <div class="col-3">Hạn thanh toán</div>
                                     <div class="col-9">
                                         <input value="@Model.Order.PaymentDueDate.ToShortDateString()" readonly
                                         class="form-control" />
@@ -259,7 +259,7 @@ else
                                 }
                             </div>
                             <div class="row mb-3 d-flex align-items-center">
-                                <div class="col-3">Payment Status</div>
+                                <div class="col-3">Tình trạng thanh toán</div>
                                 <div class="col-9">
                                     <input asp-for="Order.PaymentStatus" readonly class="form-control" />
                                 </div>
@@ -275,9 +275,9 @@ else
                             </div>
                         </div>
                         <div class="col-12 col-lg-5 offset-lg-1">
-                            <h3 class="title-option mb-4">Order Summary</h3>
+                            <h3 class="title-option mb-4">Tóm tắt đơn hàng</h3>
                             <label class="btn-save w-100 d-flex justify-content-center mb-4">
-                                Order Status -
+                                Trạng thái đơn hàng -
                                 @Model.Order.OrderStatus
                             </label>
 
@@ -309,7 +309,7 @@ else
 
                                 <li class="list-group-item btn-save mt-4 py-3 px-4">
                                     <div class="d-flex justify-content-between align-items-center">
-                                        <h6 class="text-white mb-0 ">Total Due</h6>
+                                        <h6 class="text-white mb-0 ">Tổng tiền</h6>
                                         <h5 class="text-white mb-0 fw-bold">
                                             <em>@Model.Order.OrderTotal.ToString("C")</em>
                                         </h5>
@@ -319,7 +319,7 @@ else
                             <div class="cart-back mt-4">
                                 <a asp-action="Index" class="text-dark mb-4">
                                     <i class="fa-solid fa-left-long"></i>
-                                    <p class="text-dark">Back To Order Management</p>
+                                    <p class="text-dark">Quay lại trang quản lý đơn hàng</p>
                                 </a>
                             </div>
 

@@ -254,5 +254,77 @@ namespace ShoeStore.Controllers
             
             return RedirectToAction("Edit", "Shoe", new {id = shoeColor.ShoeId});
         }
+
+        public async Task<IActionResult> EditShoeSize(int id)
+        {
+            var shoeSize = await _unitOfWork.ShoeSizes.FirstOrDefaultAsync(e => e.Id == id);
+            if (shoeSize == null)
+            {
+                return NotFound();
+            }
+
+            ViewData["SizeId"] = new SelectList(await _unitOfWork.Sizes.GetAllAsync(), "Id", "Value", shoeSize.SizeId);
+            return View(shoeSize);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditShoeSize(int id, [Bind("Id,SizeId,Quantity,ShoeColorId")] ShoeSize shoeSize)
+        {
+            if (id != shoeSize.Id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                _unitOfWork.ShoeSizes.Update(shoeSize);
+                await _unitOfWork.SaveChangesAsync();
+                return RedirectToAction(nameof(Edit), new { id = shoeSize.ShoeColorId });
+            }
+
+            ViewData["SizeId"] = new SelectList(await _unitOfWork.Sizes.GetAllAsync(), "Id", "Value", shoeSize.SizeId);
+            return View(shoeSize);
+        }
+
+        public async Task<IActionResult> AddShoeSize(int shoeColorId)
+        {
+            ViewData["Sizes"] = new SelectList(await _unitOfWork.Sizes.GetAllAsync(), "Id", "Value");
+            var shoeSize = new ShoeSize
+            {
+                ShoeColorId = shoeColorId
+            };
+            return View(shoeSize);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddShoeSize([Bind("SizeId,Quantity,ShoeColorId")] ShoeSize shoeSize)
+        {
+            if (ModelState.IsValid)
+            {
+                await _unitOfWork.ShoeSizes.AddAsync(shoeSize);
+                await _unitOfWork.SaveChangesAsync();
+                return RedirectToAction("Edit", new { id = shoeSize.ShoeColorId });
+            }
+
+            ViewData["Sizes"] = new SelectList(await _unitOfWork.Sizes.GetAllAsync(), "Id", "Value", shoeSize.SizeId);
+            return View(shoeSize);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteShoeSize(int shoeSizeId, int shoeColorId)
+        {
+            var shoeSize = await _unitOfWork.ShoeSizes.FirstOrDefaultAsync(s => s.Id == shoeSizeId);
+            if (shoeSize == null)
+            {
+                return NotFound();
+            }
+
+            _unitOfWork.ShoeSizes.Remove(shoeSize);
+            await _unitOfWork.SaveChangesAsync();
+            return RedirectToAction("Edit", new { id = shoeColorId });
+        }
     }
 }

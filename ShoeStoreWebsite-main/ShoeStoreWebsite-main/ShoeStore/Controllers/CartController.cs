@@ -33,6 +33,12 @@ public class CartController : Controller
     //Nếu không, sử dụng đối tượng Cart trực tiếp.
     public async Task<IActionResult> Index(string? returnUrl)
     {
+        if (!User.Identity.IsAuthenticated)
+        {
+            // Nếu chưa đăng nhập, điều hướng họ đến trang đăng nhập
+            return Redirect("/Identity/Account/Login?returnUrl=" + returnUrl); // Thay "Login" và "Account" bằng đường dẫn đến trang đăng nhập của bạn
+        }
+
         CartViewModel cartViewModel = new CartViewModel()
         {
             ReturnUrl = returnUrl ?? "/",

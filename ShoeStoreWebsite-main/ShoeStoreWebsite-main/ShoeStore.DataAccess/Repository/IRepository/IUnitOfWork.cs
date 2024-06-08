@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore.Storage;
+using ShoeStore.Models;
 
 namespace ShoeStore.DataAccess.Repository.IRepository;
 
@@ -21,4 +22,5 @@ public interface IUnitOfWork
     
     public Task<IDbContextTransaction> BeginTransactionAsync();
     // public Task CommitTransactionAsync();
+    
 }

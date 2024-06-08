@@ -1,47 +1,98 @@
-﻿@* @model IEnumerable<ShoeStore.Models.ShoeSize> *@
-@* *@
-@* @{ *@
-@*     ViewData["Title"] = "Index"; *@
-@* } *@
-@* *@
-@* <h1>Index</h1> *@
-@* *@
-@* <p> *@
-@*     <a asp-action="Create" class="btn btn-outline-primary">Create New <i class="fa-solid fa-circle-plus"></i></a> *@
-@* </p> *@
-@* <table class="table"> *@
-@*     <thead> *@
-@*         <tr> *@
-@*             <th> *@
-@*                 @Html.DisplayUnitFor(model => model.Quantity) *@
-@*             </th> *@
-@*             <th> *@
-@*                 @Html.DisplayUnitFor(model => model.ShoeColor) *@
-@*             </th> *@
-@*             <th> *@
-@*                 @Html.DisplayUnitFor(model => model.Size) *@
-@*             </th> *@
-@*             <th></th> *@
-@*         </tr> *@
-@*     </thead> *@
-@*     <tbody> *@
-@* @foreach (var item in Model) { *@
-@*         <tr> *@
-@*             <td> *@
-@*                 @Html.DisplayFor(modelItem => item.Quantity) *@
-@*             </td> *@
-@*             <td> *@
-@*                 @Html.DisplayFor(modelItem => item.ShoeColor.Id) *@
-@*             </td> *@
-@*             <td> *@
-@*                 @Html.DisplayFor(modelItem => item.Size.Unit) *@
-@*             </td> *@
-@*             <td> *@
-@*                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> | *@
-@*                 <a asp-action="Details" asp-route-id="@item.Id">Details</a> | *@
-@*                 <a asp-action="Delete" asp-route-id="@item.Id">Delete</a> *@
-@*             </td> *@
-@*         </tr> *@
-@* } *@
-@*     </tbody> *@
-@* </table> *@
+﻿@* @model IEnumerable<ShoeStore.Models.ShoeSize>  *@
+@model X.PagedList.IPagedList<ShoeStore.Models.ShoeSize>
+@using X.PagedList.Mvc.Core
+
+@{ 
+    ViewData["Title"] = "Index"; 
+    Layout = "_AdminLayout";
+} 
+<link rel="stylesheet" href="~/css/custom.css" />
+<h1>Index</h1> 
+
+<p> 
+    <a asp-action="Create" class="btn btn-outline-primary">Create New <i class="fa-solid fa-circle-plus"></i></a> 
+</p> 
+<table id="table_id" class="custom-table"> 
+    <thead> 
+        <tr> 
+            <th>
+                Id
+            </th> 
+            <th> 
+                Số lượng
+            </th> 
+            <th> 
+                Mã màu sắc giày
+            </th>
+            <th>
+                Mã kích cỡ
+            </th>
+            <th></th> 
+        </tr> 
+    </thead> 
+     <tbody> 
+ @foreach (var item in Model) { 
+        <tr> 
+            <td> 
+                @Html.DisplayFor(modelItem => item.Id)
+            </td> 
+            <td> 
+                @Html.DisplayFor(modelItem => item.Quantity)
+            </td> 
+            <td> 
+                @Html.DisplayFor(modelItem => item.ShoeColorId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SizeId)
+            </td>
+            <td> 
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> 
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> 
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a> 
+            </td> 
+        </tr> 
+} 
+    </tbody> 
+</table> 
+
+<div class="pagination-container custom-pagination">
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page }), new PagedListRenderOptions { DisplayLinkToFirstPage = PagedListDisplayMode.Never, DisplayLinkToLastPage = PagedListDisplayMode.Never })
+</div>
+
+<style>
+    .custom-pagination {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 20px;
+    }
+
+        .custom-pagination .pagination {
+            display: flex;
+            list-style: none;
+            padding: 0;
+        }
+
+            .custom-pagination .pagination li {
+                margin: 0 5px;
+            }
+
+                .custom-pagination .pagination li a,
+                .custom-pagination .pagination li span {
+                    display: block;
+                    width: 30px; /* Chiều rộng của ô vuông */
+                    height: 30px; /* Chiều cao của ô vuông */
+                    line-height: 30px; /* Căn giữa nội dung theo chiều dọc */
+                    text-align: center; /* Căn giữa nội dung theo chiều ngang */
+                    border: 1px solid #ddd; /* Đường viền ô vuông */
+                    border-radius: 4px; /* Góc bo tròn, có thể bỏ nếu muốn góc vuông hoàn toàn */
+                    background-color: #f8f9fa; /* Màu nền */
+                    color: #333; /* Màu chữ */
+                    text-decoration: none; /* Bỏ gạch chân */
+                }
+
+                    .custom-pagination .pagination li a:hover,
+                    .custom-pagination .pagination li span:hover {
+                        background-color: #007bff; /* Màu nền khi hover */
+                        color: white; /* Màu chữ khi hover */
+                    }
+</style>

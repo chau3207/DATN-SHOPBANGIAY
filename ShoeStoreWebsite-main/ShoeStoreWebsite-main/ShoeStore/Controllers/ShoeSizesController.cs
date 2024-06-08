@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using ShoeStore.DataAccess.Repository.IRepository;
 using ShoeStore.Models;
 using ShoeStore.Ultitity;
+using X.PagedList;
 
 namespace ShoeStore.Controllers
 {
@@ -19,11 +20,14 @@ namespace ShoeStore.Controllers
         }
 
         // GET: ShoeSizes
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? page)
         {
-            var shoeSizes = _unitOfWork.ShoeSizes.GetAllAsync(include: e => e.Include(s => s.ShoeColor)
+            int pageNumber = page ?? 1;
+            int pageSize = 10;
+            var shoeSizes = await _unitOfWork.ShoeSizes.GetAllAsync(include: e => e.Include(s => s.ShoeColor)
                 .Include(s => s.Size)!);
-            return View(await shoeSizes);
+            var paginatedShoeSizes = shoeSizes.ToPagedList(pageNumber,pageSize);
+            return View(paginatedShoeSizes);
         }
 
         // GET: ShoeSizes/Details/5
@@ -124,6 +128,8 @@ namespace ShoeStore.Controllers
 
             return View(shoeSize);
         }
+
+        
 
         // POST: ShoeSizes/Delete/5
         [HttpPost, ActionName("Delete")]

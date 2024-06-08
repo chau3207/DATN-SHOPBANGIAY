@@ -42,22 +42,22 @@
                 <li><i class="fa-solid fa-star"></i></li>
                 <li><i class="fa-solid fa-star"></i></li>
                 <li><i class="fa-solid fa-star"></i></li>
-                <li><a href="#">Rating for product</a></li>
+                <li><a href="#">Đánh giá của sản phẩm</a></li>
             </ul>
             <div class="d-flex justify-content-between">
-                <p>Brand: <a class="link-dark text-decoration-none" asp-controller="Products" asp-action="Index"
+                <p>Nhãn hàng: <a class="link-dark text-decoration-none" asp-controller="Products" asp-action="Index"
                         asp-route-brand="@Model.Shoe.Brand.Name">
                         <strong>@Model.Shoe.Brand.Name</strong>
                     </a></p>
-                <p>Code: <strong>@Model.ShoeColor.ProductCode</strong></p>
+                <p>Mã sản phẩm: <strong>@Model.ShoeColor.ProductCode</strong></p>
             </div>
         </div>
         <div class="detail-info-price">
-            <h4>Price:</h4>
+            <h4>Giá tiền:</h4>
             <h2><strong>$@Model.ShoeColor.SalePrice</strong></h2>
         </div>
         <div class="detail-info-size mt-3">
-            <h4>Size:</h4>
+            <h4>Kích cỡ:</h4>
             <div asp-validation-summary="All"></div>
             <div class="d-flex align-items-baseline flex-wrap mt-3">
                 @foreach (var size in Model?.ShoeSizes ?? Enumerable.Empty<ShoeSize>())
@@ -72,7 +72,7 @@
             </div>
         </div>
         <div class="detail-info-color mt-4">
-            <h4>Color:</h4>
+            <h4>Màu sắc:</h4>
             <div class="d-flex justify-content-start align-items-center flex-wrap gap-3 mt-3">
 
                 @for (var i = 0; i < Model.RelatedShoeColors.Count; i++)
@@ -92,7 +92,7 @@
             </div>
         </div>
         <div class="detail-info-quantity mt-4">
-            <h4>Quantity:</h4>
+            <h4>Số lượng:</h4>
             <div class="box-quantity mt-3">
                 <button class="btn btn-quantity px-2"
                     onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
@@ -124,7 +124,7 @@
                 else
                 {
                     <button type="submit" class="btn-add" asp-action="AddToCartSession">
-                        Add to Cart
+                        Thêm vào giỏ hàng
                         <i class="fa-solid fa-bag-shopping"></i>
                     </button>
                 }
@@ -150,7 +150,7 @@
 <section class="related mt-lg-5 mt-3 mb-5">
     <div class="container">
         <h3 class="mb-4" data-aos="zoom-in-right">
-            <strong>Related Product</strong>
+            <strong>Một số sản phẩm liên quan</strong>
         </h3>
         <div class="product mt-4" data-aos="zoom-in">
 

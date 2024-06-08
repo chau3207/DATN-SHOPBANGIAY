@@ -1,4 +1,5 @@
-﻿@{
+﻿Index.cshtml
+@{
     ViewData["Title"] = "List Product Page";
 }
 
@@ -111,15 +112,7 @@
 
                 </div>
             </div>
-            @* pagi mt-5 *@
-            @* <div page-model="@Model?.PagingInfo" page-action="Index"
-                 page-classes-enabled="true" 
-                 page-class="pagi-item" 
-                 page-class-normal=""
-                 page-class-selected="is-active" 
-                 page-url-brand="@Model?.CurrentBrand"
-                 class="pagi mt-5">
-            </div> *@
+            
             
         </div>
     </section>
@@ -135,3 +128,15 @@
         
     </script>
 }
+
+------------------------------------------------------------
+ProductsController
+public async Task<IActionResult> Index(string? productName, int page = 1, string? brand = null, int? size = null,
+        decimal? minPrice = 0,
+        decimal? maxPrice = 999, string? sort = "latest")
+    {
+        ProductListViewModel productListViewModel = await _unitOfWork.ShoeColors.FilterProductAsync(PageSize,
+            productName, page, brand, size, minPrice, maxPrice,
+            sort);
+        return View(productListViewModel);
+    }
