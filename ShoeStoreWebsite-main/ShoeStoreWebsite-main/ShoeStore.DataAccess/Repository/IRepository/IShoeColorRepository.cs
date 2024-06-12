@@ -8,11 +8,16 @@ public interface IShoeColorRepository : IRepository<ShoeColor>
     void Update(ShoeColor obj);
 
     Task<ProductListViewModel> FilterProductAsync(
-        int pageSize,
+        //int pageSize,
         string? productName,
-        int page = 1,
+        //int page = 1,
         string? brand = null,
         int? size = null,
         decimal? minPrice = 0,
-        decimal? maxPrice = 999, string? sort = "latest");
+        decimal? maxPrice = 999, 
+        string? sort = "latest",
+        int page = 1, // Added
+        int pageSize = 10 // Added
+        );
+    
 }

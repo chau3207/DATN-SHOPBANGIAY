@@ -1,7 +1,7 @@
-﻿@{
+﻿@using X.PagedList.Mvc.Core
+@{
     ViewData["Title"] = "List Product Page";
 }
-
 @model ShoeStore.Models.ViewModels.ProductListViewModel
 
 <div class="container">
@@ -28,6 +28,16 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- Tìm kiếm theo tên -->
+                <div class="form-category mt-3">
+                    <h4 class="mb-3">Tìm kiếm theo tên</h4>
+                    <div class="form-group">
+                        <input type="text" name="productName" class="form-control" placeholder="Nhập tên sản phẩm" value="@(Model.ProductName ?? "")">
+                    </div>
+                </div>
+
+
                 <div class="form-category mt-3">
                     <h4 class="mb-3">Nhãn hàng</h4>
                     @for (var i = 0; i < Model.Brands.Count; i++)
@@ -40,7 +50,6 @@
                             </label>
                         </div>
                     }
-    
                 </div>
                 <div class="form-category mt-4">
                     <h4 class="mb-3">Kích cỡ</h4>
@@ -79,7 +88,7 @@
             <div class="list-product-container">
                 <div class="product mt-4" data-aos="zoom-in">
 
-                    @foreach (var product in Model.ProductCards)
+                    @foreach (var product in Model.PagedProducts)
                     {
                         <div class="product-card">
                             <a asp-controller="Products" asp-action="Detail" asp-route-url="@product.Url">
@@ -122,7 +131,24 @@
             </div> *@
             
         </div>
+        <div class="pagination-container mt-4 custom-pagination">
+            @Html.PagedListPager(Model.PagedProducts, page => Url.Action("Index", new { 
+                page, 
+                sort = Model.SelectListItems.FirstOrDefault(i => i.Selected)?.Value, 
+                productName = Model.ProductName, 
+                brand = Model.CurrentBrand, 
+                size = Model.SelectedSizeId, 
+                minPrice = Model.minPrice, 
+                maxPrice = Model.maxPrice }), 
+                new PagedListRenderOptions { 
+                    DisplayLinkToFirstPage = PagedListDisplayMode.Always, 
+                    DisplayLinkToLastPage = PagedListDisplayMode.Always, 
+                    DisplayLinkToPreviousPage = PagedListDisplayMode.Always, 
+                    DisplayLinkToNextPage = PagedListDisplayMode.Always, 
+                    MaximumPageNumbersToDisplay = 5 })
+        </div>
     </section>
+    
 </div>
 
 @section Scripts
@@ -135,3 +161,42 @@
         
     </script>
 }
+
+<style>
+    .custom-pagination {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+        margin-left: 20cm;
+    }
+
+    .custom-pagination .pagination {
+        display: flex;
+        list-style: none;
+        padding: 0;
+    }
+
+    .custom-pagination .pagination li {
+        margin: 0 5px;
+    }
+
+    .custom-pagination .pagination li a,
+    .custom-pagination .pagination li span {
+        display: block;
+        width: 30px; /* Chiều rộng của ô vuông */
+        height: 30px; /* Chiều cao của ô vuông */
+        line-height: 30px; /* Căn giữa nội dung theo chiều dọc */
+        text-align: center; /* Căn giữa nội dung theo chiều ngang */
+        border: 1px solid #ddd; /* Đường viền ô vuông */
+        border-radius: 4px; /* Góc bo tròn, có thể bỏ nếu muốn góc vuông hoàn toàn */
+        background-color: #f8f9fa; /* Màu nền */
+        color: #333; /* Màu chữ */
+        text-decoration: none; /* Bỏ gạch chân */
+    }
+
+    .custom-pagination .pagination li a:hover,
+    .custom-pagination .pagination li span:hover {
+        background-color: #007bff; /* Màu nền khi hover */
+        color: white; /* Màu chữ khi hover */
+    }
+</style>

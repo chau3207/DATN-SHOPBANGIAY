@@ -6,6 +6,7 @@ using ShoeStore.DataAccess.Data;
 using ShoeStore.DataAccess.Repository.IRepository;
 using ShoeStore.Models;
 using ShoeStore.Models.ViewModels;
+using X.PagedList;
 
 namespace ShoeStore.DataAccess.Repository;
 
@@ -20,10 +21,140 @@ public class ShoeColorRepository : Repository<ShoeColor>, IShoeColorRepository
         _dbSet.Update(obj);
     }
 
-    public async Task<ProductListViewModel> FilterProductAsync(int pageSize,
-        string? productName = null, int page = 1, string? brand = null,
+    //public async Task<ProductListViewModel> FilterProductAsync(int pageSize,
+    //    string? productName = null, int page = 1, string? brand = null,
+    //    int? size = null,
+    //    decimal? minPrice = null, decimal? maxPrice = null, string? sort = "latest")
+    //{
+    //    var shoeQuery = _context.Shoes
+    //        .Include(e => e.Brand)
+    //        .Select(e => new
+    //        {
+    //            ShoeId = e.Id,
+    //            Name = e.Name,
+    //            BrandName = e.Brand!.Name
+    //        });
+    //    if (brand != null)
+    //    {
+    //        shoeQuery = shoeQuery.Where(e => e.BrandName == brand);
+    //    }
+
+    //    if (productName != null)
+    //    {
+    //        shoeQuery = shoeQuery.Where(e => EF.Functions.Like(e.Name, $"%{productName.Trim()}%"));
+    //    }
+
+    //    var shoeColorsQuery = _context.ShoeColor
+    //        .Where(e => e.Active == true)
+    //        .Include(e => e.Images)
+    //        .Include(e => e.ShoeSizes)
+    //        .Select(e => new
+    //        {
+    //            ShoeId = e.ShoeId,
+    //            ShoeSizes = e.ShoeSizes,
+    //            Price = e.SalePrice,
+    //            ImagePath = e.Images.First().Path,
+    //            Url = e.Url,
+    //            Created = e.Created
+    //        });
+
+    //    if (size != null)
+    //    {
+    //        shoeColorsQuery = shoeColorsQuery.Where(e => e.ShoeSizes.Any(e => e.Size.Value == size));
+    //    }
+
+    //    ;
+    //    if (maxPrice != null)
+    //    {
+    //        shoeColorsQuery = shoeColorsQuery.Where(e => e.Price <= maxPrice);
+    //    }
+
+    //    IQueryable<ProductCardViewModel> productCardViewModels = from shoeColor in shoeColorsQuery
+    //                                                             join shoe in shoeQuery
+    //                                                                 on shoeColor.ShoeId equals shoe.ShoeId
+    //                                                             select new ProductCardViewModel()
+    //                                                             {
+    //                                                                 Name = shoe.Name,
+    //                                                                 Price = shoeColor.Price,
+    //                                                                 Url = shoeColor.Url,
+    //                                                                 BrandName = shoe.BrandName,
+    //                                                                 ImagePath = shoeColor.ImagePath,
+    //                                                                 Created = shoeColor.Created
+    //                                                             };
+
+    //    switch (sort)
+    //    {
+    //        case "lowest":
+    //            productCardViewModels = productCardViewModels.OrderBy(e => e.Price);
+    //            break;
+    //        case "highest":
+    //            productCardViewModels = productCardViewModels.OrderBy(e => e.Price).Reverse();
+    //            break;
+    //        default:
+    //            sort = "latest";
+    //            productCardViewModels = productCardViewModels.OrderBy(e => e.Created);
+    //            break;
+    //    }
+
+    //    List<ProductCardViewModel> productCards = await productCardViewModels.ToListAsync();
+
+    //    var brands = await _context.Brands.AsNoTracking().OrderBy(e => e.Name).ToListAsync();
+    //    var sizes = await _context.Sizes.AsNoTracking().OrderBy(e => e.Value).ToListAsync();
+
+    //    ProductListViewModel productListViewModel = new ProductListViewModel()
+    //    {
+    //        Brands = brands,
+    //        Sizes = sizes,
+    //        // ShoeColors = shoeColors,
+    //        ProductCards = productCards
+    //            .Skip(pageSize * (page - 1))
+    //            .Take(pageSize)
+    //            .ToList(),
+    //        SelectedBrandId = (brands.FirstOrDefault(e => e.Name == brand))?.Id,
+    //        SelectedSizeId = (sizes.FirstOrDefault(e => e.Value.ToString() == size.ToString()))?.Id,
+    //        PagingInfo = new PagingInfo()
+    //        {
+    //            CurrentPage = page,
+    //            ItemsPerPage = pageSize,
+    //            TotalItems = productCards.Count
+    //        },
+    //        CurrentBrand = brand
+    //    };
+
+    //    if (maxPrice != null)
+    //    {
+    //        productListViewModel.maxPrice = maxPrice;
+    //    }
+
+    //    productListViewModel.SearchedBrand = brand;
+
+    //    List<SelectListItem> selectListItems = new List<SelectListItem>()
+    //    {
+    //        new SelectListItem("Mới nhất", "latest"),
+    //        new SelectListItem("Giá: Từ thấp đến cao", "lowest"),
+    //        new SelectListItem("Giá: Từ cao đến thấp", "highest"),
+    //    };
+    //    for (int i = 0; i < selectListItems.Count; i++)
+    //    {
+    //        SelectListItem opt = selectListItems[i];
+    //        if (opt.Value == sort)
+    //        {
+    //            opt.Selected = true;
+    //            break;
+    //        }
+    //    }
+
+    //    productListViewModel.SelectListItems = selectListItems;
+
+
+    //    return productListViewModel;
+    //}
+
+    public async Task<ProductListViewModel> FilterProductAsync(
+        string? productName = null, string? brand = null,
         int? size = null,
-        decimal? minPrice = null, decimal? maxPrice = null, string? sort = "latest")
+        decimal? minPrice = null, decimal? maxPrice = null, string? sort = "latest",
+        int page = 1, int pageSize = 12)
     {
         var shoeQuery = _context.Shoes
             .Include(e => e.Brand)
@@ -95,7 +226,8 @@ public class ShoeColorRepository : Repository<ShoeColor>, IShoeColorRepository
                 break;
         }
 
-        List<ProductCardViewModel> productCards = await productCardViewModels.ToListAsync();
+        // Updated to use ToPagedListAsync for pagination
+        var pagedProductCards = await productCardViewModels.ToPagedListAsync(page, pageSize);
 
         var brands = await _context.Brands.AsNoTracking().OrderBy(e => e.Name).ToListAsync();
         var sizes = await _context.Sizes.AsNoTracking().OrderBy(e => e.Value).ToListAsync();
@@ -105,19 +237,16 @@ public class ShoeColorRepository : Repository<ShoeColor>, IShoeColorRepository
             Brands = brands,
             Sizes = sizes,
             // ShoeColors = shoeColors,
-            ProductCards = productCards
-                .Skip(pageSize * (page - 1))
-                .Take(pageSize)
-                .ToList(),
+            PagedProducts = pagedProductCards, // Assign the paged list
             SelectedBrandId = (brands.FirstOrDefault(e => e.Name == brand))?.Id,
             SelectedSizeId = (sizes.FirstOrDefault(e => e.Value.ToString() == size.ToString()))?.Id,
-            PagingInfo = new PagingInfo()
-            {
-                CurrentPage = page,
-                ItemsPerPage = pageSize,
-                TotalItems = productCards.Count
-            },
-            CurrentBrand = brand
+            CurrentBrand = brand,
+            CurrentPage = page, // Set current page
+            TotalPages = pagedProductCards.PageCount, // Set total pages
+            PageSize = pageSize,// Set page size
+            ProductName = productName,
+            minPrice = minPrice, // Assign the minPrice
+            maxPrice = maxPrice // Ensure maxPrice is assigned
         };
 
         if (maxPrice != null)

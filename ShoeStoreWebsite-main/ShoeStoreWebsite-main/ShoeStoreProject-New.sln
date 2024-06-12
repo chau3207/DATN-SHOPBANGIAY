@@ -20,6 +20,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		TextFile4.txt = TextFile4.txt
 		TextFile6.txt = TextFile6.txt
 		TextFile7.txt = TextFile7.txt
+		TextFile8.txt = TextFile8.txt
 	EndProjectSection
 EndProject
 Global

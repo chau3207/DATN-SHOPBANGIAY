@@ -1,4 +1,5 @@
-﻿Index.cshtml
+﻿------------------------------------------------------------------------
+Index.cshtml
 @{
     ViewData["Title"] = "List Product Page";
 }
@@ -112,7 +113,7 @@
 
                 </div>
             </div>
-            
+           
             
         </div>
     </section>
@@ -131,12 +132,173 @@
 
 ------------------------------------------------------------
 ProductsController
-public async Task<IActionResult> Index(string? productName, int page = 1, string? brand = null, int? size = null,
+public async Task<IActionResult> Index(string? productName, string? brand = null, int? size = null,
         decimal? minPrice = 0,
         decimal? maxPrice = 999, string? sort = "latest")
     {
-        ProductListViewModel productListViewModel = await _unitOfWork.ShoeColors.FilterProductAsync(PageSize,
-            productName, page, brand, size, minPrice, maxPrice,
-            sort);
+        ProductListViewModel productListViewModel = await _unitOfWork.ShoeColors.FilterProductAsync(productName, brand, size, minPrice, maxPrice, sort);
         return View(productListViewModel);
+    }
+------------------------------------------------------
+IShoeColorRepository.cs
+using ShoeStore.Models;
+using ShoeStore.Models.ViewModels;
+
+namespace ShoeStore.DataAccess.Repository.IRepository;
+
+public interface IShoeColorRepository : IRepository<ShoeColor>
+{
+    void Update(ShoeColor obj);
+
+    Task<ProductListViewModel> FilterProductAsync(
+        //int pageSize,
+        string? productName,
+        //int page = 1,
+        string? brand = null,
+        int? size = null,
+        decimal? minPrice = 0,
+        decimal? maxPrice = 999, string? sort = "latest");
+}
+---------------------------------------------------------------
+ProductListViewModel.cs
+using Microsoft.AspNetCore.Mvc.Rendering;
+
+namespace ShoeStore.Models.ViewModels;
+
+public class ProductListViewModel
+{
+    public List<ShoeColor>? ShoeColors { get; set; }
+    public IEnumerable<ProductCardViewModel>? ProductCards { get; set; }
+    public List<Brand>? Brands { get; set; }
+    public List<Size>? Sizes { get; set; }
+    public int? SelectedBrandId { get; set; }
+    public int? SelectedSizeId { get; set; }
+    public decimal? maxPrice { get; set; } = 900;
+    public string? SearchedBrand { get; set; }
+    public List<SelectListItem>? SelectListItems { get; set; }
+    //public PagingInfo PagingInfo { get; set; } = new();
+    
+
+    public string CurrentBrand { get; set; }
+}
+---------------------------------------------------------------------------
+ShoeColorRepository.cs
+public async Task<ProductListViewModel> FilterProductAsync(
+        string? productName = null, string? brand = null,
+        int? size = null,
+        decimal? minPrice = null, decimal? maxPrice = null, string? sort = "latest")
+    {
+        var shoeQuery = _context.Shoes
+            .Include(e => e.Brand)
+            .Select(e => new
+            {
+                ShoeId = e.Id,
+                Name = e.Name,
+                BrandName = e.Brand!.Name
+            });
+        if (brand != null)
+        {
+            shoeQuery = shoeQuery.Where(e => e.BrandName == brand);
+        }
+
+        if (productName != null)
+        {
+            shoeQuery = shoeQuery.Where(e => EF.Functions.Like(e.Name, $"%{productName.Trim()}%"));
+        }
+
+        var shoeColorsQuery = _context.ShoeColor
+            .Where(e => e.Active == true)
+            .Include(e => e.Images)
+            .Include(e => e.ShoeSizes)
+            .Select(e => new
+            {
+                ShoeId = e.ShoeId,
+                ShoeSizes = e.ShoeSizes,
+                Price = e.SalePrice,
+                ImagePath = e.Images.First().Path,
+                Url = e.Url,
+                Created = e.Created
+            });
+
+        if (size != null)
+        {
+            shoeColorsQuery = shoeColorsQuery.Where(e => e.ShoeSizes.Any(e => e.Size.Value == size));
+        }
+
+        ;
+        if (maxPrice != null)
+        {
+            shoeColorsQuery = shoeColorsQuery.Where(e => e.Price <= maxPrice);
+        }
+
+        IQueryable<ProductCardViewModel> productCardViewModels = from shoeColor in shoeColorsQuery
+                                                                 join shoe in shoeQuery
+                                                                     on shoeColor.ShoeId equals shoe.ShoeId
+                                                                 select new ProductCardViewModel()
+                                                                 {
+                                                                     Name = shoe.Name,
+                                                                     Price = shoeColor.Price,
+                                                                     Url = shoeColor.Url,
+                                                                     BrandName = shoe.BrandName,
+                                                                     ImagePath = shoeColor.ImagePath,
+                                                                     Created = shoeColor.Created
+                                                                 };
+
+        switch (sort)
+        {
+            case "lowest":
+                productCardViewModels = productCardViewModels.OrderBy(e => e.Price);
+                break;
+            case "highest":
+                productCardViewModels = productCardViewModels.OrderBy(e => e.Price).Reverse();
+                break;
+            default:
+                sort = "latest";
+                productCardViewModels = productCardViewModels.OrderBy(e => e.Created);
+                break;
+        }
+
+        List<ProductCardViewModel> productCards = await productCardViewModels.ToListAsync();
+
+        var brands = await _context.Brands.AsNoTracking().OrderBy(e => e.Name).ToListAsync();
+        var sizes = await _context.Sizes.AsNoTracking().OrderBy(e => e.Value).ToListAsync();
+
+        ProductListViewModel productListViewModel = new ProductListViewModel()
+        {
+            Brands = brands,
+            Sizes = sizes,
+            // ShoeColors = shoeColors,
+            ProductCards = productCards.ToList(),
+            SelectedBrandId = (brands.FirstOrDefault(e => e.Name == brand))?.Id,
+            SelectedSizeId = (sizes.FirstOrDefault(e => e.Value.ToString() == size.ToString()))?.Id,
+            CurrentBrand = brand
+        };
+
+        if (maxPrice != null)
+        {
+            productListViewModel.maxPrice = maxPrice;
+        }
+
+        productListViewModel.SearchedBrand = brand;
+
+        List<SelectListItem> selectListItems = new List<SelectListItem>()
+        {
+            new SelectListItem("Mới nhất", "latest"),
+            new SelectListItem("Giá: Từ thấp đến cao", "lowest"),
+            new SelectListItem("Giá: Từ cao đến thấp", "highest"),
+        };
+        for (int i = 0; i < selectListItems.Count; i++)
+        {
+            SelectListItem opt = selectListItems[i];
+            if (opt.Value == sort)
+            {
+                opt.Selected = true;
+                break;
+            }
+        }
+
+        productListViewModel.SelectListItems = selectListItems;
+
+
+        return productListViewModel;
     }

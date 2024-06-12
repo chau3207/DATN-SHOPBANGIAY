@@ -6,6 +6,7 @@ using ShoeStore.DataAccess.Repository.IRepository;
 using ShoeStore.Models;
 using ShoeStore.Models.ViewModels;
 using ShoeStore.Ultitity;
+using X.PagedList;
 
 namespace ShoeStore.Controllers;
 
@@ -13,7 +14,7 @@ public class ProductsController : Controller
 {
     private readonly IUnitOfWork _unitOfWork;
 
-    public int PageSize = 9;
+    public int PageSize = 12;
     public Cart Cart { get; set; }
 
     // GET
@@ -23,17 +24,26 @@ public class ProductsController : Controller
         Cart = cart;
     }
 
-    public async Task<IActionResult> Index(string? productName, int page = 1, string? brand = null, int? size = null,
-        decimal? minPrice = 0,
-        decimal? maxPrice = 999, string? sort = "latest")
+    //public async Task<IActionResult> Index(string? productName, int page , string? brand = null, int? size = null,
+    //    decimal? minPrice = 0,
+    //    decimal? maxPrice = 999, string? sort = "latest")
+    //{
+    //    //ProductListViewModel productListViewModel = await _unitOfWork.ShoeColors.FilterProductAsync(PageSize,
+    //    //    productName, page, brand, size, minPrice, maxPrice,
+    //    //    sort);
+    //    ProductListViewModel productListViewModel = await _unitOfWork.ShoeColors.FilterProductAsync(
+    //       productName, brand, size, minPrice, maxPrice,
+    //       sort);
+    //    return View(productListViewModel);
+    //}
+
+    public async Task<IActionResult> Index(string? productName, string? brand = null, int? size = null,
+    decimal? minPrice = 0, decimal? maxPrice = 999, string? sort = "latest",
+    int page = 1, int pageSize = 12) // Added pagination parameters
     {
-        ProductListViewModel productListViewModel = await _unitOfWork.ShoeColors.FilterProductAsync(PageSize,
-            productName, page, brand, size, minPrice, maxPrice,
-            sort);
+        ProductListViewModel productListViewModel = await _unitOfWork.ShoeColors.FilterProductAsync(productName, brand, size, minPrice, maxPrice, sort, page, pageSize); // Passed pagination parameters
         return View(productListViewModel);
     }
-
-
 
     [HttpGet]
     public async Task<IActionResult> Detail(string url)

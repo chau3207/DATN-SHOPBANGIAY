@@ -1,4 +1,32 @@
-﻿@model ShoeStore.Models.Shoe
+﻿public async Task<IActionResult> Create()
+        {
+            ViewBag.BrandId = new SelectList(await _unitOfWork.Brands.GetAllAsync(), "Id", "Name");
+            ViewBag.CategoryId = new SelectList(await _unitOfWork.Categories.GetAllAsync(), "Id", "Name");
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(
+            [Bind("Id,Name,ProductCode,Priority,Active,Features,Description,Note,BrandId,CategoryId")]
+            Shoe shoe)
+        {
+            if (ModelState.IsValid)
+            {
+                shoe.Created = DateTime.Now;
+                shoe.Edited = DateTime.Now;
+                await _unitOfWork.Shoes.AddAsync(shoe);
+                await _unitOfWork.SaveChangesAsync();
+                return RedirectToAction(nameof(Edit), new { id = shoe.Id });
+            }
+
+            // ViewData["BrandId"] = new SelectList(await _unitOfWork.Brands.GetAllAsync(), "Id", "Unit", shoe.BrandId);
+            // return View(shoe);
+            return await Create();
+        }
+
+
+@model ShoeStore.Models.Shoe
 
 @{
     ViewData["Title"] = "Shoe Create" + " ";
@@ -15,11 +43,11 @@
 
 <hr />
 
-<div class="container p-0"> 
-    <div class="card">
-        <div class="card-body">
+<div class="container p-0">
+    <h3 class="title-option mb-4">Thêm sản phẩm</h3>
+    <div class="card"
+        <div class="card-body"
     <form asp-action="Create">
-        <h3 class="title-option mb-4">Thêm sản phẩm</h3>
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="row">
             <div class="col-md-12 mb-3">
@@ -76,5 +104,29 @@
     </form>
     </div>
     </div>
-</div> 
+</div>
 
+using System.ComponentModel;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System.ComponentModel.DataAnnotations;
+
+namespace ShoeStore.Models;
+
+public class Shoe
+{
+    public int Id { get; set; }
+    [Required] public string Name { get; set; }
+    public int Priority { get; set; }
+    public bool Active { get; set; }
+    public string? Description { get; set; }
+    public string? Features { get; set; }
+    public string? Note { get; set; }
+    public DateTime Created { get; set; }
+    public DateTime Edited { get; set; }
+    [DisplayName("Brand")] public int? BrandId { get; set; }
+    [ValidateNever] public Brand? Brand { get; set; }
+    public int? CategoryId { get; set; }
+    [ValidateNever] public Category? Category { get; set; }
+
+    [ValidateNever] public ICollection<ShoeColor>? ShoeColors { get; set; }
+}
