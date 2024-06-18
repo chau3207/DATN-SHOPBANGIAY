@@ -180,8 +180,9 @@ namespace ShoeStore.Controllers
                 shoeColor.Edited = DateTime.Now;
                 _unitOfWork.ShoeColors.Update(shoeColor);
                 await _unitOfWork.SaveChangesAsync();
-
-                return RedirectToAction(nameof(Edit));
+                TempData["SuccessMessage"] = "Thông tin màu sắc giày được chỉnh sửa thành công";
+                //return RedirectToAction(nameof(Edit));
+                return RedirectToAction(nameof(Index));
             }
 
             ViewData["ColorId"] =
@@ -246,6 +247,7 @@ namespace ShoeStore.Controllers
 
                 _unitOfWork.ShoeColors.Remove(shoeColor);
                 await _unitOfWork.SaveChangesAsync();
+                TempData["SuccessMessage"] = "Thông tin màu sắc giày được xóa thành công";
             }
             else
             {

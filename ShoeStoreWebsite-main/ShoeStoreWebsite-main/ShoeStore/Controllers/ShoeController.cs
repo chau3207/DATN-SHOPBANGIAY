@@ -73,6 +73,7 @@ namespace ShoeStore.Controllers
                 shoe.Edited = DateTime.Now;
                 await _unitOfWork.Shoes.AddAsync(shoe);
                 await _unitOfWork.SaveChangesAsync();
+                TempData["SuccessMessage"] = "Giày được thêm thành công";
                 return RedirectToAction(nameof(Edit), new { id = shoe.Id });
             }
 
@@ -119,6 +120,7 @@ namespace ShoeStore.Controllers
                 shoe.Edited = DateTime.Now;
                 _unitOfWork.Shoes.Update(shoe);
                 await _unitOfWork.SaveChangesAsync();
+                TempData["SuccessMessage"] = "Giày được sửa thành công";
                 return RedirectToAction(nameof(Index));
             }
 
@@ -158,6 +160,7 @@ namespace ShoeStore.Controllers
             {
                 _unitOfWork.Shoes.Remove(shoe);
                 await _unitOfWork.SaveChangesAsync();
+                TempData["SuccessMessage"] = "Giày được xóa thành công";
             }
             else
             {

@@ -33,16 +33,16 @@ public class ShopOrder
     [Required] public string Name { get; set; }
     [Required] [Phone] public string PhoneNumber { get; set; }
 
-    [Required(ErrorMessage = "Please enter the your address")]
+    [Required(ErrorMessage = "Vui lòng nhập địa chỉ của bạn")]
     public string Address { get; set; }
 
-    [Required(ErrorMessage = "Please enter a city name")]
+    [Required(ErrorMessage = "Vui lòng nhập tên thành phố của bạn")]
     public string City { get; set; }
 
-    [Required(ErrorMessage = "Please enter a district name")]
+    [Required(ErrorMessage = "Vui lòng nhập tên huyện")]
     public string District { get; set; }
 
-    [Required(ErrorMessage = "Please enter a ward name")]
+    [Required(ErrorMessage = "Vui lòng nhập tên phường")]
     public string Ward { get; set; }
 
     public string? PostalCode { get; set; }

@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ShoeStore.DataAccess.Repository.IRepository;
 using ShoeStore.Models;
@@ -47,6 +47,7 @@ namespace ShoeStore.Controllers
                 {
                     await _unitOfWork.Sizes.AddAsync(size);
                     await _unitOfWork.SaveChangesAsync();
+                    TempData["SuccessMessage"] = "Kích thước được thêm mới thành công";
                     return RedirectToAction(nameof(Index));
                 }
             }
@@ -79,7 +80,7 @@ namespace ShoeStore.Controllers
             {
                 _unitOfWork.Sizes.Update(size);
                 await _unitOfWork.SaveChangesAsync();
-
+                TempData["SuccessMessage"] = "Kích thước được sửa thành công";
                 return RedirectToAction(nameof(Index));
             }
 
@@ -112,6 +113,7 @@ namespace ShoeStore.Controllers
             {
                 _unitOfWork.Sizes.Remove(size);
                 await _unitOfWork.SaveChangesAsync();
+                TempData["SuccessMessage"] = "Kích thước được xóa thành công";
             }
             else
             {

@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ShoeStore.DataAccess.Repository.IRepository;
 using ShoeStore.Models;
@@ -52,11 +52,13 @@ namespace ShoeStore.Controllers
                 if (_unitOfWork.Colors.Any(e => e.Name == color.Name))
                 {
                     ModelState.AddModelError("name", "This color has already existed!");
+                    TempData[SD.Error] = "This color already existed!";
                     return await Create();
                 }
                 
                 await _unitOfWork.Colors.AddAsync(color);
                 await _unitOfWork.SaveChangesAsync();
+                TempData["SuccessMessage"] = "Màu sắc mới được thêm thành công";
                 return RedirectToAction(nameof(Index));
             }
 
@@ -90,7 +92,7 @@ namespace ShoeStore.Controllers
 
             _unitOfWork.Colors.Update(color);
             await _unitOfWork.SaveChangesAsync();
-
+            TempData["SuccessMessage"] = "Màu sắc được sửa thành công";
             return RedirectToAction(nameof(Index));
         }
 
@@ -120,6 +122,7 @@ namespace ShoeStore.Controllers
             {
                 _unitOfWork.Colors.Remove(color);
                 await _unitOfWork.SaveChangesAsync();
+                TempData["SuccessMessage"] = "Màu sắc được xóa thành công";
             }
             else
             {

@@ -1,4 +1,4 @@
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System.ComponentModel.DataAnnotations;
 
@@ -7,7 +7,8 @@ namespace ShoeStore.Models;
 public class Shoe
 {
     public int Id { get; set; }
-    [Required] public string Name { get; set; }
+    [Required(ErrorMessage = "Yêu cầu nhập Tên giày")] 
+    public string Name { get; set; }
     public int Priority { get; set; }
     public bool Active { get; set; }
     public string? Description { get; set; }

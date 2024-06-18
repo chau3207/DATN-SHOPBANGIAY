@@ -73,6 +73,7 @@ namespace ShoeStore.Controllers
                 brand.Edited = DateTime.Now;
                 await _unitOfWork.Brands.AddAsync(brand);
                 await _unitOfWork.SaveChangesAsync();
+                TempData["SuccessMessage"] = "Thương hiệu đã được thêm thành công!";
                 return RedirectToAction(nameof(Index));
             }
             return View(brand);
@@ -108,7 +109,7 @@ namespace ShoeStore.Controllers
                 brand.Edited = DateTime.Now;
                 _unitOfWork.Brands.Update(brand);
                 await _unitOfWork.SaveChangesAsync();
-
+                TempData["SuccessMessage"] = "Thông tin đã được sửa thành công";
                 return RedirectToAction("Index");
             }
 
@@ -145,10 +146,12 @@ namespace ShoeStore.Controllers
             {
                 _unitOfWork.Brands.Remove(brand);
                 await _unitOfWork.SaveChangesAsync();
+                TempData["SuccessMessage"] = "Thông tin đã được xóa thành công";
             }
             else
             {
                 TempData[SD.Error] = "Some shoe models is belong to this Brand. Can not delete it!";
+                
             }
 
             return RedirectToAction(nameof(Index));

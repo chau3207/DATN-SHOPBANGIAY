@@ -7,6 +7,16 @@
     Layout = "_AdminLayout";
 }
 
+@{
+    if(TempData["SuccessMessage"] != null)
+    {
+        <div id="success-alert" class="alert alert-success">
+            @TempData["SuccessMessage"] 
+        </div>
+    }
+}
+<script src="~/js/Success.js"></script>
+
 <link rel="stylesheet" href="~/css/custom.css" />
 
 <div class="d-flex justify-content-between align-items-center mt-4 mb-4">

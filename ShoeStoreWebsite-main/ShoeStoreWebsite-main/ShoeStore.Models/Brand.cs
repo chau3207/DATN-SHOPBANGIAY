@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System.ComponentModel.DataAnnotations;
 
 namespace ShoeStore.Models;
@@ -6,7 +6,8 @@ namespace ShoeStore.Models;
 public class Brand
 {
     public int Id { get; set; }
-    [Required] public string Name { get; set; }
+    [Required(ErrorMessage = "Yêu cầu nhập Tên nhãn hàng")] 
+    public string Name { get; set; }
 
     public int Priority { get; set; }
 

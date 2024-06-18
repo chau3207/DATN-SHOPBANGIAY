@@ -1,9 +1,21 @@
-﻿@model ShoeStore.Models.Color
+﻿@using ShoeStore.Ultitity
+@model ShoeStore.Models.Color
 
 @{
     ViewData["Title"] = "Color Create" + " ";
     Layout = "_AdminLayout";
 }
+
+@{
+    if (TempData[SD.Error] != null)
+    {
+        <div id="error-alert" class="alert alert-danger">
+            @TempData[SD.Error]
+        </div>
+    }
+}
+
+<script src="~/js/Error.js"></script>
 
 <div class="admin-title mt-4 mb-4">
     <ion-icon name="settings-outline"></ion-icon>

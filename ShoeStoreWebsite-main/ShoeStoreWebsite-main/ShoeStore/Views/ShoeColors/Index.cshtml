@@ -6,6 +6,19 @@
     ViewData["Title"] = "Shoe Color" + " ";
     Layout = "_AdminLayout";
 }
+
+@{
+    if(TempData["SuccessMessage"] != null)
+    {
+        <div id="success-alert" class="alert alert-success">
+            @TempData["SuccessMessage"]
+        </div>
+    }
+
+}
+
+<script src="~/js/Success.js"></script>
+
 <link rel="stylesheet" href="~/css/custom.css" />
 
 <form asp-action="Index" method="get" class="mb-4">
@@ -25,9 +38,9 @@
     </div>
 </div>
 
-<p class="text-center">
-    @* <a asp-action="Create" class="btn btn-outline-primary">Create New <i class="fa-solid fa-circle-plus"></i></a> *@
-</p>
+@* <p class="text-center">
+    <a asp-action="Create" class="btn btn-outline-primary">Create New <i class="fa-solid fa-circle-plus"></i></a>
+</p> *@
 <table id="table_id" class="custom-table">
     <thead>
     <tr>

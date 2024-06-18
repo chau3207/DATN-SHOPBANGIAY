@@ -7,6 +7,18 @@
     ViewData["Title"] = "Shoe Management";
     Layout = "_AdminLayout";
 }
+
+@{
+    if(TempData["SuccessMessage"] != null)
+    {
+        <div id="success-alert" class="alert alert-success">
+            @TempData["SuccessMessage"]
+        </div>
+    }
+}
+
+<script src="~/js/Success.js"></script>
+
 <link rel="stylesheet" href="~/css/custom.css" />
 
 <form asp-action="Index" method="get" class="mb-4">

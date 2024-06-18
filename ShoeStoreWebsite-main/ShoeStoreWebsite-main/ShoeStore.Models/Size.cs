@@ -7,7 +7,7 @@ namespace ShoeStore.Models;
 public class Size
 {
     public int Id { get; set; }
-    [Required] public string Unit { get; set; }
+    [Required(ErrorMessage ="Yêu cầu nhập tên đơn vị")] public string Unit { get; set; }
 
     public double Value { get; set; }
 

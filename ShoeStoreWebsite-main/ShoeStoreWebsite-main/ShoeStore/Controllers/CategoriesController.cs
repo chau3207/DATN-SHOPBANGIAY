@@ -67,6 +67,7 @@ namespace ShoeStore.Controllers
             {
                 await _unitOfWork.Categories.AddAsync(category);
                 await _unitOfWork.SaveChangesAsync();
+                TempData["SuccessMessage"] = "Thông tin danh mục được thêm thành công";
                 return RedirectToAction(nameof(Index));
             }
 
@@ -114,7 +115,7 @@ namespace ShoeStore.Controllers
 
             _unitOfWork.Categories.Update(category);
             await _unitOfWork.SaveChangesAsync();
-
+            TempData["SuccessMessage"] = "Danh mục được sửa thành công";
             return RedirectToAction(nameof(Index));
         }
         //Các hành động này xử lý việc xóa một danh mục.Hành động 
@@ -146,6 +147,7 @@ namespace ShoeStore.Controllers
             {
                 _unitOfWork.Categories.Remove(category);
                 await _unitOfWork.SaveChangesAsync();
+                TempData["SuccessMessage"] = "Danh mục được xóa thành công";
             }
             else
             {
