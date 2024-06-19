@@ -66,10 +66,16 @@
         <h3 class="title-option mb-4"><span>Ảnh<sub class="fs-6">(@Model.Images.Count())</sub></span></h3>
         <div class="d-flex flex-column col-md-8 mx-auto position-relative">
             <div class="add-image">
-                <button class="btn-save btn-add-img" data-bs-toggle="modal" data-bs-target="#model-upload-image">
+                <button class="btn-save btn-add-img">
                     <i class="fa-regular fa-plus fs-1"></i>
                 </button>
             </div>
+            <!-- Hidden form for uploading images -->
+            <form id="image-upload-form" asp-action="UploadImage" asp-controller="ShoeColors" method="post" enctype="multipart/form-data" style="display:none;">
+                <input type="hidden" name="shoeColorId" value="@Model.Id" />
+                <input type="file" name="imageFile" accept="image/*" onchange="document.getElementById('image-upload-form').submit();" />
+            </form>
+            <!-- Existing carousel code... -->
             <div class="carousel carousel-main" data-flickity='{"prevNextButtons": true, "pageDots": false}'>
                 @foreach (var image in @Model.Images?.OrderBy(e => e.SortOrder) ?? Enumerable.Empty<Image>())
                 {
@@ -87,7 +93,13 @@
                         <div class="screen-blur"></div>
                         <div class="sort-options">
                             <div class="delete">
-                                <i class="fa-solid fa-trash"></i>
+                                <form asp-action="DeleteImage" method="post">
+                                    <input type="hidden" name="imageId" value="@image.Id" />
+                                    <input type="hidden" name="shoeColorId" value="@Model.Id" />
+                                    <button type="submit" class="btn-option delete-size">
+                                        <i class="fa-solid fa-trash delete-image"></i>
+                                    </button>
+                                </form>
                             </div>
                             <div class="sort-order">
                                 <select name="SortOrder"></select>
@@ -152,5 +164,29 @@
 @section Scripts
 {
     <script src="/js/shoeColorEdit.js" asp-append-version="true"></script>
-    
+    <script>
+        document.querySelector('.btn-add-img').addEventListener('click', function () {
+            document.querySelector('input[name="imageFile"]').click();
+        });
+    </script>
+    <script>
+        // Function to handle delete image
+        function deleteImage(imageId) {
+            if (confirm('Bạn có chắc chắn muốn xóa hình ảnh này?')) {
+                // Perform AJAX request to delete image
+                $.ajax({
+                    url: '@Url.Action("DeleteImage", "ShoeColors")',
+                    type: 'POST',
+                    data: { shoeColorId: @Model.Id, imageId: imageId }, // Thêm shoeColorId vào đây
+                    success: function (result) {
+                        location.reload(); // Hoặc cập nhật lại view nếu cần
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(xhr.responseText);
+                        // Xử lý lỗi nếu cần
+                    }
+                });
+            }
+        }
+    </script>
 }

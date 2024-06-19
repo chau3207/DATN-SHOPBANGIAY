@@ -328,5 +328,63 @@ namespace ShoeStore.Controllers
             await _unitOfWork.SaveChangesAsync();
             return RedirectToAction("Edit", new { id = shoeColorId });
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> UploadImage(int shoeColorId, IFormFile imageFile)
+        {
+            if (imageFile != null && imageFile.Length > 0)
+            {
+                var shoeColor = await _unitOfWork.ShoeColors.FirstOrDefaultAsync(e => e.Id == shoeColorId);
+                if (shoeColor == null)
+                {
+                    return NotFound();
+                }
+
+                string root = _webHostEnvironment.WebRootPath;
+                string fileName = Guid.NewGuid().ToString();
+                string fileExtension = Path.GetExtension(imageFile.FileName);
+                string filePath = Path.Combine(root, @"images\shoes", fileName + fileExtension);
+                await using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    await imageFile.CopyToAsync(fileStream);
+                }
+
+                var image = new Image
+                {
+                    ShoeColorId = shoeColorId,
+                    Path = @"\images\shoes\" + fileName + fileExtension,
+                    SortOrder = shoeColor.Images?.Count() + 1 ?? 1
+                };
+                await _unitOfWork.Images.AddAsync(image);
+                await _unitOfWork.SaveChangesAsync();
+            }
+
+            return RedirectToAction(nameof(Edit), new { id = shoeColorId });
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteImage(int imageId, int shoeColorId)
+        {
+            var image = await _unitOfWork.Images.FirstOrDefaultAsync(e => e.Id == imageId && e.ShoeColorId == shoeColorId);
+            if (image == null)
+            {
+                return NotFound();
+            }
+
+            string root = _webHostEnvironment.WebRootPath;
+            string imagePath = Path.Combine(root, image.Path.TrimStart('\\'));
+            if (System.IO.File.Exists(imagePath))
+            {
+                System.IO.File.Delete(imagePath);
+            }
+
+            _unitOfWork.Images.Remove(image);
+            await _unitOfWork.SaveChangesAsync();
+
+            TempData["SuccessMessage"] = "Ảnh đã được xóa thành công";
+            return RedirectToAction(nameof(Edit), new { id = shoeColorId });
+        }
     }
 }
