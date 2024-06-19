@@ -368,7 +368,8 @@ public class CartController : Controller
             }
 
             cartViewModel.ShopOrder.PaymentStatus = SD.PaymentStatusPending;
-            cartViewModel.ShopOrder.OrderStatus = SD.StatusPending;
+            //cartViewModel.ShopOrder.OrderStatus = SD.StatusPending;
+            cartViewModel.ShopOrder.OrderStatus = SD.StatusApproved;
             cartViewModel.ShopOrder.OrderDate = DateTime.Now;
 
             foreach (var cartItem in cartItemList)
@@ -431,60 +432,60 @@ public class CartController : Controller
                 return RedirectToAction("Index", "Home");
             }
 
-            // stripe settings
-            var domain = $"{Request.Scheme}://{Request.Host.Value}";
-            var options = new SessionCreateOptions
-            {
-                PaymentIntentData = new SessionPaymentIntentDataOptions
-                {
-                    SetupFutureUsage = "off_session"
-                },
-                SuccessUrl = $"{domain}/Cart/OrderConfirmation?id={cartViewModel.ShopOrder.Id}",
-                CancelUrl = $"{domain}/Cart/OrderConfirmation?id={cartViewModel.ShopOrder.Id}",
-                // CancelUrl = $"{domain}/Cart/Index",
-                LineItems = new List<SessionLineItemOptions>(),
-                Mode = "payment",
-                PaymentMethodTypes = new List<string>()
-                {
-                    "card",
-                },
-            };
+            //    // stripe settings
+            //    var domain = $"{Request.Scheme}://{Request.Host.Value}";
+            //    var options = new SessionCreateOptions
+            //    {
+            //        PaymentIntentData = new SessionPaymentIntentDataOptions
+            //        {
+            //            SetupFutureUsage = "off_session"
+            //        },
+            //        SuccessUrl = $"{domain}/Cart/OrderConfirmation?id={cartViewModel.ShopOrder.Id}",
+            //        CancelUrl = $"{domain}/Cart/OrderConfirmation?id={cartViewModel.ShopOrder.Id}",
+            //        // CancelUrl = $"{domain}/Cart/Index",
+            //        LineItems = new List<SessionLineItemOptions>(),
+            //        Mode = "payment",
+            //        PaymentMethodTypes = new List<string>()
+            //        {
+            //            "card",
+            //        },
+            //    };
 
-            foreach (var cartItem in cartItemList)
-            {
-                ShoeColor shoeColor = (await _unitOfWork.ShoeColors.FirstOrDefaultAsync(
-                    e => e.ShoeSizes!.Any(ss => ss.Id == cartItem.ShoeSizeId),
-                    include: o => o.Include(e => e.Shoe)
-                        .Include(e => e.Images)
-                        .Include(e => e.Color)!
-                ))!;
+            //    foreach (var cartItem in cartItemList)
+            //    {
+            //        ShoeColor shoeColor = (await _unitOfWork.ShoeColors.FirstOrDefaultAsync(
+            //            e => e.ShoeSizes!.Any(ss => ss.Id == cartItem.ShoeSizeId),
+            //            include: o => o.Include(e => e.Shoe)
+            //                .Include(e => e.Images)
+            //                .Include(e => e.Color)!
+            //        ))!;
 
-                var sessionLineItem = new SessionLineItemOptions
-                {
-                    PriceData = new SessionLineItemPriceDataOptions
-                    {
-                        UnitAmount = (long)(cartItem.PriceEach * 100),
-                        Currency = "usd",
-                        ProductData = new SessionLineItemPriceDataProductDataOptions
-                        {
-                            Name = $"{shoeColor.Shoe!.Name} {shoeColor.Color?.Name}",
-                            Images = shoeColor.Images?.Select(e => $"{domain}{e.Path}").ToList() ?? new List<string>(),
-                        },
-                    },
-                    Quantity = cartItem.Count,
-                };
+            //        var sessionLineItem = new SessionLineItemOptions
+            //        {
+            //            PriceData = new SessionLineItemPriceDataOptions
+            //            {
+            //                UnitAmount = (long)(cartItem.PriceEach * 100),
+            //                Currency = "usd",
+            //                ProductData = new SessionLineItemPriceDataProductDataOptions
+            //                {
+            //                    Name = $"{shoeColor.Shoe!.Name} {shoeColor.Color?.Name}",
+            //                    Images = shoeColor.Images?.Select(e => $"{domain}{e.Path}").ToList() ?? new List<string>(),
+            //                },
+            //            },
+            //            Quantity = cartItem.Count,
+            //        };
 
-                options.LineItems.Add(sessionLineItem);
-            }
+            //        options.LineItems.Add(sessionLineItem);
+            //    }
 
-            var service = new SessionService();
-            Session session = service.Create(options);
+            //    var service = new SessionService();
+            //    Session session = service.Create(options);
 
-            await _unitOfWork.Orders.UpdateStripePaymentId(cartViewModel.ShopOrder.Id, session.Id,
-                session.PaymentIntentId);
-            await _unitOfWork.SaveChangesAsync();
+            //    await _unitOfWork.Orders.UpdateStripePaymentId(cartViewModel.ShopOrder.Id, session.Id,
+            //        session.PaymentIntentId);
+            //    await _unitOfWork.SaveChangesAsync();
 
-            // clear Cart
+            //    // clear Cart
             if (applicationUserId != null)
             {
                 _unitOfWork.CartItems.RemoveRange(cartItemList);
@@ -494,9 +495,9 @@ public class CartController : Controller
             {
                 Cart.Clear();
             }
-
-            Response.Headers.Add("Location", session.Url);
-            return new StatusCodeResult(303);
+            return RedirectToAction("OrderConfirmation", new { id = cartViewModel.ShopOrder.Id });
+            //    Response.Headers.Add("Location", session.Url);
+            //    return new StatusCodeResult(303);
         }
 
         TempData[SD.Error] = "Please enter all field!";
@@ -508,16 +509,22 @@ public class CartController : Controller
     {
         ShopOrder? order = await _unitOfWork.Orders.FirstOrDefaultAsync(e => e.Id == id);
 
-        if (order.PaymentStatus != SD.PaymentStatusDelayedPayment)
+        //if (order.PaymentStatus != SD.PaymentStatusDelayedPayment)
+        //{
+        //    var service = new SessionService();
+        //    Session session = service.Get(order.SessionId);
+        //    // check the stripe status
+        //    if (session.PaymentStatus.ToLower() == "paid")
+        //    {
+        //        await _unitOfWork.Orders.UpdateStatusAsync(id, SD.StatusApproved, SD.PaymentStatusApproved);
+        //        await _unitOfWork.SaveChangesAsync();
+        //    }
+        //}
+        if (order.PaymentStatus != SD.PaymentStatusDelayedPayment) // Kiểm tra xem đơn hàng đã được thanh toán thành công chưa
         {
-            var service = new SessionService();
-            Session session = service.Get(order.SessionId);
-            // check the stripe status
-            if (session.PaymentStatus.ToLower() == "paid")
-            {
-                await _unitOfWork.Orders.UpdateStatusAsync(id, SD.StatusApproved, SD.PaymentStatusApproved);
-                await _unitOfWork.SaveChangesAsync();
-            }
+            // Cập nhật trạng thái đơn hàng là đã duyệt và thanh toán thành công
+            await _unitOfWork.Orders.UpdateStatusAsync(id, SD.StatusApproved, SD.PaymentStatusApproved);
+            await _unitOfWork.SaveChangesAsync();
         }
 
         return View(id);
