@@ -69,6 +69,12 @@ namespace ShoeStore.Controllers
         {
             if (ModelState.IsValid)
             {
+                brand.Name = brand.Name.Trim();
+                if (_unitOfWork.Brands.Any(e => e.Name == brand.Name))
+                {
+                    ModelState.AddModelError("name", "Tên nhãn đã tồn tại!");
+                    return Create();
+                }
                 brand.Created = DateTime.Now;
                 brand.Edited = DateTime.Now;
                 await _unitOfWork.Brands.AddAsync(brand);
@@ -101,6 +107,11 @@ namespace ShoeStore.Controllers
             if (id != brand.Id || brandFromDb == null)
             {
                 return NotFound();
+            }
+            var existingBrand = await _unitOfWork.Brands.FirstOrDefaultAsync(e => e.Name == brand.Name && e.Id != id);
+            if (existingBrand != null)
+            {
+                ModelState.AddModelError("Name", "Tên nhãn hàng đã tồn tại.");
             }
 
             if (ModelState.IsValid)

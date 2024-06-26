@@ -15,35 +15,45 @@
             <div class="cart-background-overlay"></div>
             <div class="shipping-address">
                 <h3>
-                    <strong>Shipping Address</strong>
+                    <strong>Địa chỉ giao hàng</strong>
                 </h3>
-                <span>Leave your information so shop can ship the goods to you in the fastest time.</span>
+                <span>Để lại thông tin của bạn để shop có thể gửi hàng cho bạn trong thời gian nhanh nhất nhé.</span>
                 <form id="form-order" method="post" asp-action="Summary">
                     <div class="row g-3 mt-1">
                         <div class="col-md-6">
-                            <label asp-for="ShopOrder.Name" class="form-label">Fullname</label>
+                            <label asp-for="ShopOrder.Name" class="form-label">Họ tên</label>
                             <input asp-for="ShopOrder.Name" class="form-control" placeholder="E.g: Nguyen Van A">
                             <span asp-validation-for="ShopOrder.Name" class="text-danger"></span>
                         </div>
                         <div class="col-md-6">
-                            <label asp-for="ShopOrder.PhoneNumber" class="form-label">Phone Number</label>
+                            <label asp-for="ShopOrder.PhoneNumber" class="form-label">Số điện thoại</label>
                             <input asp-for="ShopOrder.PhoneNumber" class="form-control" placeholder="E.g: 0123456789">
                             <span asp-validation-for="ShopOrder.PhoneNumber" class="text-danger"></span>
                         </div>
                         <div class="col-12">
-                            <label asp-for="ShopOrder.Address" class="form-label">Address</label>
+                            <label asp-for="ShopOrder.Address" class="form-label">Địa chỉ</label>
                             <input asp-for="ShopOrder.Address" class="form-control" id="inputAddress" placeholder="E.g: 123 NY Street, Suite 330..." type="text">
                             <span asp-validation-for="ShopOrder.Address" class="text-danger"></span>
                         </div>
                         <div class="col-12">
-                            <label asp-for="ShopOrder.PostalCode" class="form-label">PostalCode</label>
+                            <label asp-for="ShopOrder.PostalCode" class="form-label">Mã bưu điện</label>
                             <input asp-for="ShopOrder.PostalCode" class="form-control" id="PostalCode" placeholder="E.g: 123 NY Street, Suite 330..." type="text">
                             <span asp-validation-for="ShopOrder.PostalCode" class="text-danger"></span>
                         </div>
                         <div class="col-12">
-                            <label asp-for="ShopOrder.City" class="form-label">City</label>
+                            <label asp-for="ShopOrder.City" class="form-label">Thành phố</label>
                             <input asp-for="ShopOrder.City" class="form-control" id="inputCity" placeholder="" type="text">
                             <span asp-validation-for="ShopOrder.City" class="text-danger"></span>
+                        </div>
+                        <div class="col-12">
+                            <label asp-for="ShopOrder.District" class="form-label">Huyện</label>
+                            <input asp-for="ShopOrder.District" class="form-control" id="inputDistrict" placeholder="" type="text">
+                            <span asp-validation-for="ShopOrder.District" class="text-danger"></span>
+                        </div>
+                        <div class="col-12">
+                            <label asp-for="ShopOrder.Ward" class="form-label">Phường</label>
+                            <input asp-for="ShopOrder.Ward" class="form-control" id="inputWard" placeholder="" type="text">
+                            <span asp-validation-for="ShopOrder.Ward" class="text-danger"></span>
                         </div>
                         @* <div class="col-md-4">
                             <label for="city" class="form-label">City</label>
@@ -52,7 +62,7 @@
                             </select>
                             <span asp-validation-for="ShopOrder.City" class="text-danger"></span>
                         </div> *@
-                        <div class="col-md-4">
+                        @* <div class="col-md-4">
                             <label for="district" class="form-label">District</label>
                             <select asp-for="ShopOrder.District" class="form-select" id="district">
                                 <option value="@Model.ShopOrder.District" selected="selected">@Model.ShopOrder.District</option>
@@ -65,7 +75,7 @@
                                 <option value="@Model.ShopOrder.Ward" selected="selected">@Model.ShopOrder.Ward</option>
                             </select>
                             <span asp-validation-for="ShopOrder.Ward" class="text-danger"></span>
-                        </div>
+                        </div> *@
                     </div>
 
                 </form>
@@ -215,12 +225,12 @@
     <div class="cart-background">
         <div class="cart-background-overlay"></div>
         <h3>
-            <strong>Order Summary</strong>
+            <strong>Đơn hàng</strong>
         </h3>
-        <span>Shipping and additional costs are calculated based on values you have entered.</span>
+        <span>Chi phí vận chuyển và chi phí bổ sung được tính dựa trên giá trị bạn đã nhập.</span>
         <div class="checkout-summary">
             <div class="d-flex justify-content-between align-items-center py-4 border-bottom">
-                <strong class="text-muted">Order Subtotal</strong>
+                <strong class="text-muted">Tổng tiền đơn hàng</strong>
                 <strong>@Model?.ShopOrder.OrderTotal.ToString("C")</strong>
             </div>
              @* <div class="d-flex justify-content-between align-items-center py-4 border-bottom">
@@ -232,16 +242,16 @@
                  <strong>$@tax.ToString("P1")</strong> 
              </div>  *@
             <div class="d-flex justify-content-between align-items-center py-4 border-bottom">
-                <strong class="text-muted">Total</strong>
+                <strong class="text-muted">Tổng cộng</strong>
                 <h5>
                     <strong>@Model.ShopOrder.OrderTotal.ToString("C")</strong>
                 </h5>
             </div>
         </div>
-        <button form="form-order" class="btn-proceed" type="submit">Place Order</button>
+        <button form="form-order" class="btn-proceed" type="submit">Đặt hàng</button>
     </div>
     <div class="my-3 rounded-5 text-center alert alert-info fs-6" role="alert">
-        Estimate Arrival Date: @DateTime.Now.AddDays(7).ToShortDateString() - @DateTime.Now.AddDays(14).ToShortDateString() 
+        Thời gian vận chuyển dự kiến: @DateTime.Now.AddDays(7).ToShortDateString() - @DateTime.Now.AddDays(14).ToShortDateString() 
     </div>
 </div>
 </div>

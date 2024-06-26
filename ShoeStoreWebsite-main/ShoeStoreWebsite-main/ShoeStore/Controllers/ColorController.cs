@@ -87,6 +87,12 @@ namespace ShoeStore.Controllers
                 return NotFound();
             }
 
+            var existingColor = await _unitOfWork.Colors.FirstOrDefaultAsync(c => c.Name == color.Name && c.Id != color.Id);
+            if (existingColor != null) 
+            {
+                ModelState.AddModelError("Name","Tên màu sắc đã tồn tại");
+            }
+
             if (!ModelState.IsValid)
                 return View(color);
 

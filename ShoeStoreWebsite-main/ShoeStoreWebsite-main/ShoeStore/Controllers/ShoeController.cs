@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using ShoeStore.DataAccess.Repository.IRepository;
 using ShoeStore.Models;
 using ShoeStore.Ultitity;
+using System.Drawing;
 using X.PagedList;
 using X.PagedList.Mvc.Core;
 
@@ -69,6 +70,13 @@ namespace ShoeStore.Controllers
         {
             if (ModelState.IsValid)
             {
+                shoe.Name = shoe.Name.Trim();
+                if(_unitOfWork.Shoes.Any(e => e.Name == shoe.Name))
+                {
+                    ModelState.AddModelError("name", "Tên giày đã tồn tại!");
+                    return await Create();
+                }
+                    
                 shoe.Created = DateTime.Now;
                 shoe.Edited = DateTime.Now;
                 await _unitOfWork.Shoes.AddAsync(shoe);
@@ -112,6 +120,12 @@ namespace ShoeStore.Controllers
             if (shoeFromDb == null)
             {
                 return NotFound();
+            }
+
+            var existingShoe = await _unitOfWork.Shoes.FirstOrDefaultAsync(s => s.Name == shoe.Name && s.Id != shoe.Id);
+            if (existingShoe != null) 
+            {
+                ModelState.AddModelError("Name","Tên giày đã tồn tại");
             }
 
             if (ModelState.IsValid)

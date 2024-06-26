@@ -13,7 +13,7 @@
                 <h2>
                     <strong>Giỏ hàng</strong>
                 </h2>
-                <h5>@Model.ProductCartsList.Count items</h5>
+                <h5>@Model.ProductCartsList.Count vật phẩm</h5>
             </div>
             <form method="post">
                 <input type="hidden" name="returnUrl" value="@Model?.ReturnUrl">
@@ -86,16 +86,16 @@
                     <h3>
                         <strong>Tổng giá tiền đơn hàng</strong>
                     </h3>
-                    <span>Shipping and additional costs are calculated based on values you have entered.</span>
+                    <span>Chi phí vận chuyển và chi phí bổ sung được tính dựa trên giá trị bạn đã nhập.</span>
                     <div class="checkout-summary">
                         <div class="d-flex justify-content-between align-items-center py-4 border-bottom">
-                            <strong class="text-muted">Total</strong>
+                            <strong class="text-muted">Tổng cộng</strong>
                             <h5>
                                 <strong>@Model.ShopOrder.OrderTotal.ToString("C")</strong>
                             </h5>
                         </div>
                     </div>
-                    <a asp-action="Summary" asp-route-returnUrl="@Model?.ReturnUrl" class="btn btn-proceed" type="button">Summary</a>
+                    <a asp-action="Summary" asp-route-returnUrl="@Model?.ReturnUrl" class="btn btn-proceed" type="button">Thanh toán</a>
                 </div>
             </div>
 

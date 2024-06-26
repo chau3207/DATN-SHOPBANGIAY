@@ -1,0 +1,207 @@
+﻿ColorController.cs
+public async Task<IActionResult> Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("Id,Name,Priority")] Color color)
+        {
+            if (ModelState.IsValid)
+            {
+                color.Name = color.Name.Trim();
+                if (_unitOfWork.Colors.Any(e => e.Name == color.Name))
+                {
+                    ModelState.AddModelError("name", "This color has already existed!");
+                    TempData[SD.Error] = "This color already existed!";
+                    return await Create();
+                }
+                
+                await _unitOfWork.Colors.AddAsync(color);
+                await _unitOfWork.SaveChangesAsync();
+                TempData["SuccessMessage"] = "Màu sắc mới được thêm thành công";
+                return RedirectToAction(nameof(Index));
+            }
+
+            return View(color);
+        }
+//////////////////////////////////////////////////////////////////////
+Index.cshtml
+@model X.PagedList.IPagedList<Color>
+@using X.PagedList.Mvc.Core
+
+@{
+    ViewData["Title"] = "Color" + " ";
+    Layout = "_AdminLayout";
+}
+
+@{
+    if(TempData["SuccessMessage"] != null)
+    {
+        <div id="success-alert" class="alert alert-success">
+            @TempData["SuccessMessage"]
+        </div>
+    }
+}
+
+<script src="~/js/Success.js"></script>
+
+<link rel="stylesheet" href="~/css/custom.css" />
+<div class="d-flex justify-content-between align-items-center mt-4 mb-4">
+    <div class="admin-title">
+        <ion-icon name="settings-outline"></ion-icon>
+        <div class="admin-title-content">
+            <h5>Màu sắc</h5>
+            <span>Liệt kê danh sách màu sắc</span>
+        </div>
+    </div>
+    <div class="option-create">
+        <a asp-action="Create" class="btn-create">
+            Thêm mới <i class="fa-solid fa-circle-plus"></i>
+        </a>
+    </div>
+</div>
+
+<table id="table_id" class="custom-table">
+    <thead>
+        <tr>
+            <th>
+                Id
+            </th>
+            <th>
+                Tên
+            </th>
+            <th>
+                Thứ tự ưu tiên
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Priority)
+                </td>
+                <td class="dt-nowrap">
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn-option" role="button"data-bs-toggle="tooltip"
+                        data-bs-placement="bottom" title="Edit">
+                        <i class="fa-regular fa-pen-to-square"></i>
+                    </a>
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn-option" role="button" data-bs-toggle="tooltip"
+                        data-bs-placement="bottom" title="Details">
+                        <i class="fa-solid fa-circle-info"></i>
+                    </a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn-option" role="button" data-bs-toggle="tooltip"
+                        data-bs-placement="bottom" title="Detele">
+                        <i class="fa-solid fa-trash"></i>
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div class="pagination-container custom-pagination">
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page }), new PagedListRenderOptions { DisplayLinkToFirstPage = PagedListDisplayMode.Never, DisplayLinkToLastPage = PagedListDisplayMode.Never })
+</div>
+
+<style>
+    .custom-pagination {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 20px;
+    }
+
+    .custom-pagination .pagination {
+        display: flex;
+        list-style: none;
+        padding: 0;
+    }
+
+    .custom-pagination .pagination li {
+        margin: 0 5px;
+    }
+
+    .custom-pagination .pagination li a,
+    .custom-pagination .pagination li span {
+        display: block;
+        width: 30px; /* Chiều rộng của ô vuông */
+        height: 30px; /* Chiều cao của ô vuông */
+        line-height: 30px; /* Căn giữa nội dung theo chiều dọc */
+        text-align: center; /* Căn giữa nội dung theo chiều ngang */
+        border: 1px solid #ddd; /* Đường viền ô vuông */
+        border-radius: 4px; /* Góc bo tròn, có thể bỏ nếu muốn góc vuông hoàn toàn */
+        background-color: #f8f9fa; /* Màu nền */
+        color: #333; /* Màu chữ */
+        text-decoration: none; /* Bỏ gạch chân */
+    }
+
+    .custom-pagination .pagination li a:hover,
+    .custom-pagination .pagination li span:hover {
+        background-color: #007bff; /* Màu nền khi hover */
+        color: white; /* Màu chữ khi hover */
+    }
+</style>
+////////////////////////////////////////////////////////
+Create.cshtml
+@using ShoeStore.Ultitity
+@model ShoeStore.Models.Color
+
+@{
+    ViewData["Title"] = "Color Create" + " ";
+    Layout = "_AdminLayout";
+}
+
+@{
+    if (TempData[SD.Error] != null)
+    {
+        <div id="error-alert" class="alert alert-danger">
+            @TempData[SD.Error]
+        </div>
+    }
+}
+
+<script src="~/js/Error.js"></script>
+
+<div class="admin-title mt-4 mb-4">
+    <ion-icon name="settings-outline"></ion-icon>
+    <div class="admin-title-content">
+        <h5>Màu sắc</h5>
+        <span>Liệt kê danh sách màu sắc</span>
+    </div>
+</div>
+<hr />
+<form asp-action="Create">
+    <h3 class="title-option mb-4">Thêm mới</h3>
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="d-flex justify-content-center flex-column align-items-center gap-3">
+        <div class="form-group col-md-6">
+            <label asp-for="Name" class="form-label">Tên</label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-6">
+            <label asp-for="Priority" class="form-label">Thứ tự ưu tiên</label>
+            <input asp-for="Priority" class="form-control" value="1" />
+            <span asp-validation-for="Priority" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="d-flex justify-content-center align-items-center gap-3 mt-4">
+        <div class="form-group">
+            <input type="submit" value="Tạo mới" class="btn-save" />
+        </div>
+        <div>
+            <a asp-action="Index" class="btn-back">Quay lại danh sách</a>
+        </div>
+    </div>
+</form>
+

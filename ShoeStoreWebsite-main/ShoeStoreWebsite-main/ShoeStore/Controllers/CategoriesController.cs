@@ -65,6 +65,12 @@ namespace ShoeStore.Controllers
         {
             if (ModelState.IsValid)
             {
+                category.Name = category.Name.Trim();
+                if (_unitOfWork.Categories.Any(c => c.Name == category.Name))
+                {
+                    ModelState.AddModelError("Name","Tên danh mục đã tồn tại");
+                    return await Create();
+                }
                 await _unitOfWork.Categories.AddAsync(category);
                 await _unitOfWork.SaveChangesAsync();
                 TempData["SuccessMessage"] = "Thông tin danh mục được thêm thành công";
@@ -102,6 +108,12 @@ namespace ShoeStore.Controllers
             if (categoryFromDb == null)
             {
                 return NotFound();
+            }
+
+            var existingCategory = await _unitOfWork.Categories.FirstOrDefaultAsync(c => c.Name == category.Name && c.Id != category.Id);
+            if(existingCategory != null) 
+            {
+                ModelState.AddModelError("Name","Tên danh mục đã tồn tại");
             }
 
             if (!ModelState.IsValid)

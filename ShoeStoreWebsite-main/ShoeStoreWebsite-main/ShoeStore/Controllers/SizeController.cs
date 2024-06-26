@@ -76,6 +76,12 @@ namespace ShoeStore.Controllers
                 return NotFound();
             }
 
+            var existingSize = await _unitOfWork.Sizes.FirstOrDefaultAsync(s => s.Value == size.Value && s.Unit != size.Unit && s.Id != size.Id);
+            if (existingSize != null)
+            {
+                ModelState.AddModelError("Value", "Giá trị này đã tồn tại");
+            }
+
             if (ModelState.IsValid)
             {
                 _unitOfWork.Sizes.Update(size);
