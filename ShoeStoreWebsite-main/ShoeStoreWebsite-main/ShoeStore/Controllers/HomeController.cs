@@ -27,7 +27,8 @@ public class HomeController : Controller
         // }
         
         Brand? nike = await _unitOfWork.Brands.FirstOrDefaultAsync(e => e.Name == "Nike");
-        Brand? newBalance = await _unitOfWork.Brands.FirstOrDefaultAsync(e => e.Name == "New Balance");
+        //Brand? newBalance = await _unitOfWork.Brands.FirstOrDefaultAsync(e => e.Name == "New Balance");
+        Brand? brooks = await _unitOfWork.Brands.FirstOrDefaultAsync(e => e.Name == "Brooks");
         Brand? asics = await _unitOfWork.Brands.FirstOrDefaultAsync(e => e.Name == "Asics");
         Brand? saucony = await _unitOfWork.Brands.FirstOrDefaultAsync(e => e.Name == "Saucony");
         
@@ -50,8 +51,17 @@ public class HomeController : Controller
                     orderBy: e => e.Priority,
                     take: 4
                 ),
-            NewBalanceProducts = await _unitOfWork.ShoeColors
-                .GetAllAsync(e => newBalance != null && e.Shoe!.BrandId == newBalance.Id,
+            //NewBalanceProducts = await _unitOfWork.ShoeColors
+            //    .GetAllAsync(e => newBalance != null && e.Shoe!.BrandId == newBalance.Id,
+            //        include: o => o
+            //            .Include(e => e.Images)
+            //            .Include(e => e.Shoe)
+            //            .ThenInclude(e => e!.Brand)!,
+            //        orderBy: e => e.Priority,
+            //        take: 4
+            //    ),
+            BrooksProducts = await _unitOfWork.ShoeColors
+                .GetAllAsync(e => brooks != null && e.Shoe!.BrandId == brooks.Id,
                     include: o => o
                         .Include(e => e.Images)
                         .Include(e => e.Shoe)

@@ -12,27 +12,29 @@
     </div>
 </div>
 <hr />
-<div>
-    <h3 class="title-option mb-4">Xóa</h3>
-    <div class="row">
-        <div class="col-sm-2 mb-3">
-            Đơn vị
+<div class="card">
+    <div class="card-body">
+        <h3 class="title-option mb-4">Xóa</h3>
+        <div class="row">
+            <div class="col-sm-2 mb-3">
+                Đơn vị
+            </div>
+            <div class="col-sm-10 mb-3">
+                @Html.DisplayFor(model => model.Unit)
+            </div>
+            <div class="col-sm-2 mb-3">
+                Giá trị
+            </div>
+            <div class="col-sm-10 mb-3">
+                @Html.DisplayFor(model => model.Value)
+            </div>
         </div>
-        <div class="col-sm-10 mb-3">
-            @Html.DisplayFor(model => model.Unit)
-        </div>
-        <div class="col-sm-2 mb-3">
-            Giá trị
-        </div>
-        <div class="col-sm-10 mb-3">
-            @Html.DisplayFor(model => model.Value)
-        </div>
-    </div>
 
-    <form asp-action="Delete" class="d-flex justify-content-start align-items-center gap-4 mt-4">
-        <h4 class="fw-bold mb-0">Bạn có muốn xóa không?</h4>
-        <input type="hidden" asp-for="Id" />
-        <input type="submit" value="Xóa" class="btn-save" />
-        <a asp-action="Index" class="btn-back">Quay lại danh sách</a>
-    </form>
+        <form asp-action="Delete" class="d-flex justify-content-start align-items-center gap-4 mt-4">
+            <h4 class="fw-bold mb-0">Bạn có muốn xóa không?</h4>
+            <input type="hidden" asp-for="Id" />
+            <input type="submit" value="Xóa" class="btn-save" />
+            <a asp-action="Index" class="btn-back">Quay lại danh sách</a>
+        </form>
+    </div>
 </div>

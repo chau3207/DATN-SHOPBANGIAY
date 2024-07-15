@@ -1,5 +1,33 @@
 ﻿ColorController.cs
-public async Task<IActionResult> Create()
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using ShoeStore.DataAccess.Repository.IRepository;
+using ShoeStore.Models;
+using ShoeStore.Ultitity;
+using X.PagedList;
+
+namespace ShoeStore.Controllers
+{
+    [Authorize(Roles = SD.Role_Admin)]
+    public class ColorController : Controller
+    {
+        private readonly IUnitOfWork _unitOfWork;
+
+        public ColorController(IUnitOfWork unitOfWork)
+        {
+            _unitOfWork = unitOfWork;
+        }
+
+        public async Task<IActionResult> Index(int? page)
+        {
+            int pageNumber = page ?? 1;
+            int pageSize = 10;
+            var colors = await _unitOfWork.Colors.GetAllAsync();
+            var paginatedColors = colors.ToPagedList(pageNumber, pageSize);
+            return View(paginatedColors);
+        }
+
+       public async Task<IActionResult> Create()
         {
             return View();
         }
@@ -26,7 +54,11 @@ public async Task<IActionResult> Create()
 
             return View(color);
         }
-//////////////////////////////////////////////////////////////////////
+
+       
+    }
+}
+---------------------------------------------------------------------------------------------------
 Index.cshtml
 @model X.PagedList.IPagedList<Color>
 @using X.PagedList.Mvc.Core
@@ -151,7 +183,7 @@ Index.cshtml
         color: white; /* Màu chữ khi hover */
     }
 </style>
-////////////////////////////////////////////////////////
+----------------------------------------------------------------------------------------------
 Create.cshtml
 @using ShoeStore.Ultitity
 @model ShoeStore.Models.Color
@@ -204,4 +236,3 @@ Create.cshtml
         </div>
     </div>
 </form>
-

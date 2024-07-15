@@ -8,41 +8,42 @@
 <div class="admin-title mt-4 mb-4">
     <ion-icon name="settings-outline"></ion-icon>
     <div class="admin-title-content">
-        <h5>Shoe Colors Management</h5>
-        <span>This dashboard is created to manage products and invoices</span>
+        <h5>Quản lý thông tin màu sắc giày</h5>
+        <span>Liệt kê danh sách thông tin màu sắc giày</span>
     </div>
 </div>
 <hr/>
 <div class="container p-0">
-    <div class="">
-        <h3 class="title-option mb-4">Details</h3>
+    <div class="card">
+        <div class="card-body">
+        <h3 class="title-option mb-4">Thông tin chi tiết</h3>
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <input readonly="readonly" type="hidden" asp-for="Id"/>
         <div class="row">
             <div class="col-md-4 mb-3">
-                <label asp-for="FactoryPrice" class="form-label"></label>
+                <label asp-for="FactoryPrice" class="form-label">Giá xuất xưởng</label>
                 <input readonly="readonly" asp-for="FactoryPrice" class="form-control"/>
                 <span asp-validation-for="FactoryPrice" class="text-danger"></span>
             </div>
             <div class="col-md-4 mb-3">
-                <label asp-for="SalePrice" class="form-label"></label>
+                <label asp-for="SalePrice" class="form-label">Giá bán</label>
                 <input readonly="readonly" asp-for="SalePrice" class="form-control"/>
                 <span asp-validation-for="SalePrice" class="text-danger"></span>
             </div>
             <div class="col-md-4 mb-3">
-                <label asp-for="SortOrder" class="form-label"></label>
+                <label asp-for="SortOrder" class="form-label">Thứ tự sắp xếp</label>
                 <input readonly="readonly" asp-for="SortOrder" class="form-control"/>
                 <span asp-validation-for="SortOrder" class="text-danger"></span>
             </div>
         </div>
         <div class="row">
             <div class="col-md-6 mb-3">
-                <label asp-for="ShoeId" class="form-label">Shoe</label>
+                <label asp-for="ShoeId" class="form-label">Giày</label>
                 <select asp-for="ShoeId" class="form-select" asp-items="ViewBag.ShoeId" readonly></select>
                 <span asp-validation-for="ShoeId" class="text-danger"></span>
             </div>
             <div class="col-md-6 mb-3">
-                <label asp-for="ColorId" class="form-label">Color</label>
+                <label asp-for="ColorId" class="form-label">Màu sắc</label>
                 <select asp-for="ColorId" class="form-select" asp-items="ViewBag.ColorId"></select>
                 <span asp-validation-for="ColorId" class="text-danger"></span>
             </div>
@@ -55,10 +56,11 @@
                 </label>
             </div>
         </div>
+        </div>
     </div>
 
     <div class="shoeImage mt-5">
-        <h3 class="title-option mb-4">Image</h3>
+        <h3 class="title-option mb-4">Ảnh</h3>
         <div class="d-flex flex-column col-md-8 mx-auto">
             <div class="carousel carousel-main" data-flickity='{"prevNextButtons": true, "pageDots": false}'>
                 @foreach (var image in @Model.Images?.OrderBy(e => e.SortOrder) ?? Enumerable.Empty<Image>())
@@ -90,14 +92,14 @@
     </div>
 
     <div class="col-12 mt-5">
-        <h3 class="title-option mb-4">Size List</h3>
+        <h3 class="title-option mb-4">Danh sách kích cỡ</h3>
         @* <select class="form-select" asp-items="ViewBag.SizeId"></select> *@
         <div class="table-responsive size-list text-right">
             <table class="table table-bordered table-striped align-middle">
                 <thead class="">
                 <tr>
-                    <th>Size</th>
-                    <th>Quantity</th>
+                    <th>Kích cỡ</th>
+                    <th>Số lượng</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -119,10 +121,10 @@
 <div class="d-flex justify-content-center align-items-center gap-4">
     <form method="post">
         <button type="submit" class="btn-save" >
-            Delete
+            Xóa
         </button>
     </form>
     <a asp-controller="Shoe" asp-action="Edit" asp-route-id="@Model?.ShoeId" class="btn-back">
-        Back to Shoe Edit Page
+        Quay về trang chỉnh sửa
     </a>
 </div>

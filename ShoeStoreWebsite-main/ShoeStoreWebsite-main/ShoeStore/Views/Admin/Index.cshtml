@@ -83,14 +83,53 @@
 <div class="visit-place container p-0">
     <div class="d-flex justify-content-start gap-5">
         <div class="col-md-7 visit-place-map">
-            <h3 class="title-option mb-4">Visit the place</h3>
-            <div class="visit-place-map-frame">
-                <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3724.944299322485!2d105.85971361501225!3d20.99486978601681!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135ad11b1f441bf%3A0xcf480c26f8137a3a!2sVTC%20Online%20Building!5e0!3m2!1svi!2s!4v1665294543756!5m2!1svi!2s"
-                    style="border:0;" allowfullscreen="" loading="lazy"
-                    referrerpolicy="no-referrer-when-downgrade"></iframe>
-            </div>
+            <!-- Đoạn mã Canvas cho biểu đồ -->
+            <canvas id="orderTotalsChart" width="300" height="150"></canvas>
         </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script>
+            // Lấy dữ liệu từ Razor view và chuyển đổi sang JavaScript object
+            var orderTotalsToday = @Html.Raw(Json.Serialize(Model.OrderTotalsToday));
+            var orderTotalsThisWeek = @Html.Raw(Json.Serialize(Model.OrderTotalsThisWeek));
+            var orderTotalsThisMonth = @Html.Raw(Json.Serialize(Model.OrderTotalsThisMonth));
+            var orderTotalsThisYear = @Html.Raw(Json.Serialize(Model.OrderTotalsThisYear));
+
+            // Biểu đồ thanh
+            var ctx = document.getElementById('orderTotalsChart').getContext('2d');
+            var orderTotalsChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Ngày', 'Tuần', 'Tháng', 'Năm'],
+                    datasets: [{
+                        label: 'Doanh thu',
+                        data: [orderTotalsToday, orderTotalsThisWeek, orderTotalsThisMonth, orderTotalsThisYear],
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(255, 206, 86, 0.2)',
+                            'rgba(75, 192, 192, 0.2)',
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        </script>
         <div class="col-md-4 total-order">
             <h3 class="title-option mb-4">Tổng cộng</h3>
             <div class="total-order-top">

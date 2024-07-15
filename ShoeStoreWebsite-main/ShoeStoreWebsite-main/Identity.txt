@@ -1,0 +1,17 @@
+﻿Bang ASP.NET User là bảng chứa thông tin User
+một số bảng được ren bởi Identity 
+ASP.NETRoles Tác dụng: Lưu trữ các vai trò trong ứng dụng.
+AspNetRoleClaims Tác dụng: Lưu trữ các claim của vai trò.
+AspNetRoles Bảng chứa các quyền vd add user edit user ,.....
+AspNetUserClaims Tác dụng: Lưu trữ các claim (quyền) của người dùng.
+AspNetUserLogins Lưu trữ thông tin đăng nhập của người dùng từ các dịch vụ ngoài như google facebook
+AspNetUserRoles xác định User thuộc Role nào
+AspNetUserTokens Tác dụng: Lưu trữ token của người dùng (dùng trong xác thực hai yếu tố hoặc khôi phục mật khẩu).
+
+AspNetUsers có quan hệ 1-nhiều với AspNetUserClaims, AspNetUserLogins, AspNetUserTokens, AspNetUserRoles.
+AspNetRoles có quan hệ 1-nhiều với AspNetRoleClaims và AspNetUserRoles.
+AspNetUserRoles là bảng liên kết nhiều-nhiều giữa AspNetUsers và AspNetRoles.
+
+Trước khi migrate thì thêm các thuộc tính DBSet để quản lý nó
+DBSet nằm ở trong file DataContext.cs
+

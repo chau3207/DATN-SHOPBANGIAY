@@ -105,6 +105,8 @@ public class OrderController : Controller
                     .Include(e => e.ShoeSize)
                     .ThenInclude(e => e.ShoeColor)
                     .ThenInclude(e => e.Color)!
+                    .Include(e => e.ShoeSize)
+                    .ThenInclude(e => e.Size)
             )
         };
 

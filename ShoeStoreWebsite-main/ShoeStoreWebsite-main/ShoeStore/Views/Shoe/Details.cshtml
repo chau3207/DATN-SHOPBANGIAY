@@ -14,50 +14,54 @@
 </div>
 
 <hr />
+
 <div class="container p-0">
-    <h3 class="title-option mb-4">Thông tin sản phẩm</h3>
-    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-    <input type="hidden" asp-for="Id" />
-    <div class="row">
-        <div class="col-md-12 mb-3">
-            <label asp-for="Name" class="form-label">Tên</label>
-            <input readonly asp-for="Name" class="form-control" />
-            <span asp-validation-for="Name" class="text-danger"></span>
-        </div>
-        <div class="col-md-6 mb-3">
-            <label asp-for="BrandId" class="form-label">Nhãn hàng</label>
-            <input readonly="readonly" class="form-control" value="@Model.Brand.Name" />
-        </div>
-        <div class="col-md-6 mb-3">
-            <label asp-for="CategoryId" class="form-label">Danh mục</label>
-            <input readonly="readonly" class="form-control" value="@Model.Category.Name" />
-        </div>
-    </div>
-    <div class="mb-3 col-md-12">
-        <label asp-for="Note" class="form-label">Ghi chú</label>
-        <input readonly="readonly" asp-for="Note" class="form-control" />
-    </div>
-    <div class="row">
-        <div class="mb-3 col-md-6">
-            <label asp-for="Features" class="form-label">Đặc điểm</label>
-            <div class="form-textarea">@Html.Raw(Model.Features)</div>
-        </div>
-        <div class="mb-3 col-md-6">
-            <label asp-for="Description" class="form-label">Mô tả</label>
-            <div class="form-textarea">@Html.Raw(Model.Description)</div>
-        </div>
-    </div>
-    <div class="col-12 col-md-6 mb-3">
-        <div class="d-flex h-100 flex-column justify-content-end">
-            <div class="form-check">
-                <label class="form-check-label">
-                    <input disabled="disabled" class="form-check-input" asp-for="Active" /> @Html.DisplayNameFor(model
-                    => model.Active)
-                </label>
+    <div class="card">
+        <div class="card-body">
+            <h3 class="title-option mb-4">Thông tin sản phẩm</h3>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="row">
+                <div class="col-md-12 mb-3">
+                    <label asp-for="Name" class="form-label">Tên</label>
+                    <input readonly asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="BrandId" class="form-label">Nhãn hàng</label>
+                    <input readonly="readonly" class="form-control" value="@Model.Brand.Name" />
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="CategoryId" class="form-label">Danh mục</label>
+                    <input readonly="readonly" class="form-control" value="@Model.Category.Name" />
+                </div>
+            </div>
+            <div class="mb-3 col-md-12">
+                <label asp-for="Note" class="form-label">Ghi chú</label>
+                <input readonly="readonly" asp-for="Note" class="form-control" />
+            </div>
+            <div class="row">
+                <div class="mb-3 col-md-6">
+                    <label asp-for="Features" class="form-label">Đặc điểm</label>
+                    <div class="form-textarea">@Html.Raw(Model.Features)</div>
+                </div>
+                <div class="mb-3 col-md-6">
+                    <label asp-for="Description" class="form-label">Mô tả</label>
+                    <div class="form-textarea">@Html.Raw(Model.Description)</div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 mb-3">
+                <div class="d-flex h-100 flex-column justify-content-end">
+                    <div class="form-check">
+                        <label class="form-check-label">
+                            <input disabled="disabled" class="form-check-input" asp-for="Active" /> @Html.DisplayNameFor(model
+                            => model.Active)
+                        </label>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-
     @*-- Color Variant --*@
 
     <div class="color-variant">

@@ -30,8 +30,10 @@ public class ShopOrder
     public string? SessionId { get; set; }
     public string? PaymentIntentId { get; set; }
 
-    [Required] public string Name { get; set; }
-    [Required] [Phone] public string PhoneNumber { get; set; }
+    [Required(ErrorMessage ="Vui lòng nhập họ tên của bạn")] 
+    public string Name { get; set; }
+    [Required(ErrorMessage ="Vui lòng nhập số điện thoại")] 
+    [Phone] public string PhoneNumber { get; set; }
 
     [Required(ErrorMessage = "Vui lòng nhập địa chỉ của bạn")]
     public string Address { get; set; }

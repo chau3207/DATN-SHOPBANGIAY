@@ -251,7 +251,7 @@ namespace ShoeStore.Controllers
             }
             else
             {
-                TempData[SD.Error] = "Some shoes is belong to this ShoeColor. Can not delete it!";
+                TempData["ErrorMessage"] = "Một số đôi giày thuộc về Màu Sắc Giày này. Không thể xóa nó!";
             }
             
             return RedirectToAction("Edit", "Shoe", new {id = shoeColor.ShoeId});

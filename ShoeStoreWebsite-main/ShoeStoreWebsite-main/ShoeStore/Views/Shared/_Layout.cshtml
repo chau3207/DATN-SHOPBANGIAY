@@ -1,4 +1,9 @@
 ﻿@using ShoeStore.Ultitity
+
+@{
+    var brands = ViewBag.Brands as List<ShoeStore.Models.Brand>;
+}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -31,8 +36,9 @@
     <nav class="navbar navbar-expand-lg bg-white">
         <div class="container">
             <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
-                <img src='@Url.Content("~/images/logo/logo.png")' class="header-logo" alt=""
-                     asp-append-version="true"/>
+                @* <img src='@Url.Content("~/images/logo/logo.png")' class="header-logo" alt=""
+                     asp-append-version="true"/> *@
+                     <span>BMC</span>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -51,29 +57,29 @@
                         </li>
                     }
                     <li class="nav-item">
-                        <a class="nav-link hover-underline-animation active" asp-area="" asp-controller="Home"
+                            <a class="nav-link hover-underline-animation active custom-width" style="width: 130px;" asp-area="" asp-controller="Home"
                            asp-action="Index">
                             Trang chủ
                         </a>
                     </li>
 
                     <li class="nav-item dropdown">
-                        <a class="nav-link hover-underline-animation" data-bs-toggle="dropdown" role="button" aria-expanded="false">
+                            <a class="nav-link hover-underline-animation custom-width" style="width: 140px;" data-bs-toggle="dropdown" role="button" aria-expanded="false">
                             Nhãn hàng
                         </a>
                         <ul class="dropdown-menu">
                             <li class="nav-item">
                                 <a class="dropdown-item" asp-controller="Products"
                                    asp-action="Index">
-                                    All Brands
+                                    Tất cả nhãn hàng
                                 </a>
                             </li>
-                            <li class="nav-item">
+                            @* <li class="nav-item">
                                 <a class="dropdown-item" asp-area="" asp-controller="Products"
                                    asp-action="Index" asp-route-brand="New Balance">
                                     New Balance
                                 </a>
-                            </li>
+                            </li> *@
                             <li class="nav-item">
                                 <a class="dropdown-item" asp-area="" asp-controller="Products"
                                    asp-action="Index" asp-route-brand="Nike">
@@ -112,7 +118,7 @@
                             <ul class="dropdown-menu">
                                 <li class="nav-item">
                                     <a class="dropdown-item" asp-area="Identity" asp-page="/Account/Register">
-                                        Create User
+                                        Tạo người dùng
                                     </a>
                                 </li>
 
@@ -203,12 +209,6 @@
                         </li>
                         <li>
                             <a class="dropdown-item" asp-area="" asp-controller="Products"
-                               asp-action="Index" asp-route-brand="New Balance">
-                                New Balance
-                            </a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item" asp-area="" asp-controller="Products"
                                asp-action="Index" asp-route-brand="Nike">
                                 Nike
                             </a>
@@ -274,7 +274,6 @@
 <div class="back-to-top">
     <i class="fa-solid fa-arrow-up"></i>
 </div>
-
 
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 @* Flickity *@

@@ -14,20 +14,22 @@
 </div>
 
 <hr />
-<div>
-    <h3 class="title-option mb-4">Details</h3>
-    <div class="row">
-        <div class="col-sm-2 mb-3">
-            Tên 
-        </div>
-        <div class="col-sm-10 mb-3">
-            @Html.DisplayFor(model => model.Name)
-        </div>
-        <div class="col-sm-2 mb-3">
-            Thứ tự ưu tiên
-        </div>
-        <div class="col-sm-10 mb-3">
-            @Html.DisplayFor(model => model.Priority)
+<div class="card">
+    <div class="card-body">
+        <h3 class="title-option mb-4">Thông tin chi tiết</h3>
+        <div class="row">
+            <div class="col-sm-2 mb-3">
+                Tên 
+            </div>
+            <div class="col-sm-10 mb-3">
+                @Html.DisplayFor(model => model.Name)
+            </div>
+            <div class="col-sm-2 mb-3">
+                Thứ tự ưu tiên
+            </div>
+            <div class="col-sm-10 mb-3">
+                @Html.DisplayFor(model => model.Priority)
+            </div>
         </div>
     </div>
 </div>

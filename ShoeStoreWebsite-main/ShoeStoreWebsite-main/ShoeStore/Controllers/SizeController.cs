@@ -123,7 +123,7 @@ namespace ShoeStore.Controllers
             }
             else
             {
-                TempData[SD.Error] = "Some Shoe is belong to this Size. Can not delete it!";
+                TempData["ErrorMessage"] = "Một số Giày thuộc về Kích thước này. Không thể xóa nó!";
             }
 
             return RedirectToAction(nameof(Index));

@@ -163,7 +163,7 @@ namespace ShoeStore.Controllers
             }
             else
             {
-                TempData[SD.Error] = "Some ShoeModels is belong to this Category. Can not delete it!";
+                TempData["ErrorMessage"] = "Một số mẫu giày thuộc Danh mục này. Không thể xóa nó!";
             }
 
             return RedirectToAction(nameof(Index));

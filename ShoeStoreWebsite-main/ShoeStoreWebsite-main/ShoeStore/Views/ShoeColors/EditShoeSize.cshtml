@@ -5,25 +5,40 @@
     Layout = "_AdminLayout";
 }
 
-<h2>Edit Shoe Size</h2>
-
-<form asp-action="EditShoeSize">
-    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-    <input type="hidden" asp-for="Id" />
-    <input type="hidden" asp-for="ShoeColorId" />
-    <div class="mb-3">
-        <label asp-for="SizeId" class="form-label"></label>
-        <select asp-for="SizeId" class="form-select" asp-items="ViewBag.SizeId"></select>
-        <span asp-validation-for="SizeId" class="text-danger"></span>
+<div class="admin-title mt-4 mb-4">
+    <ion-icon name="settings-outline"></ion-icon>
+    <div class="admin-title-content">
+        <h5>Quản lý kích thước giày</h5>
+        <span>Liệt kê danh sách số lượng theo kích thước</span>
     </div>
-    <div class="mb-3">
-        <label asp-for="Quantity" class="form-label"></label>
-        <input asp-for="Quantity" class="form-control" />
-        <span asp-validation-for="Quantity" class="text-danger"></span>
-    </div>
-    <button type="submit" class="btn btn-primary">Save</button>
-</form>
-
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.ShoeColorId">Back to Shoe Color</a>
 </div>
+<hr />
+
+<div class="container p-0">
+    <h3 class="title-option mb-4">Chỉnh sửa kích thước giày</h3>
+    <div class="card">
+        <div class="card-body">
+            <form asp-action="EditShoeSize">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Id" />
+                <input type="hidden" asp-for="ShoeColorId" />
+                <div class="mb-3">
+                    <label asp-for="SizeId" class="form-label">Kích cỡ</label>
+                    <select asp-for="SizeId" class="form-select" asp-items="ViewBag.SizeId"></select>
+                    <span asp-validation-for="SizeId" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Quantity" class="form-label">Số lượng</label>
+                    <input asp-for="Quantity" class="form-control" />
+                    <span asp-validation-for="Quantity" class="text-danger"></span>
+                </div>
+                <div class="d-flex justify-content-center align-items-center gap-3 mt-4 mb-4">
+                    <button type="submit" class="btn-save">Lưu</button>
+                    <a asp-action="Edit" asp-route-id="@Model.ShoeColorId" class="btn-back">Quay lại trang chỉnh sửa màu sắc giày</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+    

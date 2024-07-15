@@ -10,13 +10,23 @@
 @{
     if (TempData["SuccessMessage"] != null)
     {
-                            <div id="success-alert" class="alert alert-success">
-                                @TempData["SuccessMessage"]
-                            </div>
+        <div id="success-alert" class="alert alert-success">
+            @TempData["SuccessMessage"]
+        </div>
     }
 }
-<script src="~/js/Success.js"></script>
 
+@{
+    if (TempData["ErrorMessage"] != null)
+    {
+        <div id="error-alert" class="alert alert-danger">
+            @TempData["ErrorMessage"]
+        </div>
+    }
+}
+
+<script src="~/js/Success.js"></script>
+<script src="~/js/Error.js"></script>
 <link rel="stylesheet" href="~/css/custom.css" />
 <div class="d-flex justify-content-between align-items-center mt-4 mb-4">
     <div class="admin-title">

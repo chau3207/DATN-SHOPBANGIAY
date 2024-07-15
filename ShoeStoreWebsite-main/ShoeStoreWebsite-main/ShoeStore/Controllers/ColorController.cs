@@ -51,8 +51,8 @@ namespace ShoeStore.Controllers
                 color.Name = color.Name.Trim();
                 if (_unitOfWork.Colors.Any(e => e.Name == color.Name))
                 {
-                    ModelState.AddModelError("name", "This color has already existed!");
-                    TempData[SD.Error] = "This color already existed!";
+                    //ModelState.AddModelError("name", "This color has already existed!");
+                    TempData[SD.Error] = "Màu sắc này đã tồn tại!";
                     return await Create();
                 }
                 
@@ -132,7 +132,7 @@ namespace ShoeStore.Controllers
             }
             else
             {
-                TempData[SD.Error] = "Some ShoeColorModels is belong to this Color. Can not delete it!";
+                TempData["ErrorMessage"] = "Một số mẫu màu sắc giày thuộc về Màu này. Không thể xóa nó!";
             }
 
             return RedirectToAction(nameof(Index));

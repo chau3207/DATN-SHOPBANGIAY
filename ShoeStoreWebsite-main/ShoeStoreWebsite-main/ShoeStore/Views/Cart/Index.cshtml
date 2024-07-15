@@ -2,7 +2,7 @@
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @model ShoeStore.Models.ViewModels.CartViewModel
 @{
-    ViewData["Title"] = "Shopping Cart Page";
+    ViewData["Title"] = "Trang giỏ hàng";
 }
 
 <section class="cart mt-lg-5 mt-4 mb-5">
@@ -32,7 +32,7 @@
                                     </a>
                                 </p>
 
-                                <p class="fs-6 fst-italic">Size: @productCart.Size</p>
+                                <p class="fs-6 fst-italic">Kích cỡ: @productCart.Size</p>
 
                                 <a class="text-decoration-none text-white"
                                    asp-controller="Products" asp-action="Index" asp-route-brand="@productCart.BrandName">

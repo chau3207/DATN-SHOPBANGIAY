@@ -1,10 +1,14 @@
-﻿@model X.PagedList.IPagedList<Size>
+﻿@model X.PagedList.IPagedList<Color>
 @using X.PagedList.Mvc.Core
 
 @{
-    ViewData["Title"] = "Size Management" + " ";
+    ViewData["Title"] = "Color" + " ";
     Layout = "_AdminLayout";
 }
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
 
 @{
     if(TempData["SuccessMessage"] != null)
@@ -15,31 +19,38 @@
     }
 }
 
-@{
-    if (TempData["ErrorMessage"] != null)
-    {
-        <div id="error-alert" class="alert alert-danger">
-            @TempData["ErrorMessage"]
-        </div>
-    }
-}
-
 <script src="~/js/Success.js"></script>
-<script src="~/js/Error.js"></script>
 
 <link rel="stylesheet" href="~/css/custom.css" />
+
+<div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="createModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="createModalLabel">Thêm mới màu sắc</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="createModalBody">
+                <!-- Content loaded via Ajax will be placed here -->
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="d-flex justify-content-between align-items-center mt-4 mb-4">
     <div class="admin-title">
         <ion-icon name="settings-outline"></ion-icon>
         <div class="admin-title-content">
-            <h5>Kích cỡ</h5>
-            <span>Liệt kê danh sách kích cỡ</span>
+            <h5>Màu sắc</h5>
+            <span>Liệt kê danh sách màu sắc</span>
         </div>
     </div>
     <div class="option-create">
-        <a asp-action="Create" class="btn-create">
-            Tạo mới <i class="fa-solid fa-circle-plus"></i>
-        </a>
+        <button type="button" class="btn btn-create" id="btnCreateModal">
+            Thêm mới <i class="fa-solid fa-circle-plus"></i>
+        </button>
     </div>
 </div>
 
@@ -50,10 +61,10 @@
                 Id
             </th>
             <th>
-                Đơn vị
+                Tên
             </th>
             <th>
-                Giá trị
+                Thứ tự ưu tiên
             </th>
             <th></th>
         </tr>
@@ -66,22 +77,22 @@
                     @Html.DisplayFor(modelItem => item.Id)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Unit)
+                    @Html.DisplayFor(modelItem => item.Name)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Value)
+                    @Html.DisplayFor(modelItem => item.Priority)
                 </td>
                 <td class="dt-nowrap">
-                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn-option" role="button" data-bs-toggle="tooltip"
-                    data-bs-placement="bottom" title="Edit">
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn-option" role="button"data-bs-toggle="tooltip"
+                        data-bs-placement="bottom" title="Edit">
                         <i class="fa-regular fa-pen-to-square"></i>
                     </a>
-                    @* <a asp-action="Details" asp-route-id="@item.Id" class="btn-option" role="button" *@
-                    @* data-bs-toggle="tooltip" data-bs-placement="bottom" title="Details"> *@
-                    @*     <i class="fa-solid fa-circle-info"></i> *@
-                    @* </a> *@
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn-option" role="button" data-bs-toggle="tooltip"
+                        data-bs-placement="bottom" title="Details">
+                        <i class="fa-solid fa-circle-info"></i>
+                    </a>
                     <a asp-action="Delete" asp-route-id="@item.Id" class="btn-option" role="button" data-bs-toggle="tooltip"
-                    data-bs-placement="bottom" title="Detele">
+                        data-bs-placement="bottom" title="Detele">
                         <i class="fa-solid fa-trash"></i>
                     </a>
                 </td>
@@ -131,3 +142,18 @@
         color: white; /* Màu chữ khi hover */
     }
 </style>
+
+<script>
+    $(document).ready(function () {
+        $('#btnCreateModal').click(function () {
+            $.ajax({
+                url: '@Url.Action("Create", "Color")',
+                type: 'GET',
+                success: function (data) {
+                    $('#createModalBody').html(data);
+                    $('#createModal').modal('show');
+                }
+            });
+        });
+    });
+</script>

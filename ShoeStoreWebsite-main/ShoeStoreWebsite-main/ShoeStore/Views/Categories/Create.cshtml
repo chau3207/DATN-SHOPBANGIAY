@@ -5,42 +5,51 @@
     Layout = "_AdminLayout";
 }
 
-<h1>Thêm mới danh mục</h1>
+<div class="admin-title mt-4 mb-4">
+    <ion-icon name="settings-outline"></ion-icon>
+    <div class="admin-title-content">
+        <h5>Quản lý danh mục</h5>
+        <span>Liệt kê danh sách các danh mục</span>
+    </div>
+</div>
 
-@* <h4>Category</h4> *@
+
 <hr/>
-<div class="row">
-    <div class="col-md-4">
+<div class="card">
+    <div class="card-body">
         <form asp-action="Create">
+            <h3 class="title-option mb-4">Thêm mới danh mục</h3>
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="">
+            <div class="form-group col-md-6" style="margin-left: 3cm;">
                 <label asp-for="Name" class="form-label">Tên</label>
                 <input asp-for="Name" class="form-control"/>
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
-            <div class="">
+            <div class="form-group col-md-6" style="margin-left: 3cm;">
                 <label asp-for="DisplayName" class="form-label">Tên hiển thị</label>
                 <input asp-for="DisplayName" class="form-control"/>
                 <span asp-validation-for="DisplayName" class="text-danger"></span>
             </div>
-            <div>
+            <div class="form-group col-md-6" style="margin-left: 3cm;">
                 <label asp-for="Description" class="form-label">Mô tả</label>
                 <input asp-for="Description" class="form-control"/>
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
-            <div class="">
+            <div class="form-group col-md-6" style="margin-left: 3cm;">
                 <label asp-for="ParentId" class="form-label"></label>
                 <select asp-for="ParentId" class="form-control" asp-items="ViewBag.ParentId">
                     <option selected=""></option>
                 </select>
             </div>
-            <div class="">
-                <input type="submit" value="Thêm mới" class="btn btn-primary"/>
+            <div class="d-flex justify-content-center align-items-center gap-3 mt-4">
+               <div class="form-group">
+                  <input type="submit" value="Thêm mới" class="btn-save"/>
+               </div>
+                <div>
+                    <a asp-action="Index" class="btn-back">Quay lại danh sách</a>
+                </div>
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index" class="btn btn-secondary">Quay lại danh sách</a>
-</div>

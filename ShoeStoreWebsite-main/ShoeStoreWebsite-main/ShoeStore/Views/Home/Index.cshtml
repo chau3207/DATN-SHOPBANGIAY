@@ -1,5 +1,5 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Trang chủ";
 }
 
 @model ShoeStore.Models.ViewModels.HomeViewModel
@@ -25,7 +25,7 @@
 <section class="featured mt-5">
     <div class="container">
         <h3 class="mb-4" data-aos="zoom-in-right">
-            <strong>Featured Product</strong>
+            <strong>Sản phẩm nổi bật</strong>
         </h3>
         <div class="product mt-4">
 
@@ -70,10 +70,6 @@
         <h3 class="mb-4" data-aos="zoom-in-right">
             <strong>Nike</strong>
         </h3>
-        @* <div class="category mt-4"> *@
-        @*     <button>Air Force 1</button> *@
-        @*     <button>Jordan</button> *@
-        @* </div> *@
         <div class="product mt-4">
 
             @for (var i = 0; i < Model.NikeProducts.Count; i++)
@@ -112,23 +108,24 @@
         <div class="view-more mt-4">
             <button>
                 <a asp-controller="Products" asp-action="Index" asp-route-brand="Nike">
-                    View all products for Nike
+                    Xem tất cả sản phẩm của Nike
                 </a>
             </button>
         </div>
     </div>
 </section>
 
+
 <section class="mlb mt-5">
     <div class="container">
         <h3 class="mb-4" data-aos="zoom-in-right">
-            <strong>New Balance</strong>
+            <strong>Brooks</strong>
         </h3>
         <div class="product mt-4" data-aos="zoom-in">
 
-            @for (var i = 0; i < Model.NewBalanceProducts.Count; i++)
+            @for (var i = 0; i < Model.BrooksProducts.Count; i++)
             {
-                var product = Model.NewBalanceProducts[i];
+                var product = Model.BrooksProducts[i];
                 int dataAosDelay = 200 + i * 100;
                 <div class="product-card" data-aos="fade-up" data-aos-delay="@dataAosDelay">
                     <a asp-controller="Products" asp-action="Detail" asp-route-url="@product.Url">
@@ -161,8 +158,8 @@
         </div>
         <div class="view-more mt-4">
             <button>
-            <a asp-controller="Products" asp-action="Index" asp-route-brand="New Balance">
-               View all products for New Balance
+            <a asp-controller="Products" asp-action="Index" asp-route-brand="Brooks">
+                    Xem tất cả sản phẩm của Brooks
             </a>
             </button>
         </div>
@@ -213,7 +210,7 @@
         <div class="view-more mt-4">
             <button>
             <a asp-controller="Products" asp-action="Index" asp-route-brand="Asics">
-                View all products for Asics
+                    Xem tất cả sản phẩm của Asics
             </a>
             </button>
         </div>
@@ -263,7 +260,7 @@
         <div class="view-more mt-4">
             <button>
             <a asp-controller="Products" asp-action="Index" asp-route-brand="Saucony">
-                View all products for Saucony
+                Xem tất cả sản phẩm của Saucony
             </a>
             </button>
         </div>

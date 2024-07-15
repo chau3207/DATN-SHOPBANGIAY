@@ -10,15 +10,12 @@ using X.PagedList;
 
 namespace ShoeStore.Controllers
 {
-    //là m?t attribute c?a controller ?? yêu c?u xác th?c và ?y quy?n, 
-    //ch? cho phép ng??i dùng v?i vai trò "Admin" truy c?p các ph??ng th?c 
-    //trong controller.
+    
     [Authorize(Roles = SD.Role_Admin)]
     public class BrandController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
-        //Constructor này nh?n m?t ??i t??ng IUnitOfWork thông qua Dependency Injection.IUnitOfWork ???c 
-        //s? d?ng ?? t??ng tác v?i c? s? d? li?u thông qua các repository.
+       
         public BrandController(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
@@ -94,10 +91,7 @@ namespace ShoeStore.Controllers
             }
             return View(brand);
         }
-        //Ph??ng th?c này x? lý vi?c c?p nh?t thông tin th??ng hi?u d?a trên 
-        //d? li?u ???c g?i t? form.
-        //N?u d? li?u h?p l?, c?p nh?t th??ng hi?u trong c? s? d? li?u và 
-        //chuy?n h??ng v? trang danh sách th??ng hi?u.
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description")] Brand brand)
@@ -126,8 +120,7 @@ namespace ShoeStore.Controllers
 
             return View(brand);
         }
-        //Ph??ng th?c này tr? v? view ?? xác nh?n xóa m?t th??ng hi?u d?a trên ID.
-        // GET: Brand/Delete/5
+        
         public async Task<IActionResult> Delete(int id)
         {
             var brand = await _unitOfWork.Brands.FirstOrDefaultAsync(m => m.Id == id);
@@ -138,10 +131,7 @@ namespace ShoeStore.Controllers
 
             return View(brand);
         }
-        //Ph??ng th?c này x? lý vi?c xóa th??ng hi?u d?a trên ID.
-        //N?u có các mô hình giày thu?c th??ng hi?u này, thông báo l?i và không 
-        //xóa; ng??c l?i, xóa th??ng hi?u và chuy?n h??ng v? trang danh sách 
-        //th??ng hi?u.
+        
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -157,12 +147,12 @@ namespace ShoeStore.Controllers
             {
                 _unitOfWork.Brands.Remove(brand);
                 await _unitOfWork.SaveChangesAsync();
-                TempData["SuccessMessage"] = "Thông tin đã được xóa thành công";
+                TempData["SuccessMessage"] = "Thông tin nhãn hàng đã được xóa thành công";
             }
             else
             {
-                TempData[SD.Error] = "Some shoe models is belong to this Brand. Can not delete it!";
-                
+                //TempData[SD.Error] = "Some shoe models is belong to this Brand. Can not delete it!";
+                TempData["ErrorMessage"] = "Một số mẫu giày thuộc về Thương hiệu này. Không thể xóa nó!";
             }
 
             return RedirectToAction(nameof(Index));
