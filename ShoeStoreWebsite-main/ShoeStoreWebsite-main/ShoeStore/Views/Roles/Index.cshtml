@@ -1,0 +1,61 @@
+﻿@using Microsoft.AspNetCore.Identity;
+@model IEnumerable<IdentityRole>
+@{
+    ViewData["Title"] = "Trang quản lý vai trò";
+    Layout = "_AdminLayout";
+}
+
+<link rel="stylesheet" href="~/css/custom.css" />
+<div class="d-flex justify-content-between align-items-center mt-4 mb-4">
+    <div class="admin-title">
+        <ion-icon name="settings-outline"></ion-icon>
+        <div class="admin-title-content">
+            <h5>Quản lý vai trò</h5>
+            <span>Liệt kê danh sách vai trò</span>
+        </div>
+    </div>
+    <div class="option-create">
+        <a asp-action="Create" class="btn-create">
+            Thêm mới <i class="fa-solid fa-circle-plus"></i>
+        </a>
+    </div>
+</div>
+
+<table id="table_id" class="custom-table">
+    <thead>
+        <tr>
+            <th>
+                Id
+            </th>
+            <th>
+                Tên
+            </th>
+            <th>
+                NormalizedName
+            </th>
+            
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NormalizedName)
+                </td>
+                <td class="dt-nowrap">
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn-option" role="button" data-bs-toggle="tooltip"
+                       data-bs-placement="bottom" title="Detele">
+                        <i class="fa-solid fa-trash"></i>
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

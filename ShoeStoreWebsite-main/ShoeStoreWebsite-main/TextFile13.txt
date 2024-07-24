@@ -1,0 +1,1 @@
+﻿in: Là một từ khóa trong C# dùng để chỉ định rằng biến tạm item sẽ nhận giá trị từ từng phần tử của tập hợp Model.

@@ -1,0 +1,39 @@
+﻿@using Microsoft.AspNetCore.Identity;
+@model IdentityRole
+
+@{
+    ViewData["Title"] = "Role Edit" + " ";
+    Layout = "_AdminLayout";
+}
+
+<div class="admin-title mt-4 mb-4">
+    <ion-icon name="settings-outline"></ion-icon>
+    <div class="admin-title-content">
+        <h5>Quản lý vai trò</h5>
+        <span>Liệt kê danh sách các vai trò</span>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <form asp-action="Edit">
+            <h3 class="title-option mb-4">Chỉnh sửa</h3>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group col-md-6" style="margin-left:3cm">
+                <label asp-for="Name" class="form-label">Tên</label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            
+            <div class="d-flex justify-content-center align-items-center gap-3 mt-4">
+                <div class="form-group">
+                    <input type="submit" value="Lưu" class="btn-save" />
+                </div>
+                <div>
+                    <a asp-action="Index" class="btn-back">Quay lại</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

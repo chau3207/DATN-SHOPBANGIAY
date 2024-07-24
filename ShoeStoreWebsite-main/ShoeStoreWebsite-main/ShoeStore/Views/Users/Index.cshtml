@@ -1,0 +1,56 @@
+﻿@using Microsoft.AspNetCore.Identity;
+@using ShoeStore.Models.ViewModels
+@model IEnumerable<UserViewModel>
+@{
+    ViewData["Title"] = "Trang quản lý người dùng";
+    Layout = "_AdminLayout";
+}
+
+<link rel="stylesheet" href="~/css/custom.css" />
+<div class="d-flex justify-content-between align-items-center mt-4 mb-4">
+    <div class="admin-title">
+        <ion-icon name="settings-outline"></ion-icon>
+        <div class="admin-title-content">
+            <h5>Quản lý người dùng</h5>
+            <span>Liệt kê danh sách người dùng</span>
+        </div>
+    </div>
+</div>
+
+<table id="table_id" class="custom-table">
+    <thead>
+        <tr>
+            <th>
+                Id
+            </th>
+            <th>
+                Tên tài khoản
+            </th>
+            <th>
+                Vai trò
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Roles)
+                </td>
+                <td class="dt-nowrap">
+                    <a asp-action="Delete" asp-route-id="@item.UserId" class="btn-option" role="button" data-bs-toggle="tooltip"
+                       data-bs-placement="bottom" title="Detele">
+                        <i class="fa-solid fa-trash"></i>
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

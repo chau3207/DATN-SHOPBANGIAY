@@ -48,7 +48,9 @@
                 <p>Nhãn hàng: <a class="link-dark text-decoration-none" asp-controller="Products" asp-action="Index"
                         asp-route-brand="@Model.Shoe.Brand.Name">
                         <strong>@Model.Shoe.Brand.Name</strong>
-                    </a></p>
+                    </a>
+                </p>
+                <p>Danh mục: <strong>@Model.Shoe.Category.Name</strong></p>
                 <p>Mã sản phẩm: <strong>@Model.ShoeColor.ProductCode</strong></p>
             </div>
         </div>

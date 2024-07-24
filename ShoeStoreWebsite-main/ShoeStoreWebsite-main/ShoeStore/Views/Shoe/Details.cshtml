@@ -48,6 +48,7 @@
                 <div class="mb-3 col-md-6">
                     <label asp-for="Description" class="form-label">Mô tả</label>
                     <div class="form-textarea">@Html.Raw(Model.Description)</div>
+                    @* Html.Raw(value):Hiển thị giá trị dưới dạng đánh dấu HTML thay vì hiển thị dưới dạng đầu ra được mã hóa HTML. *@
                 </div>
             </div>
             <div class="col-12 col-md-6 mb-3">

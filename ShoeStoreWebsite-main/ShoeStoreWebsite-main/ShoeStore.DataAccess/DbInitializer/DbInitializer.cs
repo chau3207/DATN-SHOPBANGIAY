@@ -60,7 +60,7 @@ public class DbInitializer : IDbInitializer
                 Name = "User",
                 Email = "user@gmail.com",
                 PhoneNumber = "123456789",
-                Address = "VTC",
+                Address = "Số nhà 11",
                 City = "Hà Nội",
                 District = "Quận Hai Bà Trưng",
                 Ward = "Phường Minh Khai",

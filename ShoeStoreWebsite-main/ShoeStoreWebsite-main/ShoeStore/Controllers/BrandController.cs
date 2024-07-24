@@ -20,9 +20,7 @@ namespace ShoeStore.Controllers
         {
             _unitOfWork = unitOfWork;
         }
-        //Ph??ng th?c này tr? v? m?t view ch?a danh sách t?t c? các th??ng hi?u 
-        //trong h? th?ng, s? d?ng repository ?? l?y d? li?u.
-        // GET: Brand
+        
         //public async Task<IActionResult> Index()
         //{
         //      return View(await _unitOfWork.Brands.GetAllAsync());
@@ -151,7 +149,6 @@ namespace ShoeStore.Controllers
             }
             else
             {
-                //TempData[SD.Error] = "Some shoe models is belong to this Brand. Can not delete it!";
                 TempData["ErrorMessage"] = "Một số mẫu giày thuộc về Thương hiệu này. Không thể xóa nó!";
             }
 

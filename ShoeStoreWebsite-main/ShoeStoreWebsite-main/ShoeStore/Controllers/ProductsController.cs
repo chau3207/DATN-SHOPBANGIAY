@@ -69,6 +69,7 @@ public class ProductsController : Controller
                     .ThenInclude(e => e.Color)
                     .Include(e => e.ShoeColors)!
                     .ThenInclude(e => e.Images)!
+                    .Include(e => e.Category)
             );
 
         List<ShoeColor> relatedShoeColors = shoe.ShoeColors!.OrderBy(e => e.SortOrder).ToList();
