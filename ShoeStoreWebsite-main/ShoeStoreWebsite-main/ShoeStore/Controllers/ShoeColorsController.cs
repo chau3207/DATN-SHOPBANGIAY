@@ -84,6 +84,15 @@ namespace ShoeStore.Controllers
             // [Bind("Id,FactoryPrice,SalePrice,SortOrder,Active,ShoeId,ColorId")]
             ShoeColor shoeColor, IFormFileCollection? formFileCollection)
         {
+
+            var existingShoeColor = await _unitOfWork.ShoeColors.FirstOrDefaultAsync(e =>
+        e.ShoeId == shoeColor.ShoeId && e.ColorId == shoeColor.ColorId );
+
+            if (existingShoeColor != null)
+            {
+                ModelState.AddModelError(string.Empty, "Màu sắc và giày đã tồn tại");
+            }
+
             if (ModelState.IsValid)
             {
                 Shoe? shoeFromDb = await _unitOfWork.Shoes.FirstOrDefaultAsync(e => e.Id == shoeColor.ShoeId);
@@ -130,7 +139,7 @@ namespace ShoeStore.Controllers
 
                     await _unitOfWork.SaveChangesAsync();
                 }
-
+                TempData["SuccessMessage"] = "Thông tin màu sắc giày được thêm thành công";
                 return RedirectToAction(nameof(Edit), new { id = shoeColor.Id });
             }
 
@@ -174,8 +183,17 @@ namespace ShoeStore.Controllers
                 return NotFound();
             }
 
+            var existingShoeColor = await _unitOfWork.ShoeColors.FirstOrDefaultAsync(e =>
+        e.ShoeId == shoeColor.ShoeId && e.ColorId == shoeColor.ColorId && e.Id != id);
+
+            if (existingShoeColor != null)
+            {
+                ModelState.AddModelError(string.Empty, "Màu sắc và giày đã tồn tại");
+            }
+
             if (ModelState.IsValid)
             {
+
                 shoeColor.Created = shoeColorFromDb.Created;
                 shoeColor.Edited = DateTime.Now;
                 _unitOfWork.ShoeColors.Update(shoeColor);
@@ -253,8 +271,10 @@ namespace ShoeStore.Controllers
             {
                 TempData["ErrorMessage"] = "Một số đôi giày thuộc về Màu Sắc Giày này. Không thể xóa nó!";
             }
+
+            return RedirectToAction("Index");
             
-            return RedirectToAction("Edit", "Shoe", new {id = shoeColor.ShoeId});
+            //return RedirectToAction("Edit", "Shoe", new {id = shoeColor.ShoeId});
         }
 
         public async Task<IActionResult> EditShoeSize(int id)
@@ -280,11 +300,20 @@ namespace ShoeStore.Controllers
 
             if (ModelState.IsValid)
             {
-                _unitOfWork.ShoeSizes.Update(shoeSize);
-                await _unitOfWork.SaveChangesAsync();
-                return RedirectToAction(nameof(Edit), new { id = shoeSize.ShoeColorId });
+                //ShoeSize shoeSizeFromDb = await _unitOfWork.ShoeSizes.FirstOrDefaultAsync(e => e.SizeId == shoeSize.SizeId || e.Quantity == shoeSize.Quantity);
+                //if (shoeSizeFromDb != null)
+                //{
+                //    //TempData[SD.Error] = "Kích thước này đã tồn tại";
+                //    ModelState.AddModelError("SizeId", "Kích thước này đã tồn tại");
+                //}
+                //else
+                //{
+                    _unitOfWork.ShoeSizes.Update(shoeSize);
+                    await _unitOfWork.SaveChangesAsync();
+                    TempData["SuccessMessage"] = "Kích thước giày được sửa thành công";
+                    return RedirectToAction(nameof(Edit), new { id = shoeSize.ShoeColorId });
+                //}
             }
-
             ViewData["SizeId"] = new SelectList(await _unitOfWork.Sizes.GetAllAsync(), "Id", "Value", shoeSize.SizeId);
             return View(shoeSize);
         }
@@ -305,9 +334,17 @@ namespace ShoeStore.Controllers
         {
             if (ModelState.IsValid)
             {
-                await _unitOfWork.ShoeSizes.AddAsync(shoeSize);
-                await _unitOfWork.SaveChangesAsync();
-                return RedirectToAction("Edit", new { id = shoeSize.ShoeColorId });
+                ShoeSize shoeSizeFromDb = await _unitOfWork.ShoeSizes.FirstOrDefaultAsync(e => e.SizeId == shoeSize.SizeId);
+                if (shoeSizeFromDb != null)
+                {
+                    TempData[SD.Error] = "Kích thước này đã tồn tại";
+                }
+                else
+                {
+                    await _unitOfWork.ShoeSizes.AddAsync(shoeSize);
+                    await _unitOfWork.SaveChangesAsync();
+                    return RedirectToAction("Edit", new { id = shoeSize.ShoeColorId });
+                }
             }
 
             ViewData["Sizes"] = new SelectList(await _unitOfWork.Sizes.GetAllAsync(), "Id", "Value", shoeSize.SizeId);
@@ -326,6 +363,7 @@ namespace ShoeStore.Controllers
 
             _unitOfWork.ShoeSizes.Remove(shoeSize);
             await _unitOfWork.SaveChangesAsync();
+            TempData["SuccessMessage"] = "Thông tin kích thước giày đã được xóa thành công";
             return RedirectToAction("Edit", new { id = shoeColorId });
         }
 

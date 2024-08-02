@@ -8,6 +8,16 @@
     bool isUser = User.Identity.IsAuthenticated;
 }
 
+@{
+    if(TempData[SD.Error] != null)
+    {
+        <div id="error-alert" class="alert alert-danger">
+            @TempData[SD.Error]
+        </div>
+    }
+}
+
+<script src="~/js/Error.js"></script>
 <section class="detail container mt-lg-5 mt-4">
     <div class="detail-slider">
         <div class="carousel carousel-main" data-flickity='{ "pageDots": false, "fullscreen": true }'>

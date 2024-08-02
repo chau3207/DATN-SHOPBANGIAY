@@ -14,11 +14,19 @@
             @TempData["SuccessMessage"]
         </div>
     }
+}
 
+@{
+    if (TempData["ErrorMessage"] != null)
+    {
+        <div id="success-alert" class="alert alert-danger">
+            @TempData["ErrorMessage"]
+        </div>
+    }
 }
 
 <script src="~/js/Success.js"></script>
-
+<script src="~/js/Error.js"></script>
 <link rel="stylesheet" href="~/css/custom.css" />
 
 <div class="admin-title mt-4 mb-4">

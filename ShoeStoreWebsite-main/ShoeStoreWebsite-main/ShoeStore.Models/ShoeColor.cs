@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.AspNetCore.Antiforgery;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
 namespace ShoeStore.Models;
@@ -9,9 +11,10 @@ public class ShoeColor
     public string? ProductCode { get; set; }
 
     [Column(TypeName = "decimal(10, 2)")] public decimal FactoryPrice { get; set; }
-
-    [Column(TypeName = "decimal(10, 2)")] public decimal SalePrice { get; set; }
-
+    
+    [Column(TypeName = "decimal(10, 2)")]
+    public decimal SalePrice { get; set; }
+    
     public int SortOrder { get; set; }
     public int Priority { get; set; } = 1;
     public bool Active { get; set; }

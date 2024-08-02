@@ -5,6 +5,15 @@
     Layout = "_AdminLayout";
 }
 
+@{
+    if(TempData["SuccessMessage"] != null)
+    {
+        <div id="success-alert" class="alert alert-success">
+            @TempData["SuccessMessage"]
+        </div>
+    }
+}
+
 <div class="admin-title mt-4 mb-4">
     <ion-icon name="settings-outline"></ion-icon>
     <div class="admin-title-content">
@@ -41,13 +50,15 @@
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label asp-for="ShoeId" class="form-label">Giày</label>
-                    <select asp-for="ShoeId" class="form-select" asp-items="ViewBag.ShoeId" readonly></select>
+                    <select asp-for="ShoeId" class="form-select" asp-items="ViewBag.ShoeId" ></select>
                     <span asp-validation-for="ShoeId" class="text-danger"></span>
+                    @* <input type="hidden" asp-for="ShoeId" /> *@
                 </div>
                 <div class="col-md-6 mb-3">
                     <label asp-for="ColorId" class="form-label">Màu sắc</label>
                     <select asp-for="ColorId" class="form-select" asp-items="ViewBag.ColorId"></select>
                     <span asp-validation-for="ColorId" class="text-danger"></span>
+                    @* <input type="hidden" asp-for="ColorId" /> *@
                 </div>
             </div>
             <div class="col-12 col-md-6 mb-3">
@@ -65,7 +76,10 @@
     </div>
 
     <div class="shoeImage mt-5">
-        <h3 class="title-option mb-4"><span>Ảnh<sub class="fs-6">(@Model.Images.Count())</sub></span></h3>
+        @* <h3 class="title-option mb-4"><span>Ảnh<sub class="fs-6">(@Model.Images.Count())</sub></span></h3> *@
+        <h3 class="title-option mb-4">
+            <span>Ảnh<sub class="fs-6">(@(Model.Images != null ? Model.Images.Count() : 0))</sub></span>
+        </h3>
         <div class="d-flex flex-column col-md-8 mx-auto position-relative">
             <div class="add-image">
                 <button class="btn-save btn-add-img">
@@ -158,7 +172,10 @@
     <a asp-action="AddShoeSize" asp-controller="ShoeColors" asp-route-shoeColorId="@Model.Id" class="btn-save">
         Thêm kích cỡ
     </a>
-    <a asp-controller="Shoe" asp-action="Edit" asp-route-id="@Model?.ShoeId" class="btn-back">
+    @* <a asp-controller="Shoe" asp-action="Edit" asp-route-id="@Model?.ShoeId" class="btn-back">
+        Quay lại
+    </a> *@
+    <a asp-controller="ShoeColors" asp-action="Index" class="btn-back">
         Quay lại
     </a>
 </div>

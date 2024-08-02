@@ -78,8 +78,7 @@ public class CartController : Controller
                     {
                         ShoeSizeId = shoeSize.Id,
                         CartItemId = cartItem.Id,
-                        ProductName =
-                            $"{shoeSize.ShoeColor.Shoe.Name}",
+                        ProductName = $"{shoeSize.ShoeColor.Shoe.Name}",
                         Size = $"{shoeSize.Size?.Unit} {shoeSize.Size?.Value}",
                         BrandName = shoeSize.ShoeColor.Shoe?.Brand.Name,
                         Price = shoeSize.ShoeColor.SalePrice,
@@ -129,7 +128,7 @@ public class CartController : Controller
 
         if (cartItem.Count >= shoeSize.Quantity)
         {
-            TempData[SD.Error] = "Can't add more item of this product!";
+            TempData[SD.Error] = "Không thể thêm nhiều mặt hàng của sản phẩm này!";
             return RedirectToAction("Index", new { returnUrl });
         }
 

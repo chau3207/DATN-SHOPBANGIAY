@@ -41,7 +41,7 @@ namespace ShoeStore.Controllers
                 Size? sizeFromDb = await _unitOfWork.Sizes.FirstOrDefaultAsync(e => e.Unit == size.Unit && Math.Abs(e.Value - size.Value) < 0.001);
                 if (sizeFromDb != null)
                 {
-                    TempData[SD.Error] = "This size already existed!";
+                    TempData[SD.Error] = "Kích thước đã tồn tại!";
                 }
                 else
                 {
@@ -76,7 +76,7 @@ namespace ShoeStore.Controllers
                 return NotFound();
             }
 
-            var existingSize = await _unitOfWork.Sizes.FirstOrDefaultAsync(s => s.Value == size.Value && s.Unit != size.Unit && s.Id != size.Id);
+            var existingSize = await _unitOfWork.Sizes.FirstOrDefaultAsync(s => s.Value == size.Value && s.Unit == size.Unit && s.Id != size.Id);
             if (existingSize != null)
             {
                 ModelState.AddModelError("Value", "Giá trị này đã tồn tại");

@@ -124,7 +124,10 @@
             Xóa
         </button>
     </form>
-    <a asp-controller="Shoe" asp-action="Edit" asp-route-id="@Model?.ShoeId" class="btn-back">
+    @* <a asp-controller="Shoe" asp-action="Edit" asp-route-id="@Model?.ShoeId" class="btn-back">
         Quay về trang chỉnh sửa
+    </a> *@
+    <a asp-controller="ShoeColors" asp-action="Index" class="btn-back">
+        Quay lại
     </a>
 </div>

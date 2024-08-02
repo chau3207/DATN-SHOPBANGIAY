@@ -1,9 +1,21 @@
-﻿@model ShoeStore.Models.ShoeSize
+﻿@using ShoeStore.Ultitity
+@model ShoeStore.Models.ShoeSize
 
 @{
     ViewData["Title"] = "Edit Shoe Size";
     Layout = "_AdminLayout";
 }
+
+@{
+    if (TempData[SD.Error] != null)
+    {
+        <div id="error-alert" class="alert alert-danger">
+            @TempData[SD.Error]
+        </div>
+    }
+}
+
+<script src="~/js/Error.js"></script>
 
 <div class="admin-title mt-4 mb-4">
     <ion-icon name="settings-outline"></ion-icon>
@@ -24,7 +36,7 @@
                 <input type="hidden" asp-for="ShoeColorId" />
                 <div class="mb-3">
                     <label asp-for="SizeId" class="form-label">Kích cỡ</label>
-                    <select asp-for="SizeId" class="form-select" asp-items="ViewBag.SizeId"></select>
+                    <select asp-for="SizeId" class="form-select" asp-items="ViewBag.SizeId" disabled></select>
                     <span asp-validation-for="SizeId" class="text-danger"></span>
                 </div>
                 <div class="mb-3">

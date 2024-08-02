@@ -1,10 +1,21 @@
 ﻿@using ShoeStore.Models.ViewModels
 @using Microsoft.AspNetCore.Mvc.TagHelpers
+@using ShoeStore.Ultitity
 @model ShoeStore.Models.ViewModels.CartViewModel
 @{
     ViewData["Title"] = "Trang giỏ hàng";
 }
 
+@{
+    if (TempData[SD.Error] != null)
+    {
+        <div id="error-alert" class="alert alert-danger">
+            @TempData[SD.Error]
+        </div>
+    }
+}
+
+<script src="~/js/Error.js"></script>
 <section class="cart mt-lg-5 mt-4 mb-5">
     <div class="container">
         <div class="cart-background">

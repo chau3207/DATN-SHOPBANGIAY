@@ -35,7 +35,7 @@ public class HomeController : Controller
         HomeViewModel homeViewModel = new HomeViewModel()
         {
             FeatureProducts = await _unitOfWork.ShoeColors
-                .GetAllAsync(include: o => o
+                .GetAllAsync(include: o => o.Where(e => e.Active == true)
                         .Include(e => e.Images)
                         .Include(e => e.Shoe)
                         .ThenInclude(e => e!.Brand)!,
@@ -44,25 +44,16 @@ public class HomeController : Controller
                 ),
             NikeProducts = await _unitOfWork.ShoeColors
                 .GetAllAsync(e => nike != null && e.Shoe!.BrandId == nike.Id,
-                    include: o => o
+                    include: o => o.Where(e => e.Active == true)
                     .Include(e => e.Images)
                     .Include(e => e.Shoe)
                     .ThenInclude(e => e!.Brand)!,
                     orderBy: e => e.Priority,
                     take: 4
                 ),
-            //NewBalanceProducts = await _unitOfWork.ShoeColors
-            //    .GetAllAsync(e => newBalance != null && e.Shoe!.BrandId == newBalance.Id,
-            //        include: o => o
-            //            .Include(e => e.Images)
-            //            .Include(e => e.Shoe)
-            //            .ThenInclude(e => e!.Brand)!,
-            //        orderBy: e => e.Priority,
-            //        take: 4
-            //    ),
             BrooksProducts = await _unitOfWork.ShoeColors
                 .GetAllAsync(e => brooks != null && e.Shoe!.BrandId == brooks.Id,
-                    include: o => o
+                    include: o => o.Where(e => e.Active == true)
                         .Include(e => e.Images)
                         .Include(e => e.Shoe)
                         .ThenInclude(e => e!.Brand)!,
@@ -71,7 +62,7 @@ public class HomeController : Controller
                 ),
             AsicsProducts = await _unitOfWork.ShoeColors
                 .GetAllAsync(e => asics != null && e.Shoe!.BrandId == asics.Id,
-                    include: o => o
+                    include: o => o.Where(e => e.Active == true)
                         .Include(e => e.Images)
                         .Include(e => e.Shoe)
                         .ThenInclude(e => e!.Brand)!,
@@ -79,8 +70,8 @@ public class HomeController : Controller
                     take: 4
                 ),
             SauconyProducts = await _unitOfWork.ShoeColors
-                .GetAllAsync(e => asics != null && e.Shoe!.BrandId == asics.Id,
-                    include: o => o
+                .GetAllAsync(e => saucony != null && e.Shoe!.BrandId == saucony.Id,
+                    include: o => o.Where(e => e.Active == true)
                         .Include(e => e.Images)
                         .Include(e => e.Shoe)
                         .ThenInclude(e => e!.Brand)!,

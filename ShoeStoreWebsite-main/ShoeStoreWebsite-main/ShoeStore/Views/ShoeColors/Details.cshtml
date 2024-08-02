@@ -122,8 +122,11 @@
     @* <button id="add-size" class="btn-save" data-bs-toggle="modal" data-bs-target="#modal-size-quantity"> *@
     @*     Add Size *@
     @* </button> *@
-    <a asp-controller="Shoe" asp-action="Edit" asp-route-id="@Model?.ShoeId" class="btn-back">
+    @* <a asp-controller="Shoe" asp-action="Edit" asp-route-id="@Model?.ShoeId" class="btn-back">
         Quay lại trang chỉnh sửa giày
+    </a> *@
+    <a asp-controller="ShoeColors" asp-action="Index" class="btn-back">
+        Quay lại 
     </a>
 </div>
 

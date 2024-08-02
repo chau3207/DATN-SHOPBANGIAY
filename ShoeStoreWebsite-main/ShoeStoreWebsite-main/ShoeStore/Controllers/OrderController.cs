@@ -347,8 +347,8 @@ public class OrderController : Controller
                 PaymentIntent = orderFromDb.PaymentIntentId,
             };
 
-            var service = new RefundService();
-            Refund refund = await service.CreateAsync(options);
+            //var service = new RefundService();
+            //Refund refund = await service.CreateAsync(options);
 
             await _unitOfWork.Orders.UpdateStatusAsync(orderFromDb.Id, SD.StatusCancelled, SD.StatusRefunded);
         }

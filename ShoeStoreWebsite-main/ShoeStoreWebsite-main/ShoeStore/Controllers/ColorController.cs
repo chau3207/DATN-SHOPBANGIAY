@@ -26,16 +26,16 @@ namespace ShoeStore.Controllers
             return View(paginatedColors);
         }
 
-        public async Task<IActionResult> Details(int id)
-        {
-            var color = await _unitOfWork.Colors.FirstOrDefaultAsync(m => m.Id == id);
-            if (color == null)
-            {
-                return NotFound();
-            }
+        //public async Task<IActionResult> Details(int id)
+        //{
+        //    var color = await _unitOfWork.Colors.FirstOrDefaultAsync(m => m.Id == id);
+        //    if (color == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            return View(color);
-        }
+        //    return View(color);
+        //}
 
         public async Task<IActionResult> Create()
         {

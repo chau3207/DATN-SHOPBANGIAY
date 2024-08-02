@@ -72,17 +72,17 @@
             {
                 <div class="position-relative">
                     <span class="color-variant-name">@e.Color?.Name</span>
-                    <a asp-controller="ShoeColors" asp-action="Edit" asp-route-id="@e.Id">
+                    @* <a asp-controller="ShoeColors" asp-action="Edit" asp-route-id="@e.Id"> *@
                         <div class="color-variant-img">
                             <img src="@e.Images?.First().Path" alt="">
                         </div>
-                    </a>
+                    @* </a> *@
                 </div>
             }
         </div>
         <div class="d-flex justify-content-center align-items-center gap-3 mt-4 mb-4">
-            <a class="btn-save" asp-controller="ShoeColors" asp-action="Create" asp-route-shoeId="@Model.Id">
-                Thêm màu sắc</a>
+            @* <a class="btn-save" asp-controller="ShoeColors" asp-action="Create" asp-route-shoeId="@Model.Id">
+                Thêm màu sắc</a> *@
             <a asp-action="Index" class="btn-back">Quay lại</a>
         </div>
     </div>

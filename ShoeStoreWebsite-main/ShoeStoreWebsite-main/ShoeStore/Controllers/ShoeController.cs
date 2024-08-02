@@ -138,9 +138,9 @@ namespace ShoeStore.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            ViewBag.BrandId = new SelectList(await _unitOfWork.Brands.GetAllAsync(), "Id", "Unit", shoe.BrandId);
+            ViewBag.BrandId = new SelectList(await _unitOfWork.Brands.GetAllAsync(), "Id", "Name", shoe.BrandId);
             ViewBag.CategoryId =
-                new SelectList(await _unitOfWork.Categories.GetAllAsync(), "Id", "Unit", shoe.CategoryId);
+                new SelectList(await _unitOfWork.Categories.GetAllAsync(), "Id", "Name", shoe.CategoryId);
             return View(shoe);
         }
 

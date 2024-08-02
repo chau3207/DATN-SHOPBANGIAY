@@ -24,22 +24,9 @@ public class ProductsController : Controller
         Cart = cart;
     }
 
-    //public async Task<IActionResult> Index(string? productName, int page , string? brand = null, int? size = null,
-    //    decimal? minPrice = 0,
-    //    decimal? maxPrice = 999, string? sort = "latest")
-    //{
-    //    //ProductListViewModel productListViewModel = await _unitOfWork.ShoeColors.FilterProductAsync(PageSize,
-    //    //    productName, page, brand, size, minPrice, maxPrice,
-    //    //    sort);
-    //    ProductListViewModel productListViewModel = await _unitOfWork.ShoeColors.FilterProductAsync(
-    //       productName, brand, size, minPrice, maxPrice,
-    //       sort);
-    //    return View(productListViewModel);
-    //}
-
     public async Task<IActionResult> Index(string? productName, string? brand = null, int? size = null,
     decimal? minPrice = 0, decimal? maxPrice = 999, string? sort = "latest",
-    int page = 1, int pageSize = 12) // Added pagination parameters
+    int page = 1, int pageSize = 12) 
     {
         ProductListViewModel productListViewModel = await _unitOfWork.ShoeColors.FilterProductAsync(productName, brand, size, minPrice, maxPrice, sort, page, pageSize); // Passed pagination parameters
         return View(productListViewModel);
@@ -97,8 +84,7 @@ public class ProductsController : Controller
 
     [HttpPost]
     [Authorize]
-    public async Task<IActionResult>
-        AddToCart(CartItem cartItem, string? returnUrl)
+    public async Task<IActionResult>AddToCart(CartItem cartItem, string? returnUrl)
     {
         returnUrl ??= "/";
 
@@ -129,7 +115,7 @@ public class ProductsController : Controller
 
                 if (shoeSize.Quantity < cartItem.Count)
                 {
-                    TempData[SD.Error] = $"There're only {shoeSize.Quantity} items of this size left";
+                    TempData[SD.Error] = $"Chỉ còn lại {shoeSize.Quantity} mặt hàng cỡ này!";
                     return Redirect(returnUrl);
                 }
 
@@ -169,7 +155,7 @@ public class ProductsController : Controller
             }
         }
 
-        TempData[SD.Error] = "Did you forgot to chose size?";
+        TempData[SD.Error] = "Bạn chưa chọn kích thước?";
 
         return Redirect(returnUrl);
     }
@@ -200,7 +186,7 @@ public class ProductsController : Controller
 
             if (shoeSize.Quantity < cartItem.Count)
             {
-                TempData[SD.Error] = $"There're only {shoeSize.Quantity} items of this size left!";
+                TempData[SD.Error] = $"Chỉ còn lại  {shoeSize.Quantity} mặt hàng cỡ này!";
                 return Redirect(returnUrl);
             }
 
@@ -234,7 +220,7 @@ public class ProductsController : Controller
             return RedirectToAction("Index", "Cart", new { returnUrl });
         }
 
-        TempData[SD.Error] = "Did you forgot to chose size?";
+        TempData[SD.Error] = "Bạn chưa chọn kích cỡ?";
 
         return Redirect(returnUrl);
     }

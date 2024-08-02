@@ -12,15 +12,15 @@ public static class SD
     public const string Warning = "Warning";
     
     
-    public const string StatusPending = "Pending";
-    public const string StatusApproved = "Approved";
-    public const string StatusInpProcess = "Processing";
-    public const string StatusShipped = "Shipped";
-    public const string StatusCancelled = "Cancelled";
-    public const string StatusRefunded = "Refunded";
+    public const string StatusPending = "Chưa giải quyết";
+    public const string StatusApproved = "Được chấp thuận";
+    public const string StatusInpProcess = "Xử lý";
+    public const string StatusShipped = "Đã vận chuyển";
+    public const string StatusCancelled = "Đã hủy";
+    public const string StatusRefunded = "Đã hoàn tiền";
     
-    public const string PaymentStatusPending = "Pending";
-    public const string PaymentStatusApproved = "Approved";
+    public const string PaymentStatusPending = "Chưa giải quyết";
+    public const string PaymentStatusApproved = "Được chấp thuận";
     public const string PaymentStatusDelayedPayment = "ApprovedForDelaydPayment";
     public const string PaymentStatusRejected = "Rejected";
 }

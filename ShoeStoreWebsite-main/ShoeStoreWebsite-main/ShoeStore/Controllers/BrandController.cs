@@ -39,16 +39,16 @@ namespace ShoeStore.Controllers
         //Ph??ng th?c này tr? v? view chi ti?t c?a m?t th??ng hi?u d?a trên ID.
         //N?u không tìm th?y th??ng hi?u, tr? v? 404 Not Found.
         // GET: Brand/Details/5
-        public async Task<IActionResult> Details(int id)
-        {
-            var brand = await _unitOfWork.Brands.FirstOrDefaultAsync(m => m.Id == id);
-            if (brand == null)
-            {
-                return NotFound();
-            }
+        //public async Task<IActionResult> Details(int id)
+        //{
+        //    var brand = await _unitOfWork.Brands.FirstOrDefaultAsync(m => m.Id == id);
+        //    if (brand == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            return View(brand);
-        }
+        //    return View(brand);
+        //}
         //Ph??ng th?c này tr? v? view ?? t?o m?i m?t th??ng hi?u.
         public IActionResult Create()
         {

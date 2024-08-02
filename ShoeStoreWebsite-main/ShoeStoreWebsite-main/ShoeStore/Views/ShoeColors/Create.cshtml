@@ -53,8 +53,8 @@
         </div>
         <div class="form-group mb-3">
             <label asp-for="ColorId" class="form-label">
-                Màu sắc <span class="small">(or <a asp-controller="Color" asp-action="Create" target="_blank">create
-                        new Color</a>)</span>
+                Màu sắc <span class="small">@* (or <a asp-controller="Color" asp-action="Create" target="_blank">create
+                        new Color</a>) *@</span>
             </label>
             <select asp-for="ColorId" class="form-select" asp-items="ViewBag.ColorId"></select>
         </div>
