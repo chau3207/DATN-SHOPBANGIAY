@@ -300,19 +300,11 @@ namespace ShoeStore.Controllers
 
             if (ModelState.IsValid)
             {
-                //ShoeSize shoeSizeFromDb = await _unitOfWork.ShoeSizes.FirstOrDefaultAsync(e => e.SizeId == shoeSize.SizeId || e.Quantity == shoeSize.Quantity);
-                //if (shoeSizeFromDb != null)
-                //{
-                //    //TempData[SD.Error] = "Kích thước này đã tồn tại";
-                //    ModelState.AddModelError("SizeId", "Kích thước này đã tồn tại");
-                //}
-                //else
-                //{
-                    _unitOfWork.ShoeSizes.Update(shoeSize);
-                    await _unitOfWork.SaveChangesAsync();
-                    TempData["SuccessMessage"] = "Kích thước giày được sửa thành công";
-                    return RedirectToAction(nameof(Edit), new { id = shoeSize.ShoeColorId });
-                //}
+                _unitOfWork.ShoeSizes.Update(shoeSize);
+                await _unitOfWork.SaveChangesAsync();
+                TempData["SuccessMessage"] = "Kích thước giày được sửa thành công";
+                return RedirectToAction(nameof(Edit), new { id = shoeSize.ShoeColorId });
+
             }
             ViewData["SizeId"] = new SelectList(await _unitOfWork.Sizes.GetAllAsync(), "Id", "Value", shoeSize.SizeId);
             return View(shoeSize);

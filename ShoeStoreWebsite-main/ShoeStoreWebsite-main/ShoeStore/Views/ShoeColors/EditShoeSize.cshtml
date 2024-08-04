@@ -34,6 +34,7 @@
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <input type="hidden" asp-for="Id" />
                 <input type="hidden" asp-for="ShoeColorId" />
+                <input type="hidden" asp-for="SizeId" />
                 <div class="mb-3">
                     <label asp-for="SizeId" class="form-label">Kích cỡ</label>
                     <select asp-for="SizeId" class="form-select" asp-items="ViewBag.SizeId" disabled></select>
