@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 #nullable disable
@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.EntityFrameworkCore;
 using ShoeStore.Models;
 using ShoeStore.Ultitity;
 
@@ -103,6 +104,7 @@ namespace ShoeStore.Areas.Identity.Pages.Account
             public string ConfirmPassword { get; set; }
 
             [Required] public string Name { get; set; }
+            [StringLength(12, ErrorMessage ="Số điện thoại yêu cầu là tầm {2} đến {1} chữ số", MinimumLength =10)]
             [Phone] public string? PhoneNumber { get; set; }
             public string? Address { get; set; }
             public string? City { get; set; }
@@ -135,6 +137,12 @@ namespace ShoeStore.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
+                var phonenumberExits = await _userManager.Users.AnyAsync(u => u.PhoneNumber == Input.PhoneNumber);
+                if(phonenumberExits)
+                {
+                    ModelState.AddModelError(string.Empty,"Số điện thoại đã tồn tại");
+                    return Page();
+                }
                 var user = CreateUser();
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);

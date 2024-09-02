@@ -25,7 +25,7 @@ public class ProductsController : Controller
     }
 
     public async Task<IActionResult> Index(string? productName, string? brand = null, int? size = null,
-    decimal? minPrice = 0, decimal? maxPrice = 999, string? sort = "latest",
+    decimal? minPrice = 0, decimal? maxPrice = 999999, string? sort = "latest",
     int page = 1, int pageSize = 12) 
     {
         ProductListViewModel productListViewModel = await _unitOfWork.ShoeColors.FilterProductAsync(productName, brand, size, minPrice, maxPrice, sort, page, pageSize); // Passed pagination parameters
@@ -66,7 +66,8 @@ public class ProductsController : Controller
                 include: o => o
                     .Include(e => e.Images)
                     .Include(e => e.Shoe.Brand),
-                orderBy: e => e.Priority,
+                //orderBy: e => e.Priority,
+                orderBy: e => e.SortOrder,
                 take: 4
             );
 

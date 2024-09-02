@@ -1,0 +1,3 @@
+﻿AOS: Thư viện của JavaScripts cho phép tạo các hiệu ứng khi người dùng cuộn trang
+Hình ảnh sử dụng CSS :transition
+Thanh trên cùng ở trang chủ, nhãn hàng, ... dùng transform

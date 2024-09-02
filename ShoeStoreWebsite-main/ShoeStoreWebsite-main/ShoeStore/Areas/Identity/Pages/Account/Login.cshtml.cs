@@ -61,7 +61,7 @@ namespace ShoeStore.Areas.Identity.Pages.Account
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
-            [Required]
+            [Required(ErrorMessage = "Nhập thiếu thông tin tài khoản")]
             [EmailAddress]
             public string Email { get; set; }
 
@@ -69,7 +69,7 @@ namespace ShoeStore.Areas.Identity.Pages.Account
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
-            [Required]
+            [Required(ErrorMessage = "Nhập thiếu thông tin mật khẩu")]
             [DataType(DataType.Password)]
             public string Password { get; set; }
 
@@ -134,7 +134,7 @@ namespace ShoeStore.Areas.Identity.Pages.Account
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Thông tin đăng nhập không hợp lệ.");
+                    ModelState.AddModelError(string.Empty, "Nhập sai thông tin đăng nhập.");
                     return Page();
                 }
             }

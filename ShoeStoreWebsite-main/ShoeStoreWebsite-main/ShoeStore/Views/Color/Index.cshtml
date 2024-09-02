@@ -52,9 +52,9 @@
             <th>
                 Tên
             </th>
-            <th>
+            @* <th>
                 Thứ tự ưu tiên
-            </th>
+            </th> *@
             <th></th>
         </tr>
     </thead>
@@ -68,9 +68,9 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Name)
                 </td>
-                <td>
+                @* <td>
                     @Html.DisplayFor(modelItem => item.Priority)
-                </td>
+                </td> *@
                 <td class="dt-nowrap">
                     <a asp-action="Edit" asp-route-id="@item.Id" class="btn-option" role="button"data-bs-toggle="tooltip"
                         data-bs-placement="bottom" title="Edit">

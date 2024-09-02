@@ -27,7 +27,8 @@
                         </div>
                         <div class="col-md-6">
                             <label asp-for="ShopOrder.PhoneNumber" class="form-label">Số điện thoại</label>
-                            <input asp-for="ShopOrder.PhoneNumber" class="form-control" placeholder="Ví dụ: 0123456789">
+                            <input asp-for="ShopOrder.PhoneNumber" class="form-control" placeholder="Ví dụ: 0123456789" disabled>
+                            <input type="hidden" asp-for="ShopOrder.PhoneNumber" />
                             <span asp-validation-for="ShopOrder.PhoneNumber" class="text-danger"></span>
                         </div>
                         <div class="col-12">
@@ -55,27 +56,7 @@
                             <input asp-for="ShopOrder.Ward" class="form-control" id="inputWard" placeholder="" type="text">
                             <span asp-validation-for="ShopOrder.Ward" class="text-danger"></span>
                         </div>
-                        @* <div class="col-md-4">
-                            <label for="city" class="form-label">City</label>
-                            <select asp-for="ShopOrder.City" class="form-select" id="city">
-                                <option value="@Model.ShopOrder.City" selected="selected">@Model.ShopOrder.City</option>
-                            </select>
-                            <span asp-validation-for="ShopOrder.City" class="text-danger"></span>
-                        </div> *@
-                        @* <div class="col-md-4">
-                            <label for="district" class="form-label">District</label>
-                            <select asp-for="ShopOrder.District" class="form-select" id="district">
-                                <option value="@Model.ShopOrder.District" selected="selected">@Model.ShopOrder.District</option>
-                            </select>
-                            <span asp-validation-for="ShopOrder.District" class="text-danger"></span>
-                        </div>
-                        <div class="col-md-4">
-                            <label for="ward" class="form-label">Ward</label>
-                            <select asp-for="ShopOrder.Ward" class="form-select" id="ward">
-                                <option value="@Model.ShopOrder.Ward" selected="selected">@Model.ShopOrder.Ward</option>
-                            </select>
-                            <span asp-validation-for="ShopOrder.Ward" class="text-danger"></span>
-                        </div> *@
+                        
                     </div>
 
                 </form>

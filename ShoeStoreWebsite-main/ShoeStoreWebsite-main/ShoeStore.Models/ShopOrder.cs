@@ -32,7 +32,8 @@ public class ShopOrder
 
     [Required(ErrorMessage ="Vui lòng nhập họ tên của bạn")] 
     public string Name { get; set; }
-    [Required(ErrorMessage ="Vui lòng nhập số điện thoại")] 
+    [Required(ErrorMessage ="Vui lòng nhập số điện thoại")]
+    [StringLength(12, ErrorMessage = "Số điện thoại yêu cầu là tầm {2} đến {1} chữ số", MinimumLength = 10)]
     [Phone] public string PhoneNumber { get; set; }
 
     [Required(ErrorMessage = "Vui lòng nhập địa chỉ của bạn")]

@@ -18,11 +18,11 @@
                     <h4 class="mb-3">Lọc theo giá</h4>
                     <div class="budget">
                         <div class="content">
-                            <input type="range" name="maxPrice" min="1" max="999" value="@(Model.maxPrice ?? 900)" id="price-range-slider" data-rangeslider>
+                            <input type="range" name="maxPrice" min="100000" max="999999" value="@(Model.maxPrice ?? 999999)" id="price-range-slider" data-rangeslider>
                             <div class="header">
                                 <div class="title clearfix mt-3">
                                     <p>Giá tiền:</p>
-                                    <span class="pull-right" id="price-display">$@Model.maxPrice</span>
+                                    <span class="pull-right" id="price-display">@Model.maxPrice VND</span>
                                 </div>
                             </div>
                         </div>
@@ -104,7 +104,7 @@
                             </div>
                             <div class="product-card-bottom">
                                 <h5>
-                                    <strong>$@product.Price</strong>
+                                    <strong>@product.Price VND</strong>
                                 </h5>
                                 <div>
                                     <a href="">
@@ -120,16 +120,6 @@
 
                 </div>
             </div>
-            @* pagi mt-5 *@
-            @* <div page-model="@Model?.PagingInfo" page-action="Index"
-                 page-classes-enabled="true" 
-                 page-class="pagi-item" 
-                 page-class-normal=""
-                 page-class-selected="is-active" 
-                 page-url-brand="@Model?.CurrentBrand"
-                 class="pagi mt-5">
-            </div> *@
-            
         </div>
         <div class="pagination-container mt-4 custom-pagination">
             @Html.PagedListPager(Model.PagedProducts, page => Url.Action("Index", new { 
@@ -166,7 +156,8 @@
             var display = document.getElementById('price-display');
 
             slider.addEventListener('input', function () {
-                display.textContent = '$' + slider.value;
+                // display.textContent = '$' + slider.value;
+                display.textContent = + slider.value + 'VND';
             });
         });
     </script>

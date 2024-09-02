@@ -121,7 +121,7 @@ namespace ShoeStore.Controllers
             {
                 return NotFound();
             }
-
+            shoe.Name = shoe.Name.Trim();
             var existingShoe = await _unitOfWork.Shoes.FirstOrDefaultAsync(s => s.Name == shoe.Name && s.Id != shoe.Id);
             if (existingShoe != null) 
             {

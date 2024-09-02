@@ -39,7 +39,8 @@ public class HomeController : Controller
                         .Include(e => e.Images)
                         .Include(e => e.Shoe)
                         .ThenInclude(e => e!.Brand)!,
-                    orderBy: e => e.Priority,
+                    //orderBy: e => e.Priority,
+                    orderBy: e=> e.SortOrder,
                     take: 4
                 ),
             NikeProducts = await _unitOfWork.ShoeColors
@@ -48,7 +49,8 @@ public class HomeController : Controller
                     .Include(e => e.Images)
                     .Include(e => e.Shoe)
                     .ThenInclude(e => e!.Brand)!,
-                    orderBy: e => e.Priority,
+                    //orderBy: e => e.Priority,
+                    orderBy: e => e.SortOrder,
                     take: 4
                 ),
             BrooksProducts = await _unitOfWork.ShoeColors
@@ -57,7 +59,8 @@ public class HomeController : Controller
                         .Include(e => e.Images)
                         .Include(e => e.Shoe)
                         .ThenInclude(e => e!.Brand)!,
-                    orderBy: e => e.Priority,
+                    //orderBy: e => e.Priority,
+                    orderBy: e => e.SortOrder,
                     take: 4
                 ),
             AsicsProducts = await _unitOfWork.ShoeColors
@@ -66,7 +69,8 @@ public class HomeController : Controller
                         .Include(e => e.Images)
                         .Include(e => e.Shoe)
                         .ThenInclude(e => e!.Brand)!,
-                    orderBy: e => e.Priority,
+                    //orderBy: e => e.Priority,
+                    orderBy: e => e.SortOrder,
                     take: 4
                 ),
             SauconyProducts = await _unitOfWork.ShoeColors
@@ -75,7 +79,8 @@ public class HomeController : Controller
                         .Include(e => e.Images)
                         .Include(e => e.Shoe)
                         .ThenInclude(e => e!.Brand)!,
-                    orderBy: e => e.Priority,
+                    //orderBy: e => e.Priority,
+                    orderBy: e => e.SortOrder,
                     take: 4
                 ),
         };

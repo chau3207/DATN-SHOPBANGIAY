@@ -174,7 +174,7 @@ namespace ShoeStore.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id,
-            [Bind("Id,FactoryPrice,SalePrice,SortOrder,Active,ShoeId,ColorId")]
+            [Bind("Id,FactoryPrice,SalePrice,ProductCode,SortOrder,Active,ShoeId,ColorId")]
             ShoeColor shoeColor)
         {
             var shoeColorFromDb = await _unitOfWork.ShoeColors.FirstOrDefaultAsync(e => e.Id == id);
@@ -182,7 +182,7 @@ namespace ShoeStore.Controllers
             {
                 return NotFound();
             }
-
+            
             var existingShoeColor = await _unitOfWork.ShoeColors.FirstOrDefaultAsync(e =>
         e.ShoeId == shoeColor.ShoeId && e.ColorId == shoeColor.ColorId && e.Id != id);
 
@@ -193,6 +193,18 @@ namespace ShoeStore.Controllers
 
             if (ModelState.IsValid)
             {
+                //Truy vấn dữ liệu để tìm Shoe có Id bằng với ShoeId của đối tượng ShoeColor
+                Shoe? shoeFromDb = await _unitOfWork.Shoes.FirstOrDefaultAsync(e => e.Id == shoeColor.ShoeId);
+                Color? colorFromDb = await _unitOfWork.Colors.FirstOrDefaultAsync(e => e.Id == shoeColor.ColorId);
+                if (shoeFromDb == null || colorFromDb == null)
+                {
+                    return NotFound();
+                }
+
+                // Cập nhật URL dựa trên tên giày và màu sắc
+                shoeColor.Url = Regex.Replace(shoeFromDb.Name.ToLower(), @"\W+", "-")
+                                  + "-"
+                                  + Regex.Replace(colorFromDb.Name.ToLower(), @"\W+", "-");
 
                 shoeColor.Created = shoeColorFromDb.Created;
                 shoeColor.Edited = DateTime.Now;
@@ -326,7 +338,7 @@ namespace ShoeStore.Controllers
         {
             if (ModelState.IsValid)
             {
-                ShoeSize shoeSizeFromDb = await _unitOfWork.ShoeSizes.FirstOrDefaultAsync(e => e.SizeId == shoeSize.SizeId);
+                ShoeSize shoeSizeFromDb = await _unitOfWork.ShoeSizes.FirstOrDefaultAsync(e => e.SizeId == shoeSize.SizeId && e.ShoeColorId == shoeSize.ShoeColorId);
                 if (shoeSizeFromDb != null)
                 {
                     TempData[SD.Error] = "Kích thước này đã tồn tại";

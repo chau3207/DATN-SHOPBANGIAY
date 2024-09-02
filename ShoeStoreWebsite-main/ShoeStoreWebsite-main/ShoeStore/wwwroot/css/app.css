@@ -551,7 +551,7 @@ body::-webkit-scrollbar-track {
 .product {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  /*justify-content: space-between;*/
   align-items: stretch;
   flex-wrap: wrap;
   gap: 40px;
@@ -3030,4 +3030,4 @@ table.dataTable.cell-border tbody tr td:first-child {
   color: #f9886c;
 }
 
-/*# sourceMappingURL=app.css.map */
+# sourceMappingURL=app.css.map 

@@ -1,4 +1,4 @@
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
@@ -7,7 +7,10 @@ namespace ShoeStore.Models;
 public class ShoeSize
 {
     public int Id { get; set; }
-    [Required] public int Quantity { get; set; }
+    [Required]
+    [Range(1, int.MaxValue, ErrorMessage = "Yêu cầu giá trị nhập vào phải lớn hơn 0")]
+    
+    public int Quantity { get; set; }
     [Required] public int ShoeColorId { get; set; }
 
     [ForeignKey("ShoeColorId")]

@@ -10,12 +10,16 @@ public class ShoeColor
     public int Id { get; set; }
     public string? ProductCode { get; set; }
 
-    [Column(TypeName = "decimal(10, 2)")] public decimal FactoryPrice { get; set; }
-    
     [Column(TypeName = "decimal(10, 2)")]
+    [Range(0, int.MaxValue, ErrorMessage = "Yêu cầu giá trị nhập vào lớn hơn 0")]
+    public decimal FactoryPrice { get; set; }
+
+    [Column(TypeName = "decimal(10, 2)")]
+    [Range(0, int.MaxValue, ErrorMessage = "Yêu cầu giá trị nhập vào lớn hơn 0")]
     public decimal SalePrice { get; set; }
-    
+    [Range(0, int.MaxValue, ErrorMessage = "Yêu cầu giá trị nhập vào lớn hơn 0")]
     public int SortOrder { get; set; }
+    [Range(0, int.MaxValue, ErrorMessage = "Yêu cầu giá trị nhập vào lớn hơn 0")]
     public int Priority { get; set; } = 1;
     public bool Active { get; set; }
     public string? Url { get; set; }
