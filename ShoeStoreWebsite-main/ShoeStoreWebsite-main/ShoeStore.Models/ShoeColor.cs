@@ -10,12 +10,14 @@ public class ShoeColor
     public int Id { get; set; }
     public string? ProductCode { get; set; }
 
-    [Column(TypeName = "decimal(10, 2)")]
+    //[Column(TypeName = "decimal(10, 0)")]
     [Range(0, int.MaxValue, ErrorMessage = "Yêu cầu giá trị nhập vào lớn hơn 0")]
+    [DisplayFormat(DataFormatString = "{0:N0}", ApplyFormatInEditMode = true)]
     public decimal FactoryPrice { get; set; }
 
-    [Column(TypeName = "decimal(10, 2)")]
+    //[Column(TypeName = "decimal(10, 0)")]
     [Range(0, int.MaxValue, ErrorMessage = "Yêu cầu giá trị nhập vào lớn hơn 0")]
+    [DisplayFormat(DataFormatString = "{0:N0}", ApplyFormatInEditMode = true)]
     public decimal SalePrice { get; set; }
     [Range(0, int.MaxValue, ErrorMessage = "Yêu cầu giá trị nhập vào lớn hơn 0")]
     public int SortOrder { get; set; }

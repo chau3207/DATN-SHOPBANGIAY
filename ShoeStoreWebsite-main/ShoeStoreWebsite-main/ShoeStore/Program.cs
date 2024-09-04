@@ -55,6 +55,8 @@ builder.Services.AddSession();
 builder.Services.AddScoped<Cart>(sp => SessionCart.GetCart(sp));
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
+
+
 // WebApplication
 var app = builder.Build();
 

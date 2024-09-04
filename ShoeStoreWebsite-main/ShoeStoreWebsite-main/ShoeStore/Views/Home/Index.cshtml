@@ -1,4 +1,5 @@
-﻿@{
+﻿@using System.Globalization
+@{
     ViewData["Title"] = "Trang chủ";
 }
 
@@ -47,7 +48,7 @@
                     </div>
                     <div class="product-card-bottom">
                         <h5>
-                            <strong>$@product.SalePrice</strong>
+                            <strong>@product.SalePrice.ToString("C0", new CultureInfo("vi-VN")) </strong>
                         </h5>
                         <div>
                             <a href="">
@@ -90,7 +91,7 @@
                     </div>
                     <div class="product-card-bottom">
                         <h5>
-                            <strong>$@product.SalePrice</strong>
+                            <strong>$@product.SalePrice.ToString("C0", new CultureInfo("vi-VN"))</strong>
                         </h5>
                         <div>
                             <a href="">
@@ -141,7 +142,7 @@
                     </div>
                     <div class="product-card-bottom">
                         <h5>
-                            <strong>$@product.SalePrice</strong>
+                            <strong>$@product.SalePrice.ToString("C0", new CultureInfo("vi-VN"))</strong>
                         </h5>
                         <div>
                             <a href="">
@@ -192,7 +193,7 @@
                     </div>
                     <div class="product-card-bottom">
                         <h5>
-                            <strong>$@product.SalePrice</strong>
+                            <strong>$@product.SalePrice.ToString("C0", new CultureInfo("vi-VN"))</strong>
                         </h5>
                         <div>
                             <a href="">
@@ -242,7 +243,7 @@
                     </div>
                     <div class="product-card-bottom">
                         <h5>
-                            <strong>$@product.SalePrice</strong>
+                            <strong>$@product.SalePrice.ToString("C0", new CultureInfo("vi-VN"))</strong>
                         </h5>
                         <div>
                             <a href="">

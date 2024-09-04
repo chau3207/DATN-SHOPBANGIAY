@@ -1,4 +1,5 @@
-﻿@{
+﻿@using System.Globalization
+@{
     Layout = "_AdminLayout";
 }
 
@@ -21,7 +22,7 @@
                         <span>Ngày</span>
                     </div>
                     <div class="revenue-card-bottom">
-                        <h3>@Model.OrderTotalsToday.ToString("C")</h3>
+                        <h3>@Model.OrderTotalsToday.ToString("C0", new CultureInfo("vi-VN"))</h3>
                         <p>100%</p>
                         <div class="progress">
                             <div class="progress-bar" role="progressbar" style="width: 100%" aria-valuenow="100"
@@ -36,7 +37,7 @@
                         <span>Tuần</span>
                     </div>
                     <div class="revenue-card-bottom">
-                        <h3>@Model.OrderTotalsThisWeek.ToString("C")</h3>
+                        <h3>@Model.OrderTotalsThisWeek.ToString("C0", new CultureInfo("vi-VN"))</h3>
                         <p>100%</p>
                         <div class="progress">
                             <div class="progress-bar" role="progressbar" style="width: 100%" aria-valuenow="100"
@@ -51,7 +52,7 @@
                         <span>Theo tháng</span>
                     </div>
                     <div class="revenue-card-bottom">
-                        <h3>@Model.OrderTotalsThisMonth.ToString("C")</h3>
+                        <h3>@Model.OrderTotalsThisMonth.ToString("C0", new CultureInfo("vi-VN"))</h3>
                         <p>100%</p>
                         <div class="progress">
                             <div class="progress-bar" role="progressbar" style="width: 100%" aria-valuenow="100"
@@ -66,7 +67,7 @@
                         <span>Theo năm</span>
                     </div>
                     <div class="revenue-card-bottom">
-                        <h3>@Model.OrderTotalsThisYear.ToString("C")</h3>
+                        <h3>@Model.OrderTotalsThisYear.ToString("C0", new CultureInfo("vi-VN"))</h3>
                         <p>100%</p>
                         <div class="progress">
                             <div class="progress-bar" role="progressbar" style="width: 100%" aria-valuenow="100"

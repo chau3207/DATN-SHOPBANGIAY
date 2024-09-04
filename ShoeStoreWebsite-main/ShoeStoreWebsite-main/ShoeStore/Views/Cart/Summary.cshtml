@@ -1,5 +1,6 @@
 ﻿@model ShoeStore.Models.ViewModels.CartViewModel
 @using Microsoft.Extensions.Options
+@using System.Globalization
 @inject IOptions<ShoeStore.Ultitity.StripeSettings> Stripe
 
 @{
@@ -212,7 +213,7 @@
         <div class="checkout-summary">
             <div class="d-flex justify-content-between align-items-center py-4 border-bottom">
                 <strong class="text-muted">Tổng tiền đơn hàng</strong>
-                <strong>@Model?.ShopOrder.OrderTotal.ToString("C")</strong>
+                <strong>@Model?.ShopOrder.OrderTotal.ToString("C0", new CultureInfo("vi-VN"))</strong>
             </div>
              @* <div class="d-flex justify-content-between align-items-center py-4 border-bottom">
                  <strong class="text-muted">Shipping and handling</strong> 
@@ -225,7 +226,7 @@
             <div class="d-flex justify-content-between align-items-center py-4 border-bottom">
                 <strong class="text-muted">Tổng cộng</strong>
                 <h5>
-                    <strong>@Model.ShopOrder.OrderTotal.ToString("C")</strong>
+                  <strong>@Model.ShopOrder.OrderTotal.ToString("C0", new CultureInfo("vi-VN"))</strong>
                 </h5>
             </div>
         </div>

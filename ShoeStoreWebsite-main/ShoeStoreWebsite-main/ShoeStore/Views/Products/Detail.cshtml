@@ -1,5 +1,6 @@
 ﻿@using ShoeStore.Ultitity
 @using Microsoft.AspNetCore.Mvc.TagHelpers
+@using System.Globalization
 @model ShoeStore.Models.ViewModels.ProductDetailViewModel
 
 @{
@@ -66,7 +67,7 @@
         </div>
         <div class="detail-info-price">
             <h4>Giá tiền:</h4>
-            <h2><strong>$@Model.ShoeColor.SalePrice</strong></h2>
+            <h2><strong>@Model.ShoeColor.SalePrice.ToString("C0", new CultureInfo("vi-VN"))</strong></h2>
         </div>
         <div class="detail-info-size mt-3">
             <h4>Kích cỡ:</h4>
@@ -182,7 +183,7 @@
                     </div>
                     <div class="product-card-bottom">
                         <h5>
-                            <strong>$@product.SalePrice</strong>
+                            <strong>@product.SalePrice.ToString("C0", new CultureInfo("vi-VN"))</strong>
                         </h5>
                         <div>
                             <a href="">

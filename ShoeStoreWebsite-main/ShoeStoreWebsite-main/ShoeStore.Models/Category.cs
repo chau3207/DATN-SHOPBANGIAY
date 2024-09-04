@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System.ComponentModel.DataAnnotations;
 
 namespace ShoeStore.Models;
@@ -7,7 +7,8 @@ public class Category
 {
     public int Id { get; set; }
 
-    [Required] public string Name { get; set; } = String.Empty;
+    [Required(ErrorMessage = "Yêu cầu nhập tên danh mục")] 
+    public string Name { get; set; } = String.Empty;
 
     public string? DisplayName { get; set; }
     public string? Description { get; set; }

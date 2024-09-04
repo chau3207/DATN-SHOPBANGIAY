@@ -22,7 +22,7 @@
                             <div class="header">
                                 <div class="title clearfix mt-3">
                                     <p>Giá tiền:</p>
-                                    <span class="pull-right" id="price-display">@Model.maxPrice VND</span>
+                                    <span class="pull-right" id="price-display">@Model.maxPrice đ</span>
                                 </div>
                             </div>
                         </div>
@@ -104,7 +104,8 @@
                             </div>
                             <div class="product-card-bottom">
                                 <h5>
-                                    <strong>@product.Price VND</strong>
+                                    @* <strong>@product.Price đ</strong> *@
+                                    <strong>@product.Price.ToString("C0", new System.Globalization.CultureInfo("vi-VN"))</strong>
                                 </h5>
                                 <div>
                                     <a href="">

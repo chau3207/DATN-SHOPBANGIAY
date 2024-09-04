@@ -1,6 +1,7 @@
 ﻿@using ShoeStore.Models.ViewModels
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @using ShoeStore.Ultitity
+@using System.Globalization
 @model ShoeStore.Models.ViewModels.CartViewModel
 @{
     ViewData["Title"] = "Trang giỏ hàng";
@@ -52,7 +53,7 @@
                             </div>
                         </div>
                         <div class="cart-item-price">
-                            <h5>$@productCart.Price</h5>
+                            <h5>@productCart.Price.ToString("C0", new CultureInfo("vi-VN"))</h5>
                         </div>
                         <div class="cart-item-quantity">
 
@@ -102,7 +103,7 @@
                         <div class="d-flex justify-content-between align-items-center py-4 border-bottom">
                             <strong class="text-muted">Tổng cộng</strong>
                             <h5>
-                                <strong>@Model.ShopOrder.OrderTotal.ToString("C")</strong>
+                                <strong>@Model.ShopOrder.OrderTotal.ToString("C0", new CultureInfo("vi-VN"))</strong>
                             </h5>
                         </div>
                     </div>

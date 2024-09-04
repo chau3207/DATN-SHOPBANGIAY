@@ -29,9 +29,20 @@ namespace ShoeStore.Controllers
         [HttpPost]
         public IActionResult Create(IdentityRole role) 
         {
+            if (string.IsNullOrWhiteSpace(role.Name))
+            {
+                ModelState.AddModelError("", "Yêu cầu nhập tên vai trò.");
+                return View(role);
+            }
+
             if (!_manager.RoleExistsAsync(role.Name).GetAwaiter().GetResult()) 
             {
                 _manager.CreateAsync(new IdentityRole(role.Name)).GetAwaiter().GetResult();
+            }
+            else
+            {
+                ModelState.AddModelError("", "Vai trò đã tồn tại");
+                return View(role);
             }
             return RedirectToAction("Index");
         }

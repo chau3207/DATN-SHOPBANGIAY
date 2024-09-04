@@ -1,5 +1,6 @@
 ﻿@* @model IEnumerable<ShoeColor> *@
 @model X.PagedList.IPagedList<ShoeColor>
+@using System.Globalization
 @using X.PagedList.Mvc.Core
 
 @{
@@ -86,8 +87,12 @@
                     @* <td> *@
                     @*     @Html.DisplayFor(modelItem => item.FactoryPrice) *@
                     @* </td> *@
-                    <td>
+                    @* <td>
                         @Html.DisplayFor(modelItem => item.SalePrice)
+                    </td> *@
+                    @* <td>@item.SalePrice.ToString("F0")</td> *@
+                    <td>
+                        @item.SalePrice.ToString("C0", new CultureInfo("vi-VN"))
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.SortOrder)
