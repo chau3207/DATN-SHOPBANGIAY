@@ -37,7 +37,12 @@ namespace ShoeStore.Controllers
 
             if (!_manager.RoleExistsAsync(role.Name).GetAwaiter().GetResult()) 
             {
-                _manager.CreateAsync(new IdentityRole(role.Name)).GetAwaiter().GetResult();
+                var result = _manager.CreateAsync(new IdentityRole(role.Name)).GetAwaiter().GetResult();
+                if (result.Succeeded)
+                {
+                    TempData["SuccessMessage"] = "Vai trò đã được thêm thành công.";
+                    return RedirectToAction("Index");
+                }
             }
             else
             {
@@ -93,6 +98,7 @@ namespace ShoeStore.Controllers
             }
 
             await _manager.DeleteAsync(role);
+            TempData["SuccessMessage"] = "Vai trò được xóa thành công";
             return RedirectToAction("Index");
         }
     }

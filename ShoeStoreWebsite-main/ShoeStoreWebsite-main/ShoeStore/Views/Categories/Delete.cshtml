@@ -21,24 +21,24 @@
         <div class="col-sm-10 mb-3">
             @Html.DisplayFor(model => model.Name)
         </div>
-        <div class="col-sm-2 mb-3">
+        @* <div class="col-sm-2 mb-3">
             Tên hiển thị
         </div>
         <div class="col-sm-10 mb-3">
             @Html.DisplayFor(model => model.DisplayName)
-        </div>
+        </div> *@
         <div class="col-sm-2 mb-3">
             Mô tả
         </div>
         <div class="col-sm-10 mb-3">
             @Html.DisplayFor(model => model.Description)
         </div>
-        <div class="col-sm-2 mb-3">
+        @* <div class="col-sm-2 mb-3">
             @Html.DisplayNameFor(model => model.Parent)
         </div>
         <div class="col-sm-10 mb-3">
             @Html.DisplayFor(model => model.Parent.Name)
-        </div>
+        </div> *@
     </div>
 
     <form asp-action="Delete" class="d-flex justify-content-start align-items-center gap-4 mt-4">

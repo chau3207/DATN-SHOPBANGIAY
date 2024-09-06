@@ -52,15 +52,15 @@
             <th>
                 Tên
             </th>
-            <th>
+            @* <th>
                 Tên hiển thị
-            </th>
+            </th> *@
             <th>
                 Mô tả
             </th>
-            <th>
+            @* <th>
                 Parent
-            </th>
+            </th> *@
             <th></th>
         </tr>
     </thead>
@@ -74,24 +74,24 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Name)
                 </td>
-                <td>
+                @* <td>
                     @Html.DisplayFor(modelItem => item.DisplayName)
-                </td>
+                </td> *@
                 <td>
                     @Html.DisplayFor(modelItem => item.Description)
                 </td>
-                <td>
+                @* <td>
                     @item?.Parent?.Name
-                </td>
+                </td> *@
                 <td class="dt-nowrap">
                     <a asp-action="Edit" asp-route-id="@item.Id" class="btn-option" role="button" data-bs-toggle="tooltip"
                     data-bs-placement="bottom" title="Edit">
                         <i class="fa-regular fa-pen-to-square"></i>
                     </a>
-                    <a asp-action="Details" asp-route-id="@item.Id" class="btn-option" role="button"
+                   @*  <a asp-action="Details" asp-route-id="@item.Id" class="btn-option" role="button"
                     data-bs-toggle="tooltip" data-bs-placement="bottom" title="Details">
                         <i class="fa-solid fa-circle-info"></i>
-                    </a>
+                    </a> *@
                     <a asp-action="Delete" asp-route-id="@item.Id" class="btn-option" role="button" data-bs-toggle="tooltip"
                     data-bs-placement="bottom" title="Detele">
                         <i class="fa-solid fa-trash"></i>

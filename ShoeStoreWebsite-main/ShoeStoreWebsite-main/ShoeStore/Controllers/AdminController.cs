@@ -24,6 +24,9 @@ public class AdminController : Controller
     {
         List<ShopOrder> orders = await _unitOfWork.Orders.GetAllAsync();
 
+        // Exclude canceled orders
+        orders = orders.Where(e => e.OrderStatus != SD.StatusCancelled).ToList();
+
         DateTime now = DateTime.Now;
         DateTime monday = StartOfWeek(DateTime.Now, DayOfWeek.Monday);
         DateTime firstDayOfMonth = new DateTime(now.Year, now.Month, 1);

@@ -18,11 +18,14 @@
                     <h4 class="mb-3">Lọc theo giá</h4>
                     <div class="budget">
                         <div class="content">
-                            <input type="range" name="maxPrice" min="100000" max="999999" value="@(Model.maxPrice ?? 999999)" id="price-range-slider" data-rangeslider>
+                            <input type="range" name="maxPrice" min="100000" max="9999999" value="@(Model.maxPrice ?? 9999999)" id="price-range-slider" data-rangeslider>
                             <div class="header">
                                 <div class="title clearfix mt-3">
                                     <p>Giá tiền:</p>
-                                    <span class="pull-right" id="price-display">@Model.maxPrice đ</span>
+                                    @* <span class="pull-right" id="price-display">@Model.maxPrice đ</span> *@
+                                    <span class="pull-right" id="price-display">
+                                        @Model.maxPrice?.ToString("C0", new System.Globalization.CultureInfo("vi-VN")) 
+                                    </span>
                                 </div>
                             </div>
                         </div>
@@ -151,14 +154,24 @@
 
         
     </script>
-    <script>
+    @* <script>
         document.addEventListener('DOMContentLoaded', function () {
             var slider = document.getElementById('price-range-slider');
             var display = document.getElementById('price-display');
 
             slider.addEventListener('input', function () {
                 // display.textContent = '$' + slider.value;
-                display.textContent = + slider.value + 'VND';
+                display.textContent = + slider.value + 'đ';
+            });
+        });
+    </script> *@
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var slider = document.getElementById('price-range-slider');
+            var display = document.getElementById('price-display');
+
+            slider.addEventListener('input', function () {
+                display.textContent = parseInt(slider.value).toLocaleString('vi-VN') + ' đ';
             });
         });
     </script>

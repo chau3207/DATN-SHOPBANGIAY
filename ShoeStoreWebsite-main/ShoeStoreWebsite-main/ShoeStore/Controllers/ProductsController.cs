@@ -25,7 +25,7 @@ public class ProductsController : Controller
     }
 
     public async Task<IActionResult> Index(string? productName, string? brand = null, int? size = null,
-    decimal? minPrice = 0, decimal? maxPrice = 999999, string? sort = "latest",
+    decimal? minPrice = 0, decimal? maxPrice = 9999999, string? sort = "latest",
     int page = 1, int pageSize = 12) 
     {
         ProductListViewModel productListViewModel = await _unitOfWork.ShoeColors.FilterProductAsync(productName, brand, size, minPrice, maxPrice, sort, page, pageSize); // Passed pagination parameters
@@ -110,7 +110,7 @@ public class ProductsController : Controller
                 
                 if (shoeSize.Quantity == 0)
                 {
-                    TempData[SD.Error] = "This size is out of stock!";
+                    TempData[SD.Error] = "Kích thước này đã hết hàng";
                     return Redirect(returnUrl);
                 }
 
@@ -140,8 +140,8 @@ public class ProductsController : Controller
                         int diff = shoeSize.Quantity - cartItemFromDb.Count;
 
                         TempData[SD.Error] = diff == 0
-                            ? "Can't add more items of this size to Cart!"
-                            : $"You can only add {diff} more items of this size to Cart";
+                            ? "Không thể thêm nhiều mặt hàng có kích thước này vào Giỏ hàng!"
+                            : $"Bạn chỉ có thể thêm {diff} mặt hàng có kích thước này vào Giỏ hàng";
 
                         return Redirect(returnUrl);
                     }
@@ -181,7 +181,7 @@ public class ProductsController : Controller
 
             if (shoeSize.Quantity == 0)
             {
-                TempData[SD.Error] = "This size is out of stock!";
+                TempData[SD.Error] = "Kích thước này đã hết hàng!";
                 return Redirect(returnUrl);
             }
 
@@ -210,8 +210,8 @@ public class ProductsController : Controller
                     int diff = shoeSize.Quantity - cartItemFromSession.Count;
 
                     TempData[SD.Error] = diff == 0
-                        ? "Can't add more items of this size to Cart!"
-                        : $"You can only add {diff} more items of this size to Cart";
+                        ? "Không thể thêm nhiều mặt hàng có kích thước này vào Giỏ hàng!"
+                        : $"Bạn chỉ có thể thêm {diff} mặt hàng có kích thước này vào Giỏ hàng";
 
                     return Redirect(returnUrl);
                 }

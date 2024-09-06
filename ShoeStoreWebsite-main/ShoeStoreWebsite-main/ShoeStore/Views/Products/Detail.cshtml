@@ -75,11 +75,14 @@
             <div class="d-flex align-items-baseline flex-wrap mt-3">
                 @foreach (var size in Model?.ShoeSizes ?? Enumerable.Empty<ShoeSize>())
                 {
-                    @if (size.Quantity > 0)
-                    {
-                        <input form="add-to-cart" type="radio" id="@($"size-{size.Size.Value}")" class="radio-input" name="ShoeSizeId" value="@size.Id"/>
-                        <label for="@($"size-{size.Size.Value}")" class="radio-label">@size.Size.Value</label>
-                    }
+                    @* @if (size.Quantity > 0)
+                    { *@
+                        <div class="size-container">
+                            <input form="add-to-cart" type="radio" id="@($"size-{size.Size.Value}")" class="radio-input" name="ShoeSizeId" value="@size.Id"/>
+                            <label for="@($"size-{size.Size.Value}")" class="radio-label">@size.Size.Value</label>
+                            <div class="quantity-label">Số lượng: @size.Quantity</div>
+                        </div>
+                    @* } *@
                 }
 
             </div>
@@ -200,3 +203,15 @@
     </div>
 </section>
 
+<style>
+.size-container {
+    margin-right: 15px;
+    margin-bottom: 10px;
+}
+
+.quantity-label {
+    display: block;
+    font-size: 0.9em;
+    color: #555;
+}
+</style>

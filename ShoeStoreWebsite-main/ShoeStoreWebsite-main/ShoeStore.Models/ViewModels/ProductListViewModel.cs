@@ -11,7 +11,7 @@ public class ProductListViewModel
     public List<Size>? Sizes { get; set; }
     public int? SelectedBrandId { get; set; }
     public int? SelectedSizeId { get; set; }
-    public decimal? maxPrice { get; set; } = 999999;
+    public decimal? maxPrice { get; set; } = 9999999;
     public decimal? minPrice { get; set; } = 0;
     public string? SearchedBrand { get; set; }
     public List<SelectListItem>? SelectListItems { get; set; }

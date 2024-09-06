@@ -1,8 +1,5 @@
 ﻿using System.Security.Claims;
 using System.Text;
-using iText.Kernel.Pdf;
-using iText.Layout;
-using iText.Layout.Element;
 using System.IO;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -253,7 +250,7 @@ public class OrderController : Controller
 
         _unitOfWork.Orders.Update(orderFromDb);
         await _unitOfWork.SaveChangesAsync();
-        TempData[SD.Success] = "Order Details Updated Successfully!";
+        TempData[SD.Success] = "Chi tiết đơn hàng được cập nhật thành công!";
 
         return RedirectToAction("Details", "Order", new { id = orderFromDb.Id });
     }
@@ -274,7 +271,7 @@ public class OrderController : Controller
 
         await _unitOfWork.Orders.UpdateStatusAsync(orderFromDb.Id, SD.StatusInpProcess);
         await _unitOfWork.SaveChangesAsync();
-        TempData[SD.Success] = "Order Status Updated Successfully!";
+        TempData[SD.Success] = "Trạng thái đơn hàng được cập nhật thành công!";
 
         return RedirectToAction("Details", "Order", new { id = orderFromDb.Id });
     }
@@ -307,7 +304,7 @@ public class OrderController : Controller
 
         _unitOfWork.Orders.Update(orderFromDb);
         await _unitOfWork.SaveChangesAsync();
-        TempData[SD.Success] = "Order Shipped Successfully!";
+        TempData[SD.Success] = "Trạng thái đơn hàng được cập nhật thành công!";
 
         return RedirectToAction("Details", "Order", new { id = orderFromDb.Id });
     }
@@ -337,7 +334,7 @@ public class OrderController : Controller
                 await _unitOfWork.ShoeSizes.FirstOrDefaultAsync(e => e.Id == orderDetail.ShoeSizeId);
             if (shoeSize == null)
             {
-                throw new Exception("ShoeSize does not exist!");
+                throw new Exception("Kích thước giày không tồn tại!");
             }
 
             shoeSize.Quantity += orderDetail.Count;
@@ -367,7 +364,7 @@ public class OrderController : Controller
         await transaction.CommitAsync();
         // end Transaction
 
-        TempData[SD.Success] = "Order Canceled Successfully!";
+        TempData[SD.Success] = "Đơn hàng đã được hủy thành công!";
 
         return RedirectToAction("Details", "Order", new { id = orderFromDb.Id });
     }

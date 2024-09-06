@@ -36,7 +36,7 @@ public class CartController : Controller
         if (!User.Identity.IsAuthenticated)
         {
             // Nếu chưa đăng nhập, điều hướng họ đến trang đăng nhập
-            return Redirect("/Identity/Account/Login?returnUrl=" + returnUrl); // Thay "Login" và "Account" bằng đường dẫn đến trang đăng nhập của bạn
+            return Redirect("/Identity/Account/Login?returnUrl=" /*+ returnUrl*/); // Thay "Login" và "Account" bằng đường dẫn đến trang đăng nhập của bạn
         }
 
         CartViewModel cartViewModel = new CartViewModel()
@@ -144,7 +144,7 @@ public class CartController : Controller
             Cart.AddItem(shoeSizeId, 1);
         }
 
-        TempData[SD.Success] = "Increase an item's quantity by 1!";
+        TempData[SD.Success] = "Tăng số lượng của một mặt hàng lên 1!";
 
         return RedirectToAction("Index", new { returnUrl });
     }
@@ -182,7 +182,7 @@ public class CartController : Controller
 
         if (cartItem.Count <= 1)
         {
-            TempData[SD.Error] = "Please use remove button instead!";
+            TempData[SD.Error] = "Vui lòng sử dụng nút xóa thay thế!";
             return RedirectToAction("Index", new { returnUrl });
         }
 
@@ -197,7 +197,7 @@ public class CartController : Controller
             Cart.SubtractItem(shoeSizeId, 1);
         }
 
-        TempData[SD.Success] = "Decreased 1 item's quantity!";
+        TempData[SD.Success] = "Giảm số lượng 1 mặt hàng!";
         return RedirectToAction("Index", new { returnUrl });
     }
     //Xóa một sản phẩm khỏi giỏ hàng.
@@ -242,7 +242,7 @@ public class CartController : Controller
             Cart.RemoveLine(shoeSizeId);
         }
 
-        TempData[SD.Success] = "Removed 1 item from cart!";
+        TempData[SD.Success] = "Xóa sản phẩm khỏi giỏ hàng!";
         return RedirectToAction("Index", new { returnUrl });
     }
     //Hiển thị trang tóm tắt đơn hàng và thông tin thanh toán.
@@ -272,7 +272,7 @@ public class CartController : Controller
 
         if (cartItemList.Count <= 0)
         {
-            TempData[SD.Error] = "You must add somethings to Cart first!";
+            TempData[SD.Error] = "Bạn phải thêm sản phẩm vào giỏ hàng trước!";
             return Redirect(returnUrl!);
         }
 
@@ -362,7 +362,7 @@ public class CartController : Controller
             
             if (cartItemList.Count <= 0)
             {
-                TempData[SD.Error] = "You must add somethings to Cart first!";
+                TempData[SD.Error] = "Bạn phải thêm sản phẩm vào giỏ hàng trước!";
                 return RedirectToAction("Index", "Home");
             }
 
@@ -403,7 +403,7 @@ public class CartController : Controller
                         (await _unitOfWork.ShoeSizes.FirstOrDefaultAsync(e => e.Id == cartItem.ShoeSizeId));
                     if (shoeSize == null)
                     {
-                        throw new Exception("ShoeSize does not exist!");
+                        throw new Exception("Kích thước giày không tồn tại!");
                     }
 
                     shoeSize.Quantity -= cartItem.Count;
@@ -427,7 +427,7 @@ public class CartController : Controller
             {
                 Console.WriteLine(e);
                 // TempData[SD.Error] = e.Message;
-                TempData[SD.Error] = "Somethings wrong happen.\nCheckout Failed!";
+                TempData[SD.Error] = "Đã xảy ra lỗi.Thanh toán không thành công!";
                 return RedirectToAction("Index", "Home");
             }
 
@@ -501,7 +501,7 @@ public class CartController : Controller
             return new StatusCodeResult(303);
         }
 
-        TempData[SD.Error] = "Please enter all field!";
+        TempData[SD.Error] = "Vui lòng nhập tất cả các trường!";
         return View(cartViewModel);
     }
     //Hiển thị trang xác nhận đơn hàng.
