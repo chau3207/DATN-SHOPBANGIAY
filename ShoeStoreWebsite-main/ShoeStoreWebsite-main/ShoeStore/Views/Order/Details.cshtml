@@ -338,6 +338,11 @@ else
             </div>
         </div>
     </div>
+    <div class="d-flex justify-content-center mt-4">
+        <a asp-action="ExportToExcel" asp-route-id="@Model.Order.Id" class="btn-save">
+            In hóa đơn
+        </a>
+    </div>
 </form>
 
 @section Scripts

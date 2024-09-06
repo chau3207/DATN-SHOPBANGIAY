@@ -11,6 +11,7 @@ using ShoeStore.DataAccess.Repository.IRepository;
 using ShoeStore.Infrastructure;
 using ShoeStore.Ultitity;
 using Stripe;
+using OfficeOpenXml;
 
 var builder = WebApplication.CreateBuilder(args);
 // var connectionString = builder.Configuration.GetConnectionString("DataContextConnection") ?? throw new InvalidOperationException("Connection string 'DataContextConnection' not found.");
@@ -19,6 +20,7 @@ builder.Services.AddControllers()
     .AddJsonOptions(x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 builder.Services.AddControllersWithViews();
 
+ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
 // builder.Services.AddDbContext<DataContext>(options =>
 //     options.UseSqlServer(builder.Configuration["ConnectionStrings:ProductConnection"]
 //         ,
