@@ -49,7 +49,8 @@ namespace ShoeStore.Controllers
             if (ModelState.IsValid)
             {
                 color.Name = color.Name.Trim();
-                if (_unitOfWork.Colors.Any(e => e.Name == color.Name))
+                var normalizedColorName = color.Name.ToLower(); // Chuyển đổi tên màu về chữ thường
+                if (_unitOfWork.Colors.Any(e => e.Name.ToLower() == normalizedColorName))
                 {
                     //ModelState.AddModelError("name", "This color has already existed!");
                     TempData[SD.Error] = "Màu sắc này đã tồn tại!";
@@ -87,7 +88,15 @@ namespace ShoeStore.Controllers
                 return NotFound();
             }
 
-            var existingColor = await _unitOfWork.Colors.FirstOrDefaultAsync(c => c.Name == color.Name && c.Id != color.Id);
+            // Chuyển tên màu sắc đang chỉnh sửa thành chữ thường
+            var colorNameLower = color.Name.Trim().ToLower();
+
+            // Tải tất cả các màu sắc vào bộ nhớ và thực hiện so sánh tại cấp ứng dụng
+            var colors = await _unitOfWork.Colors.GetAllAsync(); // Giả sử có phương thức GetAllAsync() để lấy tất cả các màu
+            var existingColor = colors
+                .FirstOrDefault(c => c.Name.Trim().ToLower() == colorNameLower && c.Id != color.Id);
+
+            //var existingColor = await _unitOfWork.Colors.FirstOrDefaultAsync(c => c.Name == color.Name && c.Id != color.Id);
             if (existingColor != null) 
             {
                 ModelState.AddModelError("Name","Tên màu sắc đã tồn tại");

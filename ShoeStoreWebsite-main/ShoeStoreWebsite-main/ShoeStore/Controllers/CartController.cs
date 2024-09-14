@@ -368,7 +368,7 @@ public class CartController : Controller
 
             cartViewModel.ShopOrder.PaymentStatus = SD.PaymentStatusPending;
             cartViewModel.ShopOrder.OrderStatus = SD.StatusPending;
-            cartViewModel.ShopOrder.OrderStatus = SD.StatusApproved;
+            //cartViewModel.ShopOrder.OrderStatus = SD.StatusApproved;
             cartViewModel.ShopOrder.OrderDate = DateTime.Now;
 
             foreach (var cartItem in cartItemList)
@@ -440,8 +440,8 @@ public class CartController : Controller
                     SetupFutureUsage = "off_session"
                 },
                 SuccessUrl = $"{domain}/Cart/OrderConfirmation?id={cartViewModel.ShopOrder.Id}",
-                CancelUrl = $"{domain}/Cart/OrderConfirmation?id={cartViewModel.ShopOrder.Id}",
-                // CancelUrl = $"{domain}/Cart/Index",
+                //CancelUrl = $"{domain}/Cart/OrderConfirmation?id={cartViewModel.ShopOrder.Id}",
+                CancelUrl = $"{domain}/Cart/Index",
                 LineItems = new List<SessionLineItemOptions>(),
                 Mode = "payment",
                 PaymentMethodTypes = new List<string>()

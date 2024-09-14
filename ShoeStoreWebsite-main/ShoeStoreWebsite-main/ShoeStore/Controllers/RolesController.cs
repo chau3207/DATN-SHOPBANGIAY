@@ -9,10 +9,12 @@ namespace ShoeStore.Controllers
     public class RolesController : Controller
     {
         private readonly RoleManager<IdentityRole> _manager;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public RolesController(RoleManager<IdentityRole> roleManager)
+        public RolesController(RoleManager<IdentityRole> roleManager, UserManager<IdentityUser> userManager)
         {
             _manager = roleManager;
+            _userManager = userManager;
         }
         public IActionResult Index()
         {
@@ -52,30 +54,30 @@ namespace ShoeStore.Controllers
             return RedirectToAction("Index");
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Edit(string id)
-        {
-            var role = await _manager.FindByIdAsync(id);
-            if (role == null)
-            {
-                return NotFound();
-            }
-            return View(role);
-        }
+        //[HttpGet]
+        //public async Task<IActionResult> Edit(string id)
+        //{
+        //    var role = await _manager.FindByIdAsync(id);
+        //    if (role == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    return View(role);
+        //}
 
-        [HttpPost]
-        public async Task<IActionResult> Edit(IdentityRole role)
-        {
-            var existingRole = await _manager.FindByIdAsync(role.Id);
-            if (existingRole == null)
-            {
-                return NotFound();
-            }
+        //[HttpPost]
+        //public async Task<IActionResult> Edit(IdentityRole role)
+        //{
+        //    var existingRole = await _manager.FindByIdAsync(role.Id);
+        //    if (existingRole == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            existingRole.Name = role.Name;
-            await _manager.UpdateAsync(existingRole);
-            return RedirectToAction("Index");
-        }
+        //    existingRole.Name = role.Name;
+        //    await _manager.UpdateAsync(existingRole);
+        //    return RedirectToAction("Index");
+        //}
 
         [HttpGet]
         public async Task<IActionResult> Delete(string id)
@@ -97,8 +99,15 @@ namespace ShoeStore.Controllers
                 return NotFound();
             }
 
+            //var users = await _userManager.GetUsersInRoleAsync(role.Name);
+            //if (users.Any())
+            //{
+            //    TempData["ErrorMessage"] = "Không thể xóa vai trò vì vẫn có người dùng thuộc vai trò";
+            //    return RedirectToAction("Index");
+            //}
+
             await _manager.DeleteAsync(role);
-            TempData["SuccessMessage"] = "Vai trò được xóa thành công";
+            //TempData["SuccessMessage"] = "Vai trò được xóa thành công";
             return RedirectToAction("Index");
         }
     }

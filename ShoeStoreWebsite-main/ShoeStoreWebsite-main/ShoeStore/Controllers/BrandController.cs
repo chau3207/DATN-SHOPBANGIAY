@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using DocumentFormat.OpenXml.Spreadsheet;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Newtonsoft.Json.Linq;
@@ -53,10 +54,7 @@ namespace ShoeStore.Controllers
         {
             return View();
         }
-        //Ph??ng th?c này x? lý vi?c t?o m?i th??ng hi?u d?a trên d? li?u ???c g?i t? form.
-        //S? d?ng[Bind] ?? ch? bind nh?ng tr??ng c?n thi?t.
-        //N?u d? li?u h?p l?, thêm th??ng hi?u m?i vào c? s? d? li?u và chuy?n h??ng 
-        //v? trang danh sách th??ng hi?u.
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Name,Description")] Brand brand)
@@ -64,7 +62,8 @@ namespace ShoeStore.Controllers
             if (ModelState.IsValid)
             {
                 brand.Name = brand.Name.Trim();
-                if (_unitOfWork.Brands.Any(e => e.Name == brand.Name))
+                var normalizedBrandName = brand.Name.ToLower();
+                if (_unitOfWork.Brands.Any(e => e.Name.ToLower() == normalizedBrandName))
                 {
                     ModelState.AddModelError("name", "Tên nhãn đã tồn tại!");
                     return Create();
@@ -78,7 +77,7 @@ namespace ShoeStore.Controllers
             }
             return View(brand);
         }
-        //Ph??ng th?c này tr? v? view ?? ch?nh s?a thông tin c?a m?t th??ng hi?u d?a trên ID.
+        
         public async Task<IActionResult> Edit(int id)
         {
             var brand = await _unitOfWork.Brands.FirstOrDefaultAsync(e => e.Id == id);
@@ -99,7 +98,13 @@ namespace ShoeStore.Controllers
             {
                 return NotFound();
             }
-            var existingBrand = await _unitOfWork.Brands.FirstOrDefaultAsync(e => e.Name == brand.Name && e.Id != id);
+            
+            var brandNameLower = brand.Name.Trim().ToLower();
+
+            var brands = await _unitOfWork.Brands.GetAllAsync(); // Giả sử có phương thức GetAllAsync() để lấy tất cả các màu
+            var existingBrand = brands
+                .FirstOrDefault(c => c.Name.Trim().ToLower() == brandNameLower && c.Id != brand.Id);
+            //var existingBrand = await _unitOfWork.Brands.FirstOrDefaultAsync(e => e.Name == brand.Name && e.Id != id);
             if (existingBrand != null)
             {
                 ModelState.AddModelError("Name", "Tên nhãn hàng đã tồn tại.");

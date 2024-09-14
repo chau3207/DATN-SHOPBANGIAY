@@ -38,7 +38,8 @@ namespace ShoeStore.Controllers
             if (ModelState.IsValid)
             {
                 size.Unit = size.Unit.Trim();
-                Size? sizeFromDb = await _unitOfWork.Sizes.FirstOrDefaultAsync(e => e.Unit == size.Unit && Math.Abs(e.Value - size.Value) < 0.001);
+                var normalizedSizeUnit = size.Unit.ToLower();
+                Size? sizeFromDb = await _unitOfWork.Sizes.FirstOrDefaultAsync(e => e.Unit.ToLower() == normalizedSizeUnit && Math.Abs(e.Value - size.Value) < 0.001);
                 if (sizeFromDb != null)
                 {
                     TempData[SD.Error] = "Kích thước đã tồn tại!";
@@ -75,8 +76,11 @@ namespace ShoeStore.Controllers
             {
                 return NotFound();
             }
-
-            var existingSize = await _unitOfWork.Sizes.FirstOrDefaultAsync(s => s.Value == size.Value && s.Unit == size.Unit && s.Id != size.Id);
+            var sizeUnitLower = size.Unit.Trim().ToLower();
+            var sizes = await _unitOfWork.Sizes.GetAllAsync();
+            var existingSize = sizes
+               .FirstOrDefault(c => c.Unit.Trim().ToLower() == sizeUnitLower && c.Id != size.Id);
+            //var existingSize = await _unitOfWork.Sizes.FirstOrDefaultAsync(s => s.Value == size.Value && s.Unit == size.Unit && s.Id != size.Id);
             if (existingSize != null)
             {
                 ModelState.AddModelError("Value", "Giá trị này đã tồn tại");

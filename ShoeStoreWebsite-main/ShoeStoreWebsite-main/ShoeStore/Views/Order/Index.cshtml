@@ -17,7 +17,7 @@ else
     @* Layout = "_Layout"; *@
 
     var status = Context.Request.Query["status"];
-    string pending = "";
+    // string pending = "";
     string inprocess = "";
     string completed = "";
     string approved = "";
@@ -25,9 +25,9 @@ else
 
     switch (status)
     {
-        case "pending":
-            pending = "active";
-            break;
+        // case "pending":
+        //     pending = "active";
+        //     break;
         case "inprocess":
             inprocess = "active";
             break;
@@ -57,10 +57,10 @@ else
                 asp-action="Index" asp-route-status="inprocess">
                 Đang tiến hành
             </a>
-            <a class="text-nowrap list-group-item list-group-item-action @pending" asp-controller="Order"
+            @* <a class="text-nowrap list-group-item list-group-item-action @pending" asp-controller="Order"
                 asp-action="Index" asp-route-status="pending">
                 Đang chờ thanh toán
-            </a>
+            </a> *@
             <a class="text-nowrap list-group-item list-group-item-action @completed" asp-controller="Order"
                 asp-action="Index" asp-route-status="completed">
                 Hoàn thành

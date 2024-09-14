@@ -93,7 +93,7 @@ public class ShoeColorRepository : Repository<ShoeColor>, IShoeColorRepository
                 break;
             default:
                 sort = "latest";
-                productCardViewModels = productCardViewModels.OrderBy(e => e.Created);
+                productCardViewModels = productCardViewModels.OrderBy(e => e.Created).Reverse();
                 break;
         }
 

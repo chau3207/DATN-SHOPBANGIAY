@@ -66,7 +66,8 @@ namespace ShoeStore.Controllers
             if (ModelState.IsValid)
             {
                 category.Name = category.Name.Trim();
-                if (_unitOfWork.Categories.Any(c => c.Name == category.Name))
+                var normalizedCategoryName = category.Name.ToLower();
+                if (_unitOfWork.Categories.Any(c => c.Name.ToLower() == normalizedCategoryName))
                 {
                     ModelState.AddModelError("Name","Tên danh mục đã tồn tại");
                     return await Create();
@@ -109,8 +110,11 @@ namespace ShoeStore.Controllers
             {
                 return NotFound();
             }
-
-            var existingCategory = await _unitOfWork.Categories.FirstOrDefaultAsync(c => c.Name == category.Name && c.Id != category.Id);
+            var categoryNameLower = category.Name.Trim().ToLower();
+            var categories = await _unitOfWork.Categories.GetAllAsync();
+            var existingCategory = categories
+               .FirstOrDefault(c => c.Name.Trim().ToLower() == categoryNameLower && c.Id != category.Id);
+            //var existingCategory = await _unitOfWork.Categories.FirstOrDefaultAsync(c => c.Name == category.Name && c.Id != category.Id);
             if(existingCategory != null) 
             {
                 ModelState.AddModelError("Name","Tên danh mục đã tồn tại");

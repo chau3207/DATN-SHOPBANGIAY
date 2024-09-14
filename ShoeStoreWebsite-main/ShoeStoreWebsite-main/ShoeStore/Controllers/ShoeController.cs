@@ -8,6 +8,7 @@ using ShoeStore.Ultitity;
 using System.Drawing;
 using X.PagedList;
 using X.PagedList.Mvc.Core;
+using static Org.BouncyCastle.Asn1.Cmp.Challenge;
 
 namespace ShoeStore.Controllers
 {
@@ -71,7 +72,8 @@ namespace ShoeStore.Controllers
             if (ModelState.IsValid)
             {
                 shoe.Name = shoe.Name.Trim();
-                if(_unitOfWork.Shoes.Any(e => e.Name == shoe.Name))
+                var normalizedShoeName = shoe.Name.ToLower();
+                if (_unitOfWork.Shoes.Any(e => e.Name.ToLower() == normalizedShoeName))
                 {
                     ModelState.AddModelError("name", "Tên giày đã tồn tại!");
                     return await Create();
@@ -121,8 +123,12 @@ namespace ShoeStore.Controllers
             {
                 return NotFound();
             }
-            shoe.Name = shoe.Name.Trim();
-            var existingShoe = await _unitOfWork.Shoes.FirstOrDefaultAsync(s => s.Name == shoe.Name && s.Id != shoe.Id);
+            //shoe.Name = shoe.Name.Trim();
+            var shoeNameLower = shoe.Name.Trim().ToLower();
+            var shoes = await _unitOfWork.Shoes.GetAllAsync();
+            var existingShoe = shoes
+               .FirstOrDefault(c => c.Name.Trim().ToLower() == shoeNameLower && c.Id != shoe.Id);
+            //var existingShoe = await _unitOfWork.Shoes.FirstOrDefaultAsync(s => s.Name == shoe.Name && s.Id != shoe.Id);
             if (existingShoe != null) 
             {
                 ModelState.AddModelError("Name","Tên giày đã tồn tại");

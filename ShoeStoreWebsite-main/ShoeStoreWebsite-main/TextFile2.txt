@@ -1,2 +1,0 @@
-﻿viết api webhook 
-viết chương trình sử dụng API

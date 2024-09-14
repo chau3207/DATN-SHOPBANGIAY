@@ -163,8 +163,7 @@ public class ProductsController : Controller
 
     [HttpPost]
     [AllowAnonymous]
-    public async Task<IActionResult>
-        AddToCartSession(CartItem cartItem, string? returnUrl)
+    public async Task<IActionResult>AddToCartSession(CartItem cartItem, string? returnUrl)
     {
         returnUrl ??= "/";
 
